@@ -1,0 +1,709 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>inovopy.robot API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>inovopy.robot</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">from contextlib import contextmanager
+import json
+
+from inovopy.logger import Logger
+from inovopy.robridge import RosBridge
+from inovopy.socket import TcpListener, TcpStream
+from inovopy.geometry.jointcoord import JointCoord
+from inovopy.geometry.transform import Transform
+from inovopy.iva import *
+
+class IvaException(Exception):
+    &#34;&#34;&#34;
+    # Iva Exception
+    &#34;&#34;&#34;
+
+class InovoRobot:
+
+    def __init__(
+            self,
+            tcp_stream : TcpStream,
+            ros_bridge : RosBridge,
+            logger : Logger | None = None
+        ):
+        self.tcp_stream : TcpStream = tcp_stream
+        self.ros_bridge : RosBridge = ros_bridge
+        self.logger : Logger = \
+                logger if logger else Logger.default(f&#34;InooRobot {tcp_stream.ip}&#34;)
+
+    @classmethod
+    def default_iva(cls, host:str)-&gt;&#39;InovoRobot&#39;:
+        listener = TcpListener()
+        ros_bridge : RosBridge = RosBridge(host=host)
+        ros_bridge.start_seq(&#34;iva&#34;)
+        tcp_stream: TcpStream = listener.accept()
+        del(listener)
+        bot : InovoRobot = InovoRobot(tcp_stream=tcp_stream, ros_bridge=ros_bridge)
+        return bot
+
+    def read(self) -&gt; str:
+        return self.tcp_stream.read()
+    
+    def write(self, instruction : dict[str, str|float]):
+        msg = json.dumps(instruction)
+        self.tcp_stream.write(msg)
+
+    def assert_res_ok(self):
+        res = self.read()
+        if res != &#34;OK&#34;:
+            raise IvaException(f&#34;Expect resopnse to be \&#34;OK\&#34;, but recieve {res}&#34;)
+
+    def execute(self, robot_command: RobotCommand, enter_context: bool = False):
+        self.write(execute(robot_command=robot_command, enter_context=enter_context))
+        self.assert_res_ok()
+
+    def sleep(self, second: float):
+        self.execute(RobotCommand.sleep(second=second))
+    
+    def enqueue(self, robot_command: RobotCommand):
+        self.write(enqueue(robot_command=robot_command))
+        self.assert_res_ok()
+
+    def dequeue(self, enter_context: bool = False):
+        self.write(dequeue(enter_context=enter_context))
+        self.assert_res_ok()
+    
+    def sequence(self, sequence: list[RobotCommand], enter_context: bool = False):
+        for step in sequence:
+            self.enqueue(step)
+        self.dequeue(enter_context=enter_context)
+
+    def pop(self):
+        self.write(pop())
+        self.assert_res_ok()
+
+    def io(self, io_command : IOCommand):
+        self.write(io(io_command=io_command))
+
+    def get_io_beckhoff(self, port: int) -&gt; bool:
+        self.io(IOCommand.get_digital(target=&#34;beckhoff&#34;,port=port))
+        return self.read() == &#34;True&#34;
+    def get_io_wrist(self, port: int) -&gt; bool:
+        self.io(IOCommand.get_digital(target=&#34;wrist&#34;, port=port))
+        return self.read() == &#34;True&#34;
+    def set_io_beckhoff(self, port: int, state: bool):
+        self.io(IOCommand.set_digital(target=&#34;beckhoff&#34;,port=port, state=state))
+        self.assert_res_ok()
+    def set_io_wrist(self, port: int, state: bool):
+        self.io(IOCommand.set_digital(target=&#34;wrist&#34;, port=port, state=state))
+        self.assert_res_ok()
+
+    def gipper_activate(self):
+        self.write(GripperCommand.activate())
+        self.assert_res_ok()
+    def gripper_get(self)-&gt;float:
+        self.write(GripperCommand.get())
+        return float(self.read()) * 100
+    def gripper_set(self, label: str):
+        self.write(GripperCommand.set(label=label))
+        self.assert_res_ok()
+
+    def get_current_transform(self) -&gt; Transform:
+        self.write(get_current(&#34;transform&#34;))
+        return Transform.from_robot(self.read())
+
+    def get_current_joint(self) -&gt; JointCoord:
+        self.write(get_current(&#34;joint_coord&#34;))
+        return JointCoord.from_robot(self.read())
+    
+    def get_data(self,key : str) -&gt; str:
+        self.write(get_data(key=key))
+        return self.read()
+
+    @contextmanager
+    def context(self, robot_command: RobotCommand):
+        self.execute(robot_command=robot_command, enter_context=True)
+        try:
+            yield
+        finally:
+            self.pop()
+
+    @contextmanager
+    def context_sequence(self, sequence: list[RobotCommand]):
+        self.sequence(sequence=sequence, enter_context=True)
+        try:
+            yield
+        finally:
+            self.pop()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="inovopy.robot.InovoRobot"><code class="flex name class">
+<span>class <span class="ident">InovoRobot</span></span>
+<span>(</span><span>tcp_stream: <a title="inovopy.socket.tcp_stream.TcpStream" href="../socket/tcp_stream.html#inovopy.socket.tcp_stream.TcpStream">TcpStream</a>, ros_bridge: <a title="inovopy.robridge.RosBridge" href="../robridge.html#inovopy.robridge.RosBridge">RosBridge</a>, logger: <a title="inovopy.logger.Logger" href="../logger/index.html#inovopy.logger.Logger">Logger</a> | None = None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class InovoRobot:
+
+    def __init__(
+            self,
+            tcp_stream : TcpStream,
+            ros_bridge : RosBridge,
+            logger : Logger | None = None
+        ):
+        self.tcp_stream : TcpStream = tcp_stream
+        self.ros_bridge : RosBridge = ros_bridge
+        self.logger : Logger = \
+                logger if logger else Logger.default(f&#34;InooRobot {tcp_stream.ip}&#34;)
+
+    @classmethod
+    def default_iva(cls, host:str)-&gt;&#39;InovoRobot&#39;:
+        listener = TcpListener()
+        ros_bridge : RosBridge = RosBridge(host=host)
+        ros_bridge.start_seq(&#34;iva&#34;)
+        tcp_stream: TcpStream = listener.accept()
+        del(listener)
+        bot : InovoRobot = InovoRobot(tcp_stream=tcp_stream, ros_bridge=ros_bridge)
+        return bot
+
+    def read(self) -&gt; str:
+        return self.tcp_stream.read()
+    
+    def write(self, instruction : dict[str, str|float]):
+        msg = json.dumps(instruction)
+        self.tcp_stream.write(msg)
+
+    def assert_res_ok(self):
+        res = self.read()
+        if res != &#34;OK&#34;:
+            raise IvaException(f&#34;Expect resopnse to be \&#34;OK\&#34;, but recieve {res}&#34;)
+
+    def execute(self, robot_command: RobotCommand, enter_context: bool = False):
+        self.write(execute(robot_command=robot_command, enter_context=enter_context))
+        self.assert_res_ok()
+
+    def sleep(self, second: float):
+        self.execute(RobotCommand.sleep(second=second))
+    
+    def enqueue(self, robot_command: RobotCommand):
+        self.write(enqueue(robot_command=robot_command))
+        self.assert_res_ok()
+
+    def dequeue(self, enter_context: bool = False):
+        self.write(dequeue(enter_context=enter_context))
+        self.assert_res_ok()
+    
+    def sequence(self, sequence: list[RobotCommand], enter_context: bool = False):
+        for step in sequence:
+            self.enqueue(step)
+        self.dequeue(enter_context=enter_context)
+
+    def pop(self):
+        self.write(pop())
+        self.assert_res_ok()
+
+    def io(self, io_command : IOCommand):
+        self.write(io(io_command=io_command))
+
+    def get_io_beckhoff(self, port: int) -&gt; bool:
+        self.io(IOCommand.get_digital(target=&#34;beckhoff&#34;,port=port))
+        return self.read() == &#34;True&#34;
+    def get_io_wrist(self, port: int) -&gt; bool:
+        self.io(IOCommand.get_digital(target=&#34;wrist&#34;, port=port))
+        return self.read() == &#34;True&#34;
+    def set_io_beckhoff(self, port: int, state: bool):
+        self.io(IOCommand.set_digital(target=&#34;beckhoff&#34;,port=port, state=state))
+        self.assert_res_ok()
+    def set_io_wrist(self, port: int, state: bool):
+        self.io(IOCommand.set_digital(target=&#34;wrist&#34;, port=port, state=state))
+        self.assert_res_ok()
+
+    def gipper_activate(self):
+        self.write(GripperCommand.activate())
+        self.assert_res_ok()
+    def gripper_get(self)-&gt;float:
+        self.write(GripperCommand.get())
+        return float(self.read()) * 100
+    def gripper_set(self, label: str):
+        self.write(GripperCommand.set(label=label))
+        self.assert_res_ok()
+
+    def get_current_transform(self) -&gt; Transform:
+        self.write(get_current(&#34;transform&#34;))
+        return Transform.from_robot(self.read())
+
+    def get_current_joint(self) -&gt; JointCoord:
+        self.write(get_current(&#34;joint_coord&#34;))
+        return JointCoord.from_robot(self.read())
+    
+    def get_data(self,key : str) -&gt; str:
+        self.write(get_data(key=key))
+        return self.read()
+
+    @contextmanager
+    def context(self, robot_command: RobotCommand):
+        self.execute(robot_command=robot_command, enter_context=True)
+        try:
+            yield
+        finally:
+            self.pop()
+
+    @contextmanager
+    def context_sequence(self, sequence: list[RobotCommand]):
+        self.sequence(sequence=sequence, enter_context=True)
+        try:
+            yield
+        finally:
+            self.pop()</code></pre>
+</details>
+<h3>Static methods</h3>
+<dl>
+<dt id="inovopy.robot.InovoRobot.default_iva"><code class="name flex">
+<span>def <span class="ident">default_iva</span></span>(<span>host: str) ‑> <a title="inovopy.robot.InovoRobot" href="#inovopy.robot.InovoRobot">InovoRobot</a></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def default_iva(cls, host:str)-&gt;&#39;InovoRobot&#39;:
+    listener = TcpListener()
+    ros_bridge : RosBridge = RosBridge(host=host)
+    ros_bridge.start_seq(&#34;iva&#34;)
+    tcp_stream: TcpStream = listener.accept()
+    del(listener)
+    bot : InovoRobot = InovoRobot(tcp_stream=tcp_stream, ros_bridge=ros_bridge)
+    return bot</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="inovopy.robot.InovoRobot.assert_res_ok"><code class="name flex">
+<span>def <span class="ident">assert_res_ok</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def assert_res_ok(self):
+    res = self.read()
+    if res != &#34;OK&#34;:
+        raise IvaException(f&#34;Expect resopnse to be \&#34;OK\&#34;, but recieve {res}&#34;)</code></pre>
+</details>
+</dd>
+<dt id="inovopy.robot.InovoRobot.context"><code class="name flex">
+<span>def <span class="ident">context</span></span>(<span>self, robot_command: <a title="inovopy.iva.RobotCommand" href="../iva/index.html#inovopy.iva.RobotCommand">RobotCommand</a>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@contextmanager
+def context(self, robot_command: RobotCommand):
+    self.execute(robot_command=robot_command, enter_context=True)
+    try:
+        yield
+    finally:
+        self.pop()</code></pre>
+</details>
+</dd>
+<dt id="inovopy.robot.InovoRobot.context_sequence"><code class="name flex">
+<span>def <span class="ident">context_sequence</span></span>(<span>self, sequence: list[<a title="inovopy.iva.RobotCommand" href="../iva/index.html#inovopy.iva.RobotCommand">RobotCommand</a>])</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@contextmanager
+def context_sequence(self, sequence: list[RobotCommand]):
+    self.sequence(sequence=sequence, enter_context=True)
+    try:
+        yield
+    finally:
+        self.pop()</code></pre>
+</details>
+</dd>
+<dt id="inovopy.robot.InovoRobot.dequeue"><code class="name flex">
+<span>def <span class="ident">dequeue</span></span>(<span>self, enter_context: bool = False)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def dequeue(self, enter_context: bool = False):
+    self.write(dequeue(enter_context=enter_context))
+    self.assert_res_ok()</code></pre>
+</details>
+</dd>
+<dt id="inovopy.robot.InovoRobot.enqueue"><code class="name flex">
+<span>def <span class="ident">enqueue</span></span>(<span>self, robot_command: <a title="inovopy.iva.RobotCommand" href="../iva/index.html#inovopy.iva.RobotCommand">RobotCommand</a>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def enqueue(self, robot_command: RobotCommand):
+    self.write(enqueue(robot_command=robot_command))
+    self.assert_res_ok()</code></pre>
+</details>
+</dd>
+<dt id="inovopy.robot.InovoRobot.execute"><code class="name flex">
+<span>def <span class="ident">execute</span></span>(<span>self, robot_command: <a title="inovopy.iva.RobotCommand" href="../iva/index.html#inovopy.iva.RobotCommand">RobotCommand</a>, enter_context: bool = False)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def execute(self, robot_command: RobotCommand, enter_context: bool = False):
+    self.write(execute(robot_command=robot_command, enter_context=enter_context))
+    self.assert_res_ok()</code></pre>
+</details>
+</dd>
+<dt id="inovopy.robot.InovoRobot.get_current_joint"><code class="name flex">
+<span>def <span class="ident">get_current_joint</span></span>(<span>self) ‑> <a title="inovopy.geometry.jointcoord.JointCoord" href="../geometry/jointcoord.html#inovopy.geometry.jointcoord.JointCoord">JointCoord</a></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_current_joint(self) -&gt; JointCoord:
+    self.write(get_current(&#34;joint_coord&#34;))
+    return JointCoord.from_robot(self.read())</code></pre>
+</details>
+</dd>
+<dt id="inovopy.robot.InovoRobot.get_current_transform"><code class="name flex">
+<span>def <span class="ident">get_current_transform</span></span>(<span>self) ‑> <a title="inovopy.geometry.transform.Transform" href="../geometry/transform.html#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_current_transform(self) -&gt; Transform:
+    self.write(get_current(&#34;transform&#34;))
+    return Transform.from_robot(self.read())</code></pre>
+</details>
+</dd>
+<dt id="inovopy.robot.InovoRobot.get_data"><code class="name flex">
+<span>def <span class="ident">get_data</span></span>(<span>self, key: str) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_data(self,key : str) -&gt; str:
+    self.write(get_data(key=key))
+    return self.read()</code></pre>
+</details>
+</dd>
+<dt id="inovopy.robot.InovoRobot.get_io_beckhoff"><code class="name flex">
+<span>def <span class="ident">get_io_beckhoff</span></span>(<span>self, port: int) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_io_beckhoff(self, port: int) -&gt; bool:
+    self.io(IOCommand.get_digital(target=&#34;beckhoff&#34;,port=port))
+    return self.read() == &#34;True&#34;</code></pre>
+</details>
+</dd>
+<dt id="inovopy.robot.InovoRobot.get_io_wrist"><code class="name flex">
+<span>def <span class="ident">get_io_wrist</span></span>(<span>self, port: int) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_io_wrist(self, port: int) -&gt; bool:
+    self.io(IOCommand.get_digital(target=&#34;wrist&#34;, port=port))
+    return self.read() == &#34;True&#34;</code></pre>
+</details>
+</dd>
+<dt id="inovopy.robot.InovoRobot.gipper_activate"><code class="name flex">
+<span>def <span class="ident">gipper_activate</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def gipper_activate(self):
+    self.write(GripperCommand.activate())
+    self.assert_res_ok()</code></pre>
+</details>
+</dd>
+<dt id="inovopy.robot.InovoRobot.gripper_get"><code class="name flex">
+<span>def <span class="ident">gripper_get</span></span>(<span>self) ‑> float</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def gripper_get(self)-&gt;float:
+    self.write(GripperCommand.get())
+    return float(self.read()) * 100</code></pre>
+</details>
+</dd>
+<dt id="inovopy.robot.InovoRobot.gripper_set"><code class="name flex">
+<span>def <span class="ident">gripper_set</span></span>(<span>self, label: str)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def gripper_set(self, label: str):
+    self.write(GripperCommand.set(label=label))
+    self.assert_res_ok()</code></pre>
+</details>
+</dd>
+<dt id="inovopy.robot.InovoRobot.io"><code class="name flex">
+<span>def <span class="ident">io</span></span>(<span>self, io_command: <a title="inovopy.iva.IOCommand" href="../iva/index.html#inovopy.iva.IOCommand">IOCommand</a>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def io(self, io_command : IOCommand):
+    self.write(io(io_command=io_command))</code></pre>
+</details>
+</dd>
+<dt id="inovopy.robot.InovoRobot.pop"><code class="name flex">
+<span>def <span class="ident">pop</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pop(self):
+    self.write(pop())
+    self.assert_res_ok()</code></pre>
+</details>
+</dd>
+<dt id="inovopy.robot.InovoRobot.read"><code class="name flex">
+<span>def <span class="ident">read</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def read(self) -&gt; str:
+    return self.tcp_stream.read()</code></pre>
+</details>
+</dd>
+<dt id="inovopy.robot.InovoRobot.sequence"><code class="name flex">
+<span>def <span class="ident">sequence</span></span>(<span>self, sequence: list[<a title="inovopy.iva.RobotCommand" href="../iva/index.html#inovopy.iva.RobotCommand">RobotCommand</a>], enter_context: bool = False)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def sequence(self, sequence: list[RobotCommand], enter_context: bool = False):
+    for step in sequence:
+        self.enqueue(step)
+    self.dequeue(enter_context=enter_context)</code></pre>
+</details>
+</dd>
+<dt id="inovopy.robot.InovoRobot.set_io_beckhoff"><code class="name flex">
+<span>def <span class="ident">set_io_beckhoff</span></span>(<span>self, port: int, state: bool)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_io_beckhoff(self, port: int, state: bool):
+    self.io(IOCommand.set_digital(target=&#34;beckhoff&#34;,port=port, state=state))
+    self.assert_res_ok()</code></pre>
+</details>
+</dd>
+<dt id="inovopy.robot.InovoRobot.set_io_wrist"><code class="name flex">
+<span>def <span class="ident">set_io_wrist</span></span>(<span>self, port: int, state: bool)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_io_wrist(self, port: int, state: bool):
+    self.io(IOCommand.set_digital(target=&#34;wrist&#34;, port=port, state=state))
+    self.assert_res_ok()</code></pre>
+</details>
+</dd>
+<dt id="inovopy.robot.InovoRobot.sleep"><code class="name flex">
+<span>def <span class="ident">sleep</span></span>(<span>self, second: float)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def sleep(self, second: float):
+    self.execute(RobotCommand.sleep(second=second))</code></pre>
+</details>
+</dd>
+<dt id="inovopy.robot.InovoRobot.write"><code class="name flex">
+<span>def <span class="ident">write</span></span>(<span>self, instruction: dict[str, str | float])</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def write(self, instruction : dict[str, str|float]):
+    msg = json.dumps(instruction)
+    self.tcp_stream.write(msg)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="inovopy.robot.IvaException"><code class="flex name class">
+<span>class <span class="ident">IvaException</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><h1 id="iva-exception">Iva Exception</h1></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class IvaException(Exception):
+    &#34;&#34;&#34;
+    # Iva Exception
+    &#34;&#34;&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="inovopy" href="../index.html">inovopy</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="inovopy.robot.InovoRobot" href="#inovopy.robot.InovoRobot">InovoRobot</a></code></h4>
+<ul class="">
+<li><code><a title="inovopy.robot.InovoRobot.assert_res_ok" href="#inovopy.robot.InovoRobot.assert_res_ok">assert_res_ok</a></code></li>
+<li><code><a title="inovopy.robot.InovoRobot.context" href="#inovopy.robot.InovoRobot.context">context</a></code></li>
+<li><code><a title="inovopy.robot.InovoRobot.context_sequence" href="#inovopy.robot.InovoRobot.context_sequence">context_sequence</a></code></li>
+<li><code><a title="inovopy.robot.InovoRobot.default_iva" href="#inovopy.robot.InovoRobot.default_iva">default_iva</a></code></li>
+<li><code><a title="inovopy.robot.InovoRobot.dequeue" href="#inovopy.robot.InovoRobot.dequeue">dequeue</a></code></li>
+<li><code><a title="inovopy.robot.InovoRobot.enqueue" href="#inovopy.robot.InovoRobot.enqueue">enqueue</a></code></li>
+<li><code><a title="inovopy.robot.InovoRobot.execute" href="#inovopy.robot.InovoRobot.execute">execute</a></code></li>
+<li><code><a title="inovopy.robot.InovoRobot.get_current_joint" href="#inovopy.robot.InovoRobot.get_current_joint">get_current_joint</a></code></li>
+<li><code><a title="inovopy.robot.InovoRobot.get_current_transform" href="#inovopy.robot.InovoRobot.get_current_transform">get_current_transform</a></code></li>
+<li><code><a title="inovopy.robot.InovoRobot.get_data" href="#inovopy.robot.InovoRobot.get_data">get_data</a></code></li>
+<li><code><a title="inovopy.robot.InovoRobot.get_io_beckhoff" href="#inovopy.robot.InovoRobot.get_io_beckhoff">get_io_beckhoff</a></code></li>
+<li><code><a title="inovopy.robot.InovoRobot.get_io_wrist" href="#inovopy.robot.InovoRobot.get_io_wrist">get_io_wrist</a></code></li>
+<li><code><a title="inovopy.robot.InovoRobot.gipper_activate" href="#inovopy.robot.InovoRobot.gipper_activate">gipper_activate</a></code></li>
+<li><code><a title="inovopy.robot.InovoRobot.gripper_get" href="#inovopy.robot.InovoRobot.gripper_get">gripper_get</a></code></li>
+<li><code><a title="inovopy.robot.InovoRobot.gripper_set" href="#inovopy.robot.InovoRobot.gripper_set">gripper_set</a></code></li>
+<li><code><a title="inovopy.robot.InovoRobot.io" href="#inovopy.robot.InovoRobot.io">io</a></code></li>
+<li><code><a title="inovopy.robot.InovoRobot.pop" href="#inovopy.robot.InovoRobot.pop">pop</a></code></li>
+<li><code><a title="inovopy.robot.InovoRobot.read" href="#inovopy.robot.InovoRobot.read">read</a></code></li>
+<li><code><a title="inovopy.robot.InovoRobot.sequence" href="#inovopy.robot.InovoRobot.sequence">sequence</a></code></li>
+<li><code><a title="inovopy.robot.InovoRobot.set_io_beckhoff" href="#inovopy.robot.InovoRobot.set_io_beckhoff">set_io_beckhoff</a></code></li>
+<li><code><a title="inovopy.robot.InovoRobot.set_io_wrist" href="#inovopy.robot.InovoRobot.set_io_wrist">set_io_wrist</a></code></li>
+<li><code><a title="inovopy.robot.InovoRobot.sleep" href="#inovopy.robot.InovoRobot.sleep">sleep</a></code></li>
+<li><code><a title="inovopy.robot.InovoRobot.write" href="#inovopy.robot.InovoRobot.write">write</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="inovopy.robot.IvaException" href="#inovopy.robot.IvaException">IvaException</a></code></h4>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

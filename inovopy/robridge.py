@@ -4,16 +4,16 @@ This module contain function and class for using rosbridge
 api to command and get state from inovo arm
 
 ## Class
-    - `RosBridge` : for handling rosbridge communication
+- `RosBridge` : for handling rosbridge communication
 
 ## Functions
-    - `run_time_json` : construct rosbridge message for reading runtime state
-    - `arm_state_json` : construct rosbridge message for reading arm state
-    - `stop_seq_json` : construct rosbridge messagee for stopping sequence
-    - `start_seq_json` : construct rosbridge messsage for starting sequence
+- `run_time_json` : construct rosbridge message for reading runtime state
+- `arm_state_json` : construct rosbridge message for reading arm state
+- `stop_seq_json` : construct rosbridge messagee for stopping sequence
+- `start_seq_json` : construct rosbridge messsage for starting sequence
 
 ## Exception
-    - `RosBridgeExcpetion` : all ros bridge related exception
+- `RosBridgeExcpetion` : all ros bridge related exception
 """
 import json
 import socket
@@ -54,7 +54,7 @@ def start_seq_json(sequence: str) -> str:
     construct rosbridge messsage for starting sequence
 
     ## Parameter
-        - sequence: str` : name of sequence(function name) in inovo blocky run time to start
+    - sequence: str` : name of sequence(function name) in inovo blocky run time to start
     """
     return json.dumps({
         "op": "call_service",
@@ -97,8 +97,8 @@ class RosBridge:
         initalize `RosBridge`
 
         ## Parameter
-            - `host : str` : host of psu, preferably in form of `192.168.x.x`
-            - `logger: Logger | None` : logger, if default if None
+        - `host : str` : host of psu, preferably in form of `192.168.x.x`
+        - `logger: Logger | None` : logger, if default if None
         """
         nest_asyncio.apply()
         self.url : str = f"ws://{host}:9090/"
@@ -114,10 +114,10 @@ class RosBridge:
         sending message and get response
 
         ## Parameter:
-            - `req : str` : json message to send
+        - `req : str` : json message to send
 
         ## Return:
-            `dict` response parse into dict
+        `dict` response parse into dict
         """
         self.logger.debug("........trying to connect to websocket . . .")
         try:
@@ -134,29 +134,29 @@ class RosBridge:
             self.logger.error("this error might be cause by host name not being not a ip address")
             self.logger.error("please retry with 192.168.x.x form ip as host")
             raise RosBridgeException("Websocket Connection Error") from e
-        
+
 
     def websocket(self, req: str) -> dict:
         """
         sending message and get response
 
         ## Parameter:
-            - `req : str` : json message to send
+        - `req : str` : json message to send
 
         ## Return:
-            `dict` response parse into dict
+        `dict` response parse into dict
         """
         self.logger.debug(f"....req : {req}")
         res = asyncio.get_event_loop().run_until_complete(self.__websocket(req))
         self.logger.debug(f"....res : {res}")
         return res
-    
+
     def get_run_time_state(self) -> dict:
         """
         get the runtime state
         
         ## Return:
-            `dict` return message representing runtime state
+        `dict` return message representing runtime state
         """
         self.logger.info("getting run time state . . .")
         return self.websocket(run_time_json())
@@ -166,7 +166,7 @@ class RosBridge:
         get the arm state
         
         ## Return:
-            `dict` return message representing arm state
+        `dict` return message representing arm state
         """
         self.logger.info("getting arm state . . .")
         return self.websocket(arm_state_json())
@@ -183,7 +183,7 @@ class RosBridge:
         start a sequence
 
         ## Parameter:
-            - `seq: str` : name of the function to call
+        - `seq: str` : name of the function to call
         """
         self.logger.info(f"starting robot sequence {seq} . . .")
         if not self.websocket(start_seq_json(seq))["values"]["success"]:

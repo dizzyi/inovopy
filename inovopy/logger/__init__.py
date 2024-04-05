@@ -34,6 +34,7 @@ class LogLevel(IntEnum):
 
     ## Levels
     The different logging level are 
+    
     - `TRACE = 0`, for detail tracing, highest level of verbosity 
     - `DEBUG = 1`, for debug information
     - `INFO  = 2`, for general information
@@ -50,8 +51,8 @@ class LogLevel(IntEnum):
 
     def to_str(self) -> str:
         """
-        return:
-            `str`: a string representation of the log level
+        ## Return
+        `str`: a string representation of the log level
         """
         match self:
             case LogLevel.TRACE:
@@ -100,8 +101,8 @@ class LogTarget(ABC):
         log message to target with a specific log level.
 
         ## Parameters:
-            `msg : str` : the message to log
-            `log_level : LogLevel` : log level of the message 
+        - `msg : str` : the message to log
+        - `log_level : LogLevel` : log level of the message 
         """
     @abstractmethod
     def get_log_level(self) -> LogLevel:
@@ -109,7 +110,7 @@ class LogTarget(ABC):
         getter for the target current log level
         
         ## Return:
-            `LogLevel`: the log level of the target
+        `LogLevel`: the log level of the target
         """
 
 
@@ -150,8 +151,8 @@ class Logger:
         if smaller than the message logging level
 
         ## Parameter:
-            - `msg : str` : message to log
-            - `log_level` : log level of the message
+        - `msg : str` : message to log
+        - `log_level` : log level of the message
         """
         msg = f"{log_level.to_str(): <6} | {msg}"
         for target in self.__targets:
@@ -163,7 +164,7 @@ class Logger:
         add a logging target to the logger
 
         ## Parameter
-            - `target: LogTarget` : an object that implement `LogTarget`
+        - `target: LogTarget` : an object that implement `LogTarget`
         """
         self.__targets.append(target)
 
@@ -175,10 +176,10 @@ class Logger:
         it contain a console target, and a rolling files targets.
 
         ## Parameters:
-            - `name : str` : the name to initalize the target with
+        - `name : str` : the name to initalize the target with
 
         ## Return:
-            `Logger` : the constructed logger
+        `Logger` : the constructed logger
         """
         logger = Logger()
         logger.add_default_target(name)
@@ -191,7 +192,7 @@ class Logger:
         it contain a console target, and a rolling files targets.
 
        ## Parameters:
-            - `name : str` : the name to initalize the target with
+        - `name : str` : the name to initalize the target with
         """
         self.add_target(ConsoleTarget(name=name))
         self.add_target(RollingFileTarget(name=name))
@@ -201,7 +202,7 @@ class Logger:
         log a message with `TRACE` level
 
         ## Parameter:
-            - `msg : str` : message to log
+        - `msg : str` : message to log
         """
         return self.log(msg, LogLevel.TRACE)
 
@@ -210,7 +211,7 @@ class Logger:
         log a message with `DEBUG` level
 
         ## Parameter:
-            - `msg : str` : message to log
+        - `msg : str` : message to log
         """
         return self.log(msg, LogLevel.DEBUG)
 
@@ -219,7 +220,7 @@ class Logger:
         log a message with `INFO` level
 
         ## Parameter:
-            - `msg : str` : message to log
+        - `msg : str` : message to log
         """
         return self.log(msg, LogLevel.INFO)
 
@@ -228,7 +229,7 @@ class Logger:
         log a message with `WARN` level
 
         ## Parameter:
-            - `msg : str` : message to log
+        - `msg : str` : message to log
         """
         return self.log(msg, LogLevel.WARN)
 
@@ -237,7 +238,7 @@ class Logger:
         log a message with `ERROR` level
 
         ## Parameter:
-            - `msg : str` : message to log
+        - `msg : str` : message to log
         """
         return self.log(msg, LogLevel.ERROR)
 
@@ -271,8 +272,8 @@ class ConsoleTarget(LogTarget):
         initalize a logger with a name and log level
 
         ## Parameters:
-            - `name : str` : name of the console target
-            - `log_level : LogLevel` : log level of the console target
+        - `name : str` : name of the console target
+        - `log_level : LogLevel` : log level of the console target
         """
         self.name : str = name
         self.log_level : LogLevel = log_level
@@ -303,19 +304,19 @@ class RollingFileTarget(LogTarget):
     A class for storing log message to rolling files
 
     ## Field
-        - `name : str` : name of the target
-        - `log_level` : log level of the target
-        - `max_roll` : number of max files in rolling
-        - `max_size` : max size of the files before rolling
+    - `name : str` : name of the target
+    - `log_level` : log level of the target
+    - `max_roll` : number of max files in rolling
+    - `max_size` : max size of the files before rolling
 
     ## Usage 
     Rolling file targets are not enabled by default,
     to enabled rolling file targets you can:
-        - ### Set Environment Variables
-        set environment variable `INOVO_LOG_DIR` to desire directory for storing logs files
-        - ### Set Class Variable of `RollingFileTarget`
-        ```python
-        RollingFileTarget.ROOT_DIR = "./your/desire/logging/path"
+    - ### Set Environment Variables
+    set environment variable `INOVO_LOG_DIR` to desire directory for storing logs files
+    - ### Set Class Variable of `RollingFileTarget`
+    ```python
+    RollingFileTarget.ROOT_DIR = "./your/desire/logging/path"
         ```
     
     ## Rolling Files
@@ -355,10 +356,10 @@ class RollingFileTarget(LogTarget):
         """
         initalize the logger
         ## Parameter
-            - `name : str` : name of the target
-            - `log_level` : log level of the target
-            - `max_roll` : number of max files in rolling
-            - `max_size` : max size of the files before rolling
+        - `name : str` : name of the target
+        - `log_level` : log level of the target
+        - `max_roll` : number of max files in rolling
+        - `max_size` : max size of the files before rolling
         """
         self.name : str = name
         self.log_level : LogLevel = log_level
@@ -413,3 +414,6 @@ class RollingFileTarget(LogTarget):
                 pass
 
         self.__f = open(os.path.join(self.log_dir, f"{self.name}.0.log"), "w", encoding="utf-8")
+
+    def __del__(self):
+        self.__f = None

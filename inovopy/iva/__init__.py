@@ -4,22 +4,23 @@ This module provide class and function for
 message generation of IVA communication protocal to inovo robots
 
 ## Functions
-    - `execute` : generate `dict` for `execute` message for robot
-    - `enqueue` : generate `dict` for `enqueue` message for robot
-    - `dequeue` : generate `dict` for `dequeue` message for robot
-    - `pop` : generate `dict` for `pop` message for robot
-    - `io` : generate `dict` for `io` message for robot
-    - `gripper` : generate `dict` for `gripper` message for robot
-    - `get` : generate `dict` for `get` message for robot
-    - `custom` : generate `dict` for `custom` message for robot
+- `execute` : generate `dict` for `execute` message for robot
+- `enqueue` : generate `dict` for `enqueue` message for robot
+- `dequeue` : generate `dict` for `dequeue` message for robot
+- `pop` : generate `dict` for `pop` message for robot
+- `io` : generate `dict` for `io` message for robot
+- `gripper` : generate `dict` for `gripper` message for robot
+- `get_current` : generate `dict` for `get` current message for robot
+- `get_data` : generate `dict` for `get` data message for robot
+- `custom` : generate `dict` for `custom` message for robot
 
 ## Class
-    - `RobotCommand` ; class for constructing robot command
-    - `IOCommand` ; class for constructing IO command
-    - `GripperCommand` ; class for constructing gripper command
+- `RobotCommand` ; class for constructing robot command
+- `IOCommand` ; class for constructing IO command
+- `GripperCommand` ; class for constructing gripper command
 
 ## Interface, Abstract Base Class
-    - `IntoRobotCommand` : interface for class to constructing robot command
+- `IntoRobotCommand` : interface for class to constructing robot command
 """
 from typing import Literal
 from enum import Enum
@@ -32,8 +33,8 @@ def execute(robot_command: 'RobotCommand', enter_context: bool = False) -> dict[
     generate jsonable `dict[str,str|float]` for execute command
 
     ## Parameter
-        - `robot_command : RobotCommand` : the robot command to execute
-        - `enter_context : bool` : whether or not to push to the context stack
+    - `robot_command : RobotCommand` : the robot command to execute
+    - `enter_context : bool` : whether or not to push to the context stack
     """
     return {
         'op_code' : 'execute',
@@ -46,7 +47,7 @@ def enqueue(robot_command: 'RobotCommand') -> dict[str,str|float]:
     generate jsonable `dict[str,str|float]` for enqueue command
 
     ## Parameter
-        - `robot_command : RobotCommand` : the robot command to enqueue
+    - `robot_command : RobotCommand` : the robot command to enqueue
     """
     return {
         'op_code' : 'enqueue',
@@ -58,7 +59,7 @@ def dequeue(enter_context : bool = False) -> dict[str, str|float]:
     generate jsonable `dict[str,str|float]` for dequeue command
 
     ## Parameter
-        - `enter_context : bool` : whether or not to push to the context stack
+    - `enter_context : bool` : whether or not to push to the context stack
     """
     return {
         'op_code' : 'dequeue',
@@ -78,7 +79,7 @@ def gripper(gripper_command : 'GripperCommand') -> dict[str,str|float]:
     generate jsonable `dict[str,str|float]` for gripper command
 
     ## Parameter
-        - `gripper_command : GripperCommand` : gripper command to execute
+    - `gripper_command : GripperCommand` : gripper command to execute
     """
     return {
         'op_code' : 'gripper',
@@ -90,7 +91,7 @@ def io(io_command : 'IOCommand') -> dict[str,str|float]:
     generate jsonable `dict[str,str|float]` for io command
 
     ## Parameter
-        - `io_command : IOCommand` : io command to execute
+    - `io_command : IOCommand` : io command to execute
     """
     return {
         'op_code' : 'io',
@@ -102,7 +103,7 @@ def get_current(target: Literal["transform", "joint_coord"]) -> dict[str, str|fl
     generate jsonable `dict[str,str|float]` for get command
 
     ## Parameter
-        - `transform : bool` : whether to get the current transform or joint
+    - `transform : bool` : whether to get the current transform or joint
     """
     return {
         'op_code' : 'get',
@@ -114,7 +115,7 @@ def get_data(key: str) -> dict[str, str|float]:
     generate jsonable `dict[str,str|float]` for get data command
 
     ## Parameter
-        - `key : str` : key of the data to get from the robot
+    - `key : str` : key of the data to get from the robot
     """
     return {
         'op_code' : 'get',
@@ -127,7 +128,7 @@ def custom(custom_command : dict[str,str|float]) -> dict[str,str|float]:
     generate jsonable `dict[str,str|float]` for custom command
 
     ## Parameter
-        - `custom_command : dict[str,str|float]` : custom command to execute
+    - `custom_command : dict[str,str|float]` : custom command to execute
     """
     return {
         'op_code' : 'custom',
@@ -140,10 +141,10 @@ class RobotCommand:
     a class for constructing robot command
 
     ## Class Method
-        - `synchronize` : command to break blending
-        - `sleep` : command to robot to sleep 
-        - `set_parameter` : command to set motion parameter of robot
-        - `motion` : command to move the robot
+    - `synchronize` : command to break blending
+    - `sleep` : command to robot to sleep 
+    - `set_parameter` : command to set motion parameter of robot
+    - `motion` : command to move the robot
     """
     def __init__(self,argument: dict[str,str|float]):
         self.argument : dict[str,str|float] = argument
@@ -165,7 +166,7 @@ class RobotCommand:
         Return a `RobotCommand` for the robot to sleep
         
         ## Parameter
-            - `second : float` : specify the lenght of sleep in seconds 
+        - `second : float` : specify the lenght of sleep in seconds 
         """
         return RobotCommand({
             "action" : "sleep",
@@ -186,12 +187,12 @@ class RobotCommand:
         Return a `RobotCommand` for setting the robot motion parameter
 
         ## Parameter
-            - `speed : float`, in percent, range from `1` to `100`
-            - `accel : float`, in precent, range from `1` to `100`
-            - `blend_linear : float`, in mm, range from `1` to `1000`
-            - `blend_angular : float`, in degree, range from `1` to `360`
-            - `tcp_speed_linear : float`, in mm, range from `1` to `999`
-            - `tcp_speed_angular : float`, in degree, range from `1` to `360`
+        - `speed : float`, in percent, range from `1` to `100`
+        - `accel : float`, in precent, range from `1` to `100`
+        - `blend_linear : float`, in mm, range from `1` to `1000`
+        - `blend_angular : float`, in degree, range from `1` to `360`
+        - `tcp_speed_linear : float`, in mm, range from `1` to `999`
+        - `tcp_speed_angular : float`, in degree, range from `1` to `360`
         """
 
         speed = clamp(speed / 100, 0.01, 1) if speed else 0
@@ -231,8 +232,8 @@ class RobotCommand:
         Return a `RobotCommand` for robot motion
 
         ## Parameter
-            - `motion_mode : MotionMode`, specify the motion mode
-            - `target` : target of the motion, either transform or joint coord
+        - `motion_mode : MotionMode`, specify the motion mode
+        - `target` : target of the motion, either transform or joint coord
         """
         return RobotCommand({
             "action" : "motion",
@@ -247,10 +248,10 @@ class MotionMode(str, Enum):
     interpolation mode and specify whether is relative move
 
     ## Enum
-        - `LINEAR`
-        - `LINEAR_RELATIVE`
-        - `JOINT`
-        - `JOINT_RELATIVE`
+    - `LINEAR`
+    - `LINEAR_RELATIVE`
+    - `JOINT`
+    - `JOINT_RELATIVE`
     """
     LINEAR = "linear"
     LINEAR_RELATIVE = "linear_relative"
@@ -264,10 +265,10 @@ class IOCommand:
     A class for constructing IO Command
 
     ## Class Method
-        - `set_beckhoff`
-        - `get_beckhoff`
-        - `set_wrist`
-        - `get_wrist`
+    - `set_beckhoff`
+    - `get_beckhoff`
+    - `set_wrist`
+    - `get_wrist`
     """
     def __init__(self, argument : dict[str,str|float]):
         self.argument = argument
@@ -287,8 +288,8 @@ class IOCommand:
         return a command for setting the digital output
 
         ## Parameter
-            - `port : int` : port to set
-            - `state : bool` : state to set
+        - `port : int` : port to set
+        - `state : bool` : state to set
         """
         return IOCommand({
             "action": "set", 
@@ -306,7 +307,7 @@ class IOCommand:
         return a command for getting the digital input
 
         ## Parameter
-            - `port : int` : port to set
+        - `port : int` : port to set
         """
         return IOCommand({
             "action": "get", 
@@ -320,9 +321,9 @@ class GripperCommand:
     A class for constructing gripper command
 
     ## Class Method
-        - `activate`
-        - `set`
-        - `get`
+    - `activate`
+    - `set`
+    - `get`
     """
     def __init__(self, argument : dict[str,str|float]):
         self.argument = argument
@@ -341,7 +342,7 @@ class GripperCommand:
         return a gripper command for setting the gripper
         
         # Parameter
-            - `label : str` : the label to set the gripper to
+        - `label : str` : the label to set the gripper to
         """
         return GripperCommand({"action": "set", "label": label})
     @classmethod

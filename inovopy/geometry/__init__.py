@@ -3,8 +3,8 @@
 This module provide geometric data structure class for robot control
 
 ## Modules
-    - `transform` : Functions and Class for 3D spatial transform
-    - `jointcoord` : 6D joint space representation
+- `transform` : Functions and Class for 3D spatial transform
+- `jointcoord` : 6D joint space representation
 """
 from abc import ABC,abstractmethod
 
@@ -16,11 +16,11 @@ class IntoRobotCommand(ABC):
     An interface for all class that can be turn into robot command
 
     ## Method
-        - `as_motion`
-        - `as_linear`
-        - `as_linear_relative`
-        - `as_joint`
-        - `as_joint_relative`
+    - `as_motion`
+    - `as_linear`
+    - `as_linear_relative`
+    - `as_joint`
+    - `as_joint_relative`
     """
     #@abstractmethod
     def as_motion(self, motion_mode: MotionMode) -> RobotCommand:

@@ -3,16 +3,16 @@
 This module provide useful class and function for spatial calculation
 
 ## Class 
-    - `Transform` : A spatial transform represented a translation and rotation
+- `Transform` : A spatial transform represented a translation and rotation
 
 ## Function
-    - `deg_to_rad` : translate degree to radian
-    - `rad_to_deg` : translate radian to degree
-    - `rx_mat` : compute rotation matrx of rotation along x axis
-    - `ry_mat` : compute rotation matrx of rotation along y axis
-    - `rz_mat` : compute rotation matrx of rotation along z axis
-    - `euler_to_mat` : translate euler angle to rotation matrix
-    - `mat_to_euler` : translate rotation matrix to euler angle
+- `deg_to_rad` : translate degree to radian
+- `rad_to_deg` : translate radian to degree
+- `rx_mat` : compute rotation matrx of rotation along x axis
+- `ry_mat` : compute rotation matrx of rotation along y axis
+- `rz_mat` : compute rotation matrx of rotation along z axis
+- `euler_to_mat` : translate euler angle to rotation matrix
+- `mat_to_euler` : translate rotation matrix to euler angle
 """
 from typing import Tuple
 import re
@@ -88,8 +88,8 @@ class Transform(IntoRobotCommand):
     compose of a translation and a rotation
 
     ## Representation
-        - `vec_mm` : a 3D vector with unit in mm
-        - `euler_deg` : a set of euler angle wiht unit in degree
+    - `vec_mm` : a 3D vector with unit in mm
+    - `euler_deg` : a set of euler angle wiht unit in degree
     """
     def __init__(
             self,
@@ -100,13 +100,14 @@ class Transform(IntoRobotCommand):
         initalize a transform
         
         ## Parameter
-            - `vec_mm` : a 3D vector with unit in mm
-            - `euler_deg` : a set of euler angle wiht unit in degree
+        - `vec_mm` : a 3D vector with unit in mm
+        - `euler_deg` : a set of euler angle wiht unit in degree
         """
         self.vec_mm : Tuple[float, float, float]= vec_mm
         self.euler_deg : Tuple[float, float, float]= euler_deg
 
     def clone(self) -> 'Transform':
+        """clone the transform"""
         return Transform(vec_mm=self.vec_mm, euler_deg=self.euler_deg)
 
     def __repr__(self) -> str:
@@ -233,7 +234,7 @@ class Transform(IntoRobotCommand):
         return a homogenous matrix representation of the `self`
         
         ## Return:
-            - `np.array` : 4x4 homogenous matrix representation of the transform
+        - `np.array` : 4x4 homogenous matrix representation of the transform
         """
         mat = numpy.eye(4)
         mat[0:3,0:3] = euler_to_mat(self.euler_deg)
@@ -246,10 +247,10 @@ class Transform(IntoRobotCommand):
         construct a transform from a `np.array` 4x4 homogenous matrix
 
         ## Parameter:
-            - `mat : np.array` : 4x4 homogenous matrix representation of the transform
+        - `mat : np.array` : 4x4 homogenous matrix representation of the transform
 
         ## Return:
-            - `Transform`
+        - `Transform`
         """
         return Transform(
                 vec_mm = (
@@ -272,10 +273,10 @@ class Transform(IntoRobotCommand):
         return a new transform that is apply a transform to `self`
 
         ## Parameter 
-            - `transform` : the transform to apply to `self`
+        - `transform` : the transform to apply to `self`
         
         ## Return
-            - `transform` : resulted transform
+        - `transform` : resulted transform
         """
         new = transform * self
         self.vec_mm = new.vec_mm
@@ -308,8 +309,8 @@ class Transform(IntoRobotCommand):
         apply a transform to `self` relative to a reference
 
         ## Parameter
-            - `transform` : the transform to apply
-            - `reference` : the reference of the transfrom
+        - `transform` : the transform to apply
+        - `reference` : the reference of the transfrom
         """
         return reference * transform * reference.inv() * self
 

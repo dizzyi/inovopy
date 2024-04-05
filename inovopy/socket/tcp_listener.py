@@ -3,7 +3,7 @@
 This module provide an api class for listening tcp connection
 
 ## Classes
-    - `TcpListener` : a class for managing and listening connection
+- `TcpListener` : a class for managing and listening connection
 """
 import socket
 import select
@@ -29,7 +29,7 @@ class TcpListener:
     """
 
     DEFAULT_PORT : int = 50003
-    """Default port to listen on if no poort are specified"""
+    """Default port to listen on if no poort are specified `50003`."""
 
     def __init__(
             self,
@@ -47,14 +47,15 @@ class TcpListener:
         network in you machine
 
         ## Parameter
-            - `host : str | None` : local ip
-            - `port : int | None` : port to listen to
-            - `logger : Logger | None` : logger for logging
+        - `host : str | None` : local ip
+        - `port : int | None` : port to listen to
+        - `logger : Logger | None` : logger for logging
 
         ## Exception:
         `SocketException`:
-            - if not local ip address are found
-            - if not vaild socket are created
+
+        - if not local ip address are found
+        - if not vaild socket are created
         """
         port : int = port or TcpListener.DEFAULT_PORT
 
@@ -116,16 +117,16 @@ class TcpListener:
 
     def accept(self, stream_logger : Logger | None = None) -> TcpStream:
         """
-        try accept a new tcp connection
+        try accept a new tcp connection.
 
         ## Parameter:
-            `stream_logger : Logger` : logger of returned TcpStream
+        `stream_logger : Logger` : logger of returned TcpStream
         
         ## Return:
-            `TcpStream` : the accepted tcp connetion
+        `TcpStream` : the accepted tcp connetion
 
         ## Exception:
-            No exception, will continue to try to accept if encounter `OSError`
+        No exception, will continue to try to accept if encounter `OSError`
         """
         self.logger.info("Start accepting . . .")
 

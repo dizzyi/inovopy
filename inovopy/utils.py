@@ -3,9 +3,9 @@
 This module provide useful functions
 
 ## Functions
-    - `clean` : clean up all non visible character of a str
-    - `now_str` : return formatted str of current datetime
-    - `clamp` : clamp float
+- `clean` : clean up all non visible character of a str
+- `now_str` : return formatted str of current datetime
+- `clamp` : clamp float
 """
 import re
 import datetime

@@ -1,14 +1,12 @@
 from contextlib import contextmanager
 import json
-import re
 
 from inovopy.logger import Logger
 from inovopy.robridge import RosBridge
 from inovopy.socket import TcpListener, TcpStream
 from inovopy.geometry.jointcoord import JointCoord
-from inovopy.geometry.transform import Transform, rad_to_deg
+from inovopy.geometry.transform import Transform
 from inovopy.iva import *
-from inovopy.utils import clean
 
 class IvaException(Exception):
     """

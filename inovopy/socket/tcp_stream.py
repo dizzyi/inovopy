@@ -3,7 +3,7 @@
 This module provide an api class for managing tcp connection
 
 ## Class
-    - `TcpStream` : a class for managing tcp connection
+- `TcpStream` : a class for managing tcp connection
 """
 import socket
 import select
@@ -14,7 +14,7 @@ from inovopy.logger import Logger
 
 class TcpStream:
     """
-    # TcpListener
+    # TcpStream
     A class for managing tcp connetion
 
     ## Usage
@@ -39,8 +39,8 @@ class TcpStream:
         initalize the stream
 
         ## Parameter
-            - `conn : socket.socket` : the socket connection
-            - `logger` : if it's `None`, a logger with default setting will be created
+        - `conn : socket.socket` : the socket connection
+        - `logger` : if it's `None`, a logger with default setting will be created
         """
         self.__conn : socket.socket = conn
         if logger:
@@ -62,15 +62,15 @@ class TcpStream:
         Try to connect to an socket address
 
         ## Parameter
-            - `ip : str`: if `None`, will try local machine
-            - `port: int` : port to connect to
-            - `logger: Logger`: logger for the resulted `TcpStream`
+        - `ip : str`: if `None`, will try local machine
+        - `port: int` : port to connect to
+        - `logger: Logger`: logger for the resulted `TcpStream`
         
         ## Return
-            `TcpStream` the resulted connection
+        `TcpStream` the resulted connection
 
         ## Exception:
-            `SocketException`
+        `SocketException`
         """
         if not ip:
             ip = "localhost"
@@ -100,11 +100,11 @@ class TcpStream:
         """
         try to read a message from the socket
         ## Parameter
-            - `timout : float = 1.0` : time out for the reading
+        - `timout : float = 1.0` : time out for the reading
         
         ## Return
-            `str` : read message; or
-            `None` : if no message is recived
+        `str` : read message; or
+        `None` : if no message is recived
         """
         ready_socket, _, _ = select.select([self.__conn],[],[],timeout)
         if not ready_socket:
@@ -119,12 +119,12 @@ class TcpStream:
         maximum byte : `2048`
 
         ## Return:
-            `str` the message read
+        `str` the message read
 
         ## Exception:
         `SocketException`:
-            - if the read failed
-            - if `EOF` character is read
+        - if the read failed
+        - if `EOF` character is read
         """
         try:
             self.__conn.setblocking(True)
@@ -149,7 +149,7 @@ class TcpStream:
         write a message to the connection
 
         ## Parameter:
-            - `msg : str` : string message to send
+        - `msg : str` : string message to send
         """
         try:
             self.logger.debug(f"{msg}")

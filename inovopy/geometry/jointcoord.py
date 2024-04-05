@@ -3,7 +3,7 @@
 This module provide joint space representation class for joint space
 
 ## Class
-    - `JointCoord` : 6D joint space representation
+- `JointCoord` : 6D joint space representation
 """
 import re
 from inovopy.geometry import IntoRobotCommand
@@ -37,14 +37,18 @@ class JointCoord(IntoRobotCommand):
         return out
     def __getitem__(self, idx: int) -> float:
         return self.joint_coord_deg[idx]
-    
+
     @classmethod
-    def from_robot(self, res: str) -> 'JointCoord':
+    def from_robot(cls, res: str) -> 'JointCoord':
         """
         Parse Robot input to `JointCoord`
 
-        example:
-            "{joints : [-1.545941, -0.087197, -0.111058, -2.998237, 1.762412, 3.399661, ], tcp : {rx : -1.793361, ry : 0.255386, rz : 1.682603, x : -0.073378, y : -0.014815, z : 0.929764, }, tcpid : tool_plate, }"
+        example input:
+
+        `{joints : [-1.545941, -0.087197, -0.111058, -2.998237, 1.762412, 3.399661, ], 
+        tcp : {rx : -1.793361, ry : 0.255386, rz : 1.682603, 
+        x : -0.073378, y : -0.014815, z : 0.929764, }, 
+        tcpid : tool_plate, }`
         """
         res = re.findall(r"\[.*\]",res)[0]
         res = re.sub(r"[ \[\]]","",res).split(",")
