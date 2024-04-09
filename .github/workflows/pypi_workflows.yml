@@ -11,12 +11,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
-          python-version: 3.9
+          python-version: "3.x"
 
       - name: Install dependencies
         run: pip install -r requirements.txt
@@ -28,8 +28,29 @@ jobs:
         run: python setup.py sdist bdist_wheel
 
       - name: Upload distribution artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: Distribution
           path: dist/
       
+  publish-to-pypi:
+      name: >-
+        Publish Python 🐍 distribution 📦 to PyPI
+      if: startsWith(github.ref, 'refs/tags/')  # only publish to PyPI on tag pushes
+      needs:
+      - build
+      runs-on: ubuntu-latest
+      environment:
+        name: pypi
+        url: https://pypi.org/p/inovopy  # Replace <package-name> with your PyPI project name
+      permissions:
+        id-token: write  # IMPORTANT: mandatory for trusted publishing
+
+      steps:
+      - name: Download all the dists
+        uses: actions/download-artifact@v3
+        with:
+          name: python-package-distributions
+          path: dist/
+      - name: Publish distribution 📦 to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
