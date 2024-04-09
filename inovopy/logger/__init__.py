@@ -54,19 +54,18 @@ class LogLevel(IntEnum):
         ## Return
         `str`: a string representation of the log level
         """
-        match self:
-            case LogLevel.TRACE:
-                return "TRACE"
-            case LogLevel.DEBUG:
-                return "DEBUG"
-            case LogLevel.INFO:
-                return "INFO"
-            case LogLevel.WARN:
-                return "WARN"
-            case LogLevel.ERROR:
-                return "ERROR"
-            case _:
-                return ""
+        if self == LogLevel.TRACE:
+            return "TRACE"
+        elif self == LogLevel.DEBUG:
+            return "DEBUG"
+        elif self == LogLevel.INFO:
+            return "INFO"
+        elif self == LogLevel.WARN:
+            return "WARN"
+        elif self == LogLevel.ERROR:
+            return "ERROR"
+        else:
+            return ""
 
 class LogTarget(ABC):
     """
