@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
 <title>inovopy.robot API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="Robot Module
+This module provide a simple api for controlling inovo robot arm with
+predefinded `iva` protocal …" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -22,11 +24,42 @@
 <h1 class="title">Module <code>inovopy.robot</code></h1>
 </header>
 <section id="section-intro">
+<h1 id="robot-module">Robot Module</h1>
+<p>This module provide a simple api for controlling inovo robot arm with
+predefinded <code>iva</code> protocal.</p>
+<h2 id="class">Class</h2>
+<ul>
+<li><code><a title="inovopy.robot.InovoRobot" href="#inovopy.robot.InovoRobot">InovoRobot</a></code>: A class for interfacing with inovo robot arm</li>
+</ul>
+<h2 id="example">Example</h2>
+<pre><code class="language-python">from inovopy.robot import InovoRobot
+
+bot = InovoRobot.default_iva(&quot;psu000&quot;)
+
+
+</code></pre>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from contextlib import contextmanager
+<pre><code class="python">&#34;&#34;&#34;
+# Robot Module
+This module provide a simple api for controlling inovo robot arm with 
+predefinded `iva` protocal.
+
+## Class
+- `InovoRobot`: A class for interfacing with inovo robot arm
+
+## Example
+```python
+from inovopy.robot import InovoRobot
+
+bot = InovoRobot.default_iva(&#34;psu000&#34;)
+
+
+```
+&#34;&#34;&#34;
+from contextlib import contextmanager
 import json
 
 from inovopy.logger import Logger
@@ -42,7 +75,20 @@ class IvaException(Exception):
     &#34;&#34;&#34;
 
 class InovoRobot:
+    &#34;&#34;&#34;
+    # InovoRobot
+    An API class for controlling and access information from inovo robot arm system.
 
+    # Usage
+    ```python
+    from inovopy.robot import InovoRobot
+
+    bot = InovoRobot.default_iva(&#34;psu000&#34;)
+    
+    print(bot.get_current_transform())
+    print(bot.get_current_jointcoord())
+    ```
+    &#34;&#34;&#34;
     def __init__(
             self,
             tcp_stream : TcpStream,
@@ -56,90 +102,277 @@ class InovoRobot:
 
     @classmethod
     def default_iva(cls, host:str)-&gt;&#39;InovoRobot&#39;:
+        &#34;&#34;&#34;
+        start the iva protocal by
+
+        - start up a tcp listener
+        - start a sequence on psu via rosbridge
+        - accept a connection
+
+        ## Parameter:
+        - `host: str` : remote host to start sequence, aka psu&#39;s address
+
+        ## Return:
+        `InovoRobot` : the resulted api class
+        &#34;&#34;&#34;
         listener = TcpListener()
         ros_bridge : RosBridge = RosBridge(host=host)
         ros_bridge.start_seq(&#34;iva&#34;)
         tcp_stream: TcpStream = listener.accept()
-        del(listener)
+        del listener
         bot : InovoRobot = InovoRobot(tcp_stream=tcp_stream, ros_bridge=ros_bridge)
         return bot
 
     def read(self) -&gt; str:
+        &#34;&#34;&#34;read a line&#34;&#34;&#34;
         return self.tcp_stream.read()
-    
+
     def write(self, instruction : dict[str, str|float]):
+        &#34;&#34;&#34;
+        write an instruction as str
+        
+        ## Parameter:
+        - `instruction : dict[str, str|float]` : jsonable instruction dict 
+        &#34;&#34;&#34;
         msg = json.dumps(instruction)
         self.tcp_stream.write(msg)
 
     def assert_res_ok(self):
+        &#34;&#34;&#34;read a message and assert that it is `OK`&#34;&#34;&#34;
         res = self.read()
         if res != &#34;OK&#34;:
             raise IvaException(f&#34;Expect resopnse to be \&#34;OK\&#34;, but recieve {res}&#34;)
 
     def execute(self, robot_command: RobotCommand, enter_context: bool = False):
+        &#34;&#34;&#34;
+        instruct the robot to execute a `inovopy.iva.RobotCommand`
+
+        ## Parameter:
+        - `robot_command: inovopy.iva.RobotCommand`: command to execute
+        - `enter_context: bool`: whether the execution of command create a pop-able context
+
+        ## Exception:
+        `IvaException` raise if response is not `OK`
+        &#34;&#34;&#34;
         self.write(execute(robot_command=robot_command, enter_context=enter_context))
         self.assert_res_ok()
 
     def sleep(self, second: float):
+        &#34;&#34;&#34;
+        instruct the robot to sleep for a specified time
+        
+        ## Parameter:
+        - `second: float` : second to sleep
+        &#34;&#34;&#34;
         self.execute(RobotCommand.sleep(second=second))
-    
+
+    def set_param(
+            self,
+            speed : float | None = None,
+            accel : float | None = None,
+            blend_linear : float | None = None,
+            blend_angular : float | None = None,
+            tcp_speed_linear : float | None = None,
+            tcp_speed_angular : float | None = None,
+        ):
+        &#34;&#34;&#34;
+        set the motion parameter of the robot
+        
+        ## Parameter
+        - `speed : float`, in percent, range from `1` to `100`
+        - `accel : float`, in precent, range from `1` to `100`
+        - `blend_linear : float`, in mm, range from `1` to `1000`
+        - `blend_angular : float`, in degree, range from `1` to `360`
+        - `tcp_speed_linear : float`, in mm, range from `1` to `999`
+        - `tcp_speed_angular : float`, in degree, range from `1` to `360`
+        &#34;&#34;&#34;
+        robot_command = RobotCommand.set_parameter(
+            speed=speed,
+            accel=accel,
+            blend_linear=blend_linear,
+            blend_angular=blend_angular,
+            tcp_speed_linear=tcp_speed_linear,
+            tcp_speed_angular=tcp_speed_angular
+        )
+
+        self.execute(robot_command=robot_command)
+
+    def linear(self, target: Transform | JointCoord):
+        &#34;&#34;&#34;linear move to a target&#34;&#34;&#34;
+        self.execute(target.as_linear())
+    def linear_relative(self, target: Transform | JointCoord):
+        &#34;&#34;&#34;linear relative move to a target&#34;&#34;&#34;
+        self.execute(target.as_linear_relative())
+    def joint(self, target: Transform | JointCoord):
+        &#34;&#34;&#34;joint move to a target&#34;&#34;&#34;
+        self.execute(target.as_joint())
+    def joint_relative(self, target: Transform | JointCoord):
+        &#34;&#34;&#34;joint relative move to a target&#34;&#34;&#34;
+        self.execute(target.as_joint_relative())
+
     def enqueue(self, robot_command: RobotCommand):
+        &#34;&#34;&#34;
+        instruct the robot to enqueue a command
+
+        ## Parameter
+        - `robot_command: inovopy.iva.RobotCommand`: the command to enqueue
+        &#34;&#34;&#34;
         self.write(enqueue(robot_command=robot_command))
         self.assert_res_ok()
 
     def dequeue(self, enter_context: bool = False):
+        &#34;&#34;&#34;
+        instruct the robot to dequeue all enqueued command
+
+        ## Parameter
+        - `enter_context: bool`: whether enter a context with the sequence or not
+        &#34;&#34;&#34;
         self.write(dequeue(enter_context=enter_context))
         self.assert_res_ok()
-    
+
     def sequence(self, sequence: list[RobotCommand], enter_context: bool = False):
+        &#34;&#34;&#34;
+        perform a sequence of `inovopy.iva.RobotCommand`
+
+        ## Parameter
+        - `enter_context: bool`: whether enter a context with the sequence or not
+        &#34;&#34;&#34;
         for step in sequence:
             self.enqueue(step)
         self.dequeue(enter_context=enter_context)
 
     def pop(self):
+        &#34;&#34;&#34;
+        exit a context
+        &#34;&#34;&#34;
         self.write(pop())
         self.assert_res_ok()
 
     def io(self, io_command : IOCommand):
+        &#34;&#34;&#34;
+        instruct the robot to perform a `inovopy.iva.IOCommand`
+
+        ## Parameter
+        - `io_command: inovopy.iva.IOCommand`: io commmand to perform
+
+        ## Return
+        `str` the respons 
+        &#34;&#34;&#34;
         self.write(io(io_command=io_command))
+        return self.read()
 
     def get_io_beckhoff(self, port: int) -&gt; bool:
-        self.io(IOCommand.get_digital(target=&#34;beckhoff&#34;,port=port))
-        return self.read() == &#34;True&#34;
+        &#34;&#34;&#34;
+        get beckhoff input port
+
+        ## Parameter
+        - `port: int`: input port to get, default `0-7`
+
+        ## Return
+        `bool` state of io
+        &#34;&#34;&#34;
+        return self.io(IOCommand.get_digital(target=&#34;beckhoff&#34;,port=port)) == &#34;True&#34;
     def get_io_wrist(self, port: int) -&gt; bool:
-        self.io(IOCommand.get_digital(target=&#34;wrist&#34;, port=port))
-        return self.read() == &#34;True&#34;
+        &#34;&#34;&#34;
+        get wrist input port
+
+        ## Parameter
+        - `port: int`: input port to get, default `0-1`
+
+        ## Return
+        `bool` state of io
+        &#34;&#34;&#34;
+        return self.io(IOCommand.get_digital(target=&#34;wrist&#34;, port=port)) == &#34;True&#34;
     def set_io_beckhoff(self, port: int, state: bool):
-        self.io(IOCommand.set_digital(target=&#34;beckhoff&#34;,port=port, state=state))
-        self.assert_res_ok()
+        &#34;&#34;&#34;
+        set beckhoff output port
+
+        ## Parameter
+        - `port: int`: output port to set, default `0-7`
+        - `state: bool`: target state of the output
+        &#34;&#34;&#34;
+        res = self.io(IOCommand.set_digital(target=&#34;beckhoff&#34;,port=port, state=state))
+        assert res == &#34;OK&#34;
     def set_io_wrist(self, port: int, state: bool):
-        self.io(IOCommand.set_digital(target=&#34;wrist&#34;, port=port, state=state))
-        self.assert_res_ok()
+        &#34;&#34;&#34;
+        set wrist output port
+
+        ## Parameter
+        - `port: int`: output port to set, default `0-7`
+        - `state: bool`: target state of the output
+        &#34;&#34;&#34;
+        res = self.io(IOCommand.set_digital(target=&#34;wrist&#34;, port=port, state=state))
+        assert res == &#34;OK&#34;
 
     def gipper_activate(self):
+        &#34;&#34;&#34;activate the gripper&#34;&#34;&#34;
         self.write(GripperCommand.activate())
         self.assert_res_ok()
     def gripper_get(self)-&gt;float:
+        &#34;&#34;&#34;
+        get the gripper width
+        
+        ## Return
+        `float` in percentage
+        &#34;&#34;&#34;
         self.write(GripperCommand.get())
         return float(self.read()) * 100
     def gripper_set(self, label: str):
+        &#34;&#34;&#34;
+        set a gripper to a predefine label
+        
+
+        #Parameter
+        - `label: str`: the label to set to 
+        &#34;&#34;&#34;
         self.write(GripperCommand.set(label=label))
         self.assert_res_ok()
 
     def get_current_transform(self) -&gt; Transform:
+        &#34;&#34;&#34;
+        get the current transform
+
+        ## Return:
+        `inovopy.geometry.transform.Transform` : current tranform
+        &#34;&#34;&#34;
         self.write(get_current(&#34;transform&#34;))
         return Transform.from_robot(self.read())
 
     def get_current_joint(self) -&gt; JointCoord:
+        &#34;&#34;&#34;
+        get the current joint coordinate
+
+        ## Return:
+        `inovopy.geometry.jointcoord.JointCoord`: current joint coordinate
+        &#34;&#34;&#34;
         self.write(get_current(&#34;joint_coord&#34;))
         return JointCoord.from_robot(self.read())
-    
-    def get_data(self,key : str) -&gt; str:
+
+    def get_data(self, key: str) -&gt; str:
+        &#34;&#34;&#34;
+        get data with a key
+
+        ## Parameter:
+        - `key : str` : key for the data
+
+        ## Return:
+        - `str` value of the data
+        - `str` containing `Error` will return if the key is not found
+        &#34;&#34;&#34;
         self.write(get_data(key=key))
         return self.read()
 
     @contextmanager
     def context(self, robot_command: RobotCommand):
+        &#34;&#34;&#34;
+        enter a context with a robot command
+
+        ## Parameter
+        - `robot_command: inovopy.iva.RobotCommand` : the command to execute
+
+        ## Context Manager
+        when exit context `InovoRobot.pop` the context
+        &#34;&#34;&#34;
         self.execute(robot_command=robot_command, enter_context=True)
         try:
             yield
@@ -148,6 +381,15 @@ class InovoRobot:
 
     @contextmanager
     def context_sequence(self, sequence: list[RobotCommand]):
+        &#34;&#34;&#34;
+        enter a context with a robot command
+
+        ## Parameter
+        - `sequence: list[inovopy.iva.RobotCommand]` : the sequence to execute
+
+        ## Context Manager
+        when exit context `InovoRobot.pop` the context
+        &#34;&#34;&#34;
         self.sequence(sequence=sequence, enter_context=True)
         try:
             yield
@@ -169,13 +411,35 @@ class InovoRobot:
 <span>(</span><span>tcp_stream: <a title="inovopy.socket.tcp_stream.TcpStream" href="../socket/tcp_stream.html#inovopy.socket.tcp_stream.TcpStream">TcpStream</a>, ros_bridge: <a title="inovopy.robridge.RosBridge" href="../robridge.html#inovopy.robridge.RosBridge">RosBridge</a>, logger: <a title="inovopy.logger.Logger" href="../logger/index.html#inovopy.logger.Logger">Logger</a> | None = None)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><h1 id="inovorobot">InovoRobot</h1>
+<p>An API class for controlling and access information from inovo robot arm system.</p>
+<h1 id="usage">Usage</h1>
+<pre><code class="language-python">from inovopy.robot import InovoRobot
+
+bot = InovoRobot.default_iva(&quot;psu000&quot;)
+
+print(bot.get_current_transform())
+print(bot.get_current_jointcoord())
+</code></pre></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class InovoRobot:
+    &#34;&#34;&#34;
+    # InovoRobot
+    An API class for controlling and access information from inovo robot arm system.
 
+    # Usage
+    ```python
+    from inovopy.robot import InovoRobot
+
+    bot = InovoRobot.default_iva(&#34;psu000&#34;)
+    
+    print(bot.get_current_transform())
+    print(bot.get_current_jointcoord())
+    ```
+    &#34;&#34;&#34;
     def __init__(
             self,
             tcp_stream : TcpStream,
@@ -189,90 +453,277 @@ class InovoRobot:
 
     @classmethod
     def default_iva(cls, host:str)-&gt;&#39;InovoRobot&#39;:
+        &#34;&#34;&#34;
+        start the iva protocal by
+
+        - start up a tcp listener
+        - start a sequence on psu via rosbridge
+        - accept a connection
+
+        ## Parameter:
+        - `host: str` : remote host to start sequence, aka psu&#39;s address
+
+        ## Return:
+        `InovoRobot` : the resulted api class
+        &#34;&#34;&#34;
         listener = TcpListener()
         ros_bridge : RosBridge = RosBridge(host=host)
         ros_bridge.start_seq(&#34;iva&#34;)
         tcp_stream: TcpStream = listener.accept()
-        del(listener)
+        del listener
         bot : InovoRobot = InovoRobot(tcp_stream=tcp_stream, ros_bridge=ros_bridge)
         return bot
 
     def read(self) -&gt; str:
+        &#34;&#34;&#34;read a line&#34;&#34;&#34;
         return self.tcp_stream.read()
-    
+
     def write(self, instruction : dict[str, str|float]):
+        &#34;&#34;&#34;
+        write an instruction as str
+        
+        ## Parameter:
+        - `instruction : dict[str, str|float]` : jsonable instruction dict 
+        &#34;&#34;&#34;
         msg = json.dumps(instruction)
         self.tcp_stream.write(msg)
 
     def assert_res_ok(self):
+        &#34;&#34;&#34;read a message and assert that it is `OK`&#34;&#34;&#34;
         res = self.read()
         if res != &#34;OK&#34;:
             raise IvaException(f&#34;Expect resopnse to be \&#34;OK\&#34;, but recieve {res}&#34;)
 
     def execute(self, robot_command: RobotCommand, enter_context: bool = False):
+        &#34;&#34;&#34;
+        instruct the robot to execute a `inovopy.iva.RobotCommand`
+
+        ## Parameter:
+        - `robot_command: inovopy.iva.RobotCommand`: command to execute
+        - `enter_context: bool`: whether the execution of command create a pop-able context
+
+        ## Exception:
+        `IvaException` raise if response is not `OK`
+        &#34;&#34;&#34;
         self.write(execute(robot_command=robot_command, enter_context=enter_context))
         self.assert_res_ok()
 
     def sleep(self, second: float):
+        &#34;&#34;&#34;
+        instruct the robot to sleep for a specified time
+        
+        ## Parameter:
+        - `second: float` : second to sleep
+        &#34;&#34;&#34;
         self.execute(RobotCommand.sleep(second=second))
-    
+
+    def set_param(
+            self,
+            speed : float | None = None,
+            accel : float | None = None,
+            blend_linear : float | None = None,
+            blend_angular : float | None = None,
+            tcp_speed_linear : float | None = None,
+            tcp_speed_angular : float | None = None,
+        ):
+        &#34;&#34;&#34;
+        set the motion parameter of the robot
+        
+        ## Parameter
+        - `speed : float`, in percent, range from `1` to `100`
+        - `accel : float`, in precent, range from `1` to `100`
+        - `blend_linear : float`, in mm, range from `1` to `1000`
+        - `blend_angular : float`, in degree, range from `1` to `360`
+        - `tcp_speed_linear : float`, in mm, range from `1` to `999`
+        - `tcp_speed_angular : float`, in degree, range from `1` to `360`
+        &#34;&#34;&#34;
+        robot_command = RobotCommand.set_parameter(
+            speed=speed,
+            accel=accel,
+            blend_linear=blend_linear,
+            blend_angular=blend_angular,
+            tcp_speed_linear=tcp_speed_linear,
+            tcp_speed_angular=tcp_speed_angular
+        )
+
+        self.execute(robot_command=robot_command)
+
+    def linear(self, target: Transform | JointCoord):
+        &#34;&#34;&#34;linear move to a target&#34;&#34;&#34;
+        self.execute(target.as_linear())
+    def linear_relative(self, target: Transform | JointCoord):
+        &#34;&#34;&#34;linear relative move to a target&#34;&#34;&#34;
+        self.execute(target.as_linear_relative())
+    def joint(self, target: Transform | JointCoord):
+        &#34;&#34;&#34;joint move to a target&#34;&#34;&#34;
+        self.execute(target.as_joint())
+    def joint_relative(self, target: Transform | JointCoord):
+        &#34;&#34;&#34;joint relative move to a target&#34;&#34;&#34;
+        self.execute(target.as_joint_relative())
+
     def enqueue(self, robot_command: RobotCommand):
+        &#34;&#34;&#34;
+        instruct the robot to enqueue a command
+
+        ## Parameter
+        - `robot_command: inovopy.iva.RobotCommand`: the command to enqueue
+        &#34;&#34;&#34;
         self.write(enqueue(robot_command=robot_command))
         self.assert_res_ok()
 
     def dequeue(self, enter_context: bool = False):
+        &#34;&#34;&#34;
+        instruct the robot to dequeue all enqueued command
+
+        ## Parameter
+        - `enter_context: bool`: whether enter a context with the sequence or not
+        &#34;&#34;&#34;
         self.write(dequeue(enter_context=enter_context))
         self.assert_res_ok()
-    
+
     def sequence(self, sequence: list[RobotCommand], enter_context: bool = False):
+        &#34;&#34;&#34;
+        perform a sequence of `inovopy.iva.RobotCommand`
+
+        ## Parameter
+        - `enter_context: bool`: whether enter a context with the sequence or not
+        &#34;&#34;&#34;
         for step in sequence:
             self.enqueue(step)
         self.dequeue(enter_context=enter_context)
 
     def pop(self):
+        &#34;&#34;&#34;
+        exit a context
+        &#34;&#34;&#34;
         self.write(pop())
         self.assert_res_ok()
 
     def io(self, io_command : IOCommand):
+        &#34;&#34;&#34;
+        instruct the robot to perform a `inovopy.iva.IOCommand`
+
+        ## Parameter
+        - `io_command: inovopy.iva.IOCommand`: io commmand to perform
+
+        ## Return
+        `str` the respons 
+        &#34;&#34;&#34;
         self.write(io(io_command=io_command))
+        return self.read()
 
     def get_io_beckhoff(self, port: int) -&gt; bool:
-        self.io(IOCommand.get_digital(target=&#34;beckhoff&#34;,port=port))
-        return self.read() == &#34;True&#34;
+        &#34;&#34;&#34;
+        get beckhoff input port
+
+        ## Parameter
+        - `port: int`: input port to get, default `0-7`
+
+        ## Return
+        `bool` state of io
+        &#34;&#34;&#34;
+        return self.io(IOCommand.get_digital(target=&#34;beckhoff&#34;,port=port)) == &#34;True&#34;
     def get_io_wrist(self, port: int) -&gt; bool:
-        self.io(IOCommand.get_digital(target=&#34;wrist&#34;, port=port))
-        return self.read() == &#34;True&#34;
+        &#34;&#34;&#34;
+        get wrist input port
+
+        ## Parameter
+        - `port: int`: input port to get, default `0-1`
+
+        ## Return
+        `bool` state of io
+        &#34;&#34;&#34;
+        return self.io(IOCommand.get_digital(target=&#34;wrist&#34;, port=port)) == &#34;True&#34;
     def set_io_beckhoff(self, port: int, state: bool):
-        self.io(IOCommand.set_digital(target=&#34;beckhoff&#34;,port=port, state=state))
-        self.assert_res_ok()
+        &#34;&#34;&#34;
+        set beckhoff output port
+
+        ## Parameter
+        - `port: int`: output port to set, default `0-7`
+        - `state: bool`: target state of the output
+        &#34;&#34;&#34;
+        res = self.io(IOCommand.set_digital(target=&#34;beckhoff&#34;,port=port, state=state))
+        assert res == &#34;OK&#34;
     def set_io_wrist(self, port: int, state: bool):
-        self.io(IOCommand.set_digital(target=&#34;wrist&#34;, port=port, state=state))
-        self.assert_res_ok()
+        &#34;&#34;&#34;
+        set wrist output port
+
+        ## Parameter
+        - `port: int`: output port to set, default `0-7`
+        - `state: bool`: target state of the output
+        &#34;&#34;&#34;
+        res = self.io(IOCommand.set_digital(target=&#34;wrist&#34;, port=port, state=state))
+        assert res == &#34;OK&#34;
 
     def gipper_activate(self):
+        &#34;&#34;&#34;activate the gripper&#34;&#34;&#34;
         self.write(GripperCommand.activate())
         self.assert_res_ok()
     def gripper_get(self)-&gt;float:
+        &#34;&#34;&#34;
+        get the gripper width
+        
+        ## Return
+        `float` in percentage
+        &#34;&#34;&#34;
         self.write(GripperCommand.get())
         return float(self.read()) * 100
     def gripper_set(self, label: str):
+        &#34;&#34;&#34;
+        set a gripper to a predefine label
+        
+
+        #Parameter
+        - `label: str`: the label to set to 
+        &#34;&#34;&#34;
         self.write(GripperCommand.set(label=label))
         self.assert_res_ok()
 
     def get_current_transform(self) -&gt; Transform:
+        &#34;&#34;&#34;
+        get the current transform
+
+        ## Return:
+        `inovopy.geometry.transform.Transform` : current tranform
+        &#34;&#34;&#34;
         self.write(get_current(&#34;transform&#34;))
         return Transform.from_robot(self.read())
 
     def get_current_joint(self) -&gt; JointCoord:
+        &#34;&#34;&#34;
+        get the current joint coordinate
+
+        ## Return:
+        `inovopy.geometry.jointcoord.JointCoord`: current joint coordinate
+        &#34;&#34;&#34;
         self.write(get_current(&#34;joint_coord&#34;))
         return JointCoord.from_robot(self.read())
-    
-    def get_data(self,key : str) -&gt; str:
+
+    def get_data(self, key: str) -&gt; str:
+        &#34;&#34;&#34;
+        get data with a key
+
+        ## Parameter:
+        - `key : str` : key for the data
+
+        ## Return:
+        - `str` value of the data
+        - `str` containing `Error` will return if the key is not found
+        &#34;&#34;&#34;
         self.write(get_data(key=key))
         return self.read()
 
     @contextmanager
     def context(self, robot_command: RobotCommand):
+        &#34;&#34;&#34;
+        enter a context with a robot command
+
+        ## Parameter
+        - `robot_command: inovopy.iva.RobotCommand` : the command to execute
+
+        ## Context Manager
+        when exit context `InovoRobot.pop` the context
+        &#34;&#34;&#34;
         self.execute(robot_command=robot_command, enter_context=True)
         try:
             yield
@@ -281,6 +732,15 @@ class InovoRobot:
 
     @contextmanager
     def context_sequence(self, sequence: list[RobotCommand]):
+        &#34;&#34;&#34;
+        enter a context with a robot command
+
+        ## Parameter
+        - `sequence: list[inovopy.iva.RobotCommand]` : the sequence to execute
+
+        ## Context Manager
+        when exit context `InovoRobot.pop` the context
+        &#34;&#34;&#34;
         self.sequence(sequence=sequence, enter_context=True)
         try:
             yield
@@ -293,18 +753,42 @@ class InovoRobot:
 <span>def <span class="ident">default_iva</span></span>(<span>host: str) ‑> <a title="inovopy.robot.InovoRobot" href="#inovopy.robot.InovoRobot">InovoRobot</a></span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>start the iva protocal by</p>
+<ul>
+<li>start up a tcp listener</li>
+<li>start a sequence on psu via rosbridge</li>
+<li>accept a connection</li>
+</ul>
+<h2 id="parameter">Parameter:</h2>
+<ul>
+<li><code>host: str</code> : remote host to start sequence, aka psu's address</li>
+</ul>
+<h2 id="return">Return:</h2>
+<p><code><a title="inovopy.robot.InovoRobot" href="#inovopy.robot.InovoRobot">InovoRobot</a></code> : the resulted api class</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@classmethod
 def default_iva(cls, host:str)-&gt;&#39;InovoRobot&#39;:
+    &#34;&#34;&#34;
+    start the iva protocal by
+
+    - start up a tcp listener
+    - start a sequence on psu via rosbridge
+    - accept a connection
+
+    ## Parameter:
+    - `host: str` : remote host to start sequence, aka psu&#39;s address
+
+    ## Return:
+    `InovoRobot` : the resulted api class
+    &#34;&#34;&#34;
     listener = TcpListener()
     ros_bridge : RosBridge = RosBridge(host=host)
     ros_bridge.start_seq(&#34;iva&#34;)
     tcp_stream: TcpStream = listener.accept()
-    del(listener)
+    del listener
     bot : InovoRobot = InovoRobot(tcp_stream=tcp_stream, ros_bridge=ros_bridge)
     return bot</code></pre>
 </details>
@@ -316,12 +800,13 @@ def default_iva(cls, host:str)-&gt;&#39;InovoRobot&#39;:
 <span>def <span class="ident">assert_res_ok</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>read a message and assert that it is <code>OK</code></p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def assert_res_ok(self):
+    &#34;&#34;&#34;read a message and assert that it is `OK`&#34;&#34;&#34;
     res = self.read()
     if res != &#34;OK&#34;:
         raise IvaException(f&#34;Expect resopnse to be \&#34;OK\&#34;, but recieve {res}&#34;)</code></pre>
@@ -331,13 +816,28 @@ def default_iva(cls, host:str)-&gt;&#39;InovoRobot&#39;:
 <span>def <span class="ident">context</span></span>(<span>self, robot_command: <a title="inovopy.iva.RobotCommand" href="../iva/index.html#inovopy.iva.RobotCommand">RobotCommand</a>)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>enter a context with a robot command</p>
+<h2 id="parameter">Parameter</h2>
+<ul>
+<li><code>robot_command: inovopy.iva.RobotCommand</code> : the command to execute</li>
+</ul>
+<h2 id="context-manager">Context Manager</h2>
+<p>when exit context <code><a title="inovopy.robot.InovoRobot.pop" href="#inovopy.robot.InovoRobot.pop">InovoRobot.pop()</a></code> the context</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@contextmanager
 def context(self, robot_command: RobotCommand):
+    &#34;&#34;&#34;
+    enter a context with a robot command
+
+    ## Parameter
+    - `robot_command: inovopy.iva.RobotCommand` : the command to execute
+
+    ## Context Manager
+    when exit context `InovoRobot.pop` the context
+    &#34;&#34;&#34;
     self.execute(robot_command=robot_command, enter_context=True)
     try:
         yield
@@ -349,13 +849,28 @@ def context(self, robot_command: RobotCommand):
 <span>def <span class="ident">context_sequence</span></span>(<span>self, sequence: list[<a title="inovopy.iva.RobotCommand" href="../iva/index.html#inovopy.iva.RobotCommand">RobotCommand</a>])</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>enter a context with a robot command</p>
+<h2 id="parameter">Parameter</h2>
+<ul>
+<li><code>sequence: list[inovopy.iva.RobotCommand]</code> : the sequence to execute</li>
+</ul>
+<h2 id="context-manager">Context Manager</h2>
+<p>when exit context <code><a title="inovopy.robot.InovoRobot.pop" href="#inovopy.robot.InovoRobot.pop">InovoRobot.pop()</a></code> the context</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@contextmanager
 def context_sequence(self, sequence: list[RobotCommand]):
+    &#34;&#34;&#34;
+    enter a context with a robot command
+
+    ## Parameter
+    - `sequence: list[inovopy.iva.RobotCommand]` : the sequence to execute
+
+    ## Context Manager
+    when exit context `InovoRobot.pop` the context
+    &#34;&#34;&#34;
     self.sequence(sequence=sequence, enter_context=True)
     try:
         yield
@@ -367,12 +882,22 @@ def context_sequence(self, sequence: list[RobotCommand]):
 <span>def <span class="ident">dequeue</span></span>(<span>self, enter_context: bool = False)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>instruct the robot to dequeue all enqueued command</p>
+<h2 id="parameter">Parameter</h2>
+<ul>
+<li><code>enter_context: bool</code>: whether enter a context with the sequence or not</li>
+</ul></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def dequeue(self, enter_context: bool = False):
+    &#34;&#34;&#34;
+    instruct the robot to dequeue all enqueued command
+
+    ## Parameter
+    - `enter_context: bool`: whether enter a context with the sequence or not
+    &#34;&#34;&#34;
     self.write(dequeue(enter_context=enter_context))
     self.assert_res_ok()</code></pre>
 </details>
@@ -381,12 +906,22 @@ def context_sequence(self, sequence: list[RobotCommand]):
 <span>def <span class="ident">enqueue</span></span>(<span>self, robot_command: <a title="inovopy.iva.RobotCommand" href="../iva/index.html#inovopy.iva.RobotCommand">RobotCommand</a>)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>instruct the robot to enqueue a command</p>
+<h2 id="parameter">Parameter</h2>
+<ul>
+<li><code>robot_command: inovopy.iva.RobotCommand</code>: the command to enqueue</li>
+</ul></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def enqueue(self, robot_command: RobotCommand):
+    &#34;&#34;&#34;
+    instruct the robot to enqueue a command
+
+    ## Parameter
+    - `robot_command: inovopy.iva.RobotCommand`: the command to enqueue
+    &#34;&#34;&#34;
     self.write(enqueue(robot_command=robot_command))
     self.assert_res_ok()</code></pre>
 </details>
@@ -395,12 +930,29 @@ def context_sequence(self, sequence: list[RobotCommand]):
 <span>def <span class="ident">execute</span></span>(<span>self, robot_command: <a title="inovopy.iva.RobotCommand" href="../iva/index.html#inovopy.iva.RobotCommand">RobotCommand</a>, enter_context: bool = False)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>instruct the robot to execute a <code><a title="inovopy.iva.RobotCommand" href="../iva/index.html#inovopy.iva.RobotCommand">RobotCommand</a></code></p>
+<h2 id="parameter">Parameter:</h2>
+<ul>
+<li><code>robot_command: inovopy.iva.RobotCommand</code>: command to execute</li>
+<li><code>enter_context: bool</code>: whether the execution of command create a pop-able context</li>
+</ul>
+<h2 id="exception">Exception:</h2>
+<p><code><a title="inovopy.robot.IvaException" href="#inovopy.robot.IvaException">IvaException</a></code> raise if response is not <code>OK</code></p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def execute(self, robot_command: RobotCommand, enter_context: bool = False):
+    &#34;&#34;&#34;
+    instruct the robot to execute a `inovopy.iva.RobotCommand`
+
+    ## Parameter:
+    - `robot_command: inovopy.iva.RobotCommand`: command to execute
+    - `enter_context: bool`: whether the execution of command create a pop-able context
+
+    ## Exception:
+    `IvaException` raise if response is not `OK`
+    &#34;&#34;&#34;
     self.write(execute(robot_command=robot_command, enter_context=enter_context))
     self.assert_res_ok()</code></pre>
 </details>
@@ -409,12 +961,20 @@ def context_sequence(self, sequence: list[RobotCommand]):
 <span>def <span class="ident">get_current_joint</span></span>(<span>self) ‑> <a title="inovopy.geometry.jointcoord.JointCoord" href="../geometry/jointcoord.html#inovopy.geometry.jointcoord.JointCoord">JointCoord</a></span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>get the current joint coordinate</p>
+<h2 id="return">Return:</h2>
+<p><code><a title="inovopy.geometry.jointcoord.JointCoord" href="../geometry/jointcoord.html#inovopy.geometry.jointcoord.JointCoord">JointCoord</a></code>: current joint coordinate</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def get_current_joint(self) -&gt; JointCoord:
+    &#34;&#34;&#34;
+    get the current joint coordinate
+
+    ## Return:
+    `inovopy.geometry.jointcoord.JointCoord`: current joint coordinate
+    &#34;&#34;&#34;
     self.write(get_current(&#34;joint_coord&#34;))
     return JointCoord.from_robot(self.read())</code></pre>
 </details>
@@ -423,12 +983,20 @@ def context_sequence(self, sequence: list[RobotCommand]):
 <span>def <span class="ident">get_current_transform</span></span>(<span>self) ‑> <a title="inovopy.geometry.transform.Transform" href="../geometry/transform.html#inovopy.geometry.transform.Transform">Transform</a></span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>get the current transform</p>
+<h2 id="return">Return:</h2>
+<p><code><a title="inovopy.geometry.transform.Transform" href="../geometry/transform.html#inovopy.geometry.transform.Transform">Transform</a></code> : current tranform</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def get_current_transform(self) -&gt; Transform:
+    &#34;&#34;&#34;
+    get the current transform
+
+    ## Return:
+    `inovopy.geometry.transform.Transform` : current tranform
+    &#34;&#34;&#34;
     self.write(get_current(&#34;transform&#34;))
     return Transform.from_robot(self.read())</code></pre>
 </details>
@@ -437,12 +1005,31 @@ def context_sequence(self, sequence: list[RobotCommand]):
 <span>def <span class="ident">get_data</span></span>(<span>self, key: str) ‑> str</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>get data with a key</p>
+<h2 id="parameter">Parameter:</h2>
+<ul>
+<li><code>key : str</code> : key for the data</li>
+</ul>
+<h2 id="return">Return:</h2>
+<ul>
+<li><code>str</code> value of the data</li>
+<li><code>str</code> containing <code>Error</code> will return if the key is not found</li>
+</ul></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_data(self,key : str) -&gt; str:
+<pre><code class="python">def get_data(self, key: str) -&gt; str:
+    &#34;&#34;&#34;
+    get data with a key
+
+    ## Parameter:
+    - `key : str` : key for the data
+
+    ## Return:
+    - `str` value of the data
+    - `str` containing `Error` will return if the key is not found
+    &#34;&#34;&#34;
     self.write(get_data(key=key))
     return self.read()</code></pre>
 </details>
@@ -451,40 +1038,69 @@ def context_sequence(self, sequence: list[RobotCommand]):
 <span>def <span class="ident">get_io_beckhoff</span></span>(<span>self, port: int) ‑> bool</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>get beckhoff input port</p>
+<h2 id="parameter">Parameter</h2>
+<ul>
+<li><code>port: int</code>: input port to get, default <code>0-7</code></li>
+</ul>
+<h2 id="return">Return</h2>
+<p><code>bool</code> state of io</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def get_io_beckhoff(self, port: int) -&gt; bool:
-    self.io(IOCommand.get_digital(target=&#34;beckhoff&#34;,port=port))
-    return self.read() == &#34;True&#34;</code></pre>
+    &#34;&#34;&#34;
+    get beckhoff input port
+
+    ## Parameter
+    - `port: int`: input port to get, default `0-7`
+
+    ## Return
+    `bool` state of io
+    &#34;&#34;&#34;
+    return self.io(IOCommand.get_digital(target=&#34;beckhoff&#34;,port=port)) == &#34;True&#34;</code></pre>
 </details>
 </dd>
 <dt id="inovopy.robot.InovoRobot.get_io_wrist"><code class="name flex">
 <span>def <span class="ident">get_io_wrist</span></span>(<span>self, port: int) ‑> bool</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>get wrist input port</p>
+<h2 id="parameter">Parameter</h2>
+<ul>
+<li><code>port: int</code>: input port to get, default <code>0-1</code></li>
+</ul>
+<h2 id="return">Return</h2>
+<p><code>bool</code> state of io</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def get_io_wrist(self, port: int) -&gt; bool:
-    self.io(IOCommand.get_digital(target=&#34;wrist&#34;, port=port))
-    return self.read() == &#34;True&#34;</code></pre>
+    &#34;&#34;&#34;
+    get wrist input port
+
+    ## Parameter
+    - `port: int`: input port to get, default `0-1`
+
+    ## Return
+    `bool` state of io
+    &#34;&#34;&#34;
+    return self.io(IOCommand.get_digital(target=&#34;wrist&#34;, port=port)) == &#34;True&#34;</code></pre>
 </details>
 </dd>
 <dt id="inovopy.robot.InovoRobot.gipper_activate"><code class="name flex">
 <span>def <span class="ident">gipper_activate</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>activate the gripper</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def gipper_activate(self):
+    &#34;&#34;&#34;activate the gripper&#34;&#34;&#34;
     self.write(GripperCommand.activate())
     self.assert_res_ok()</code></pre>
 </details>
@@ -493,12 +1109,20 @@ def context_sequence(self, sequence: list[RobotCommand]):
 <span>def <span class="ident">gripper_get</span></span>(<span>self) ‑> float</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>get the gripper width</p>
+<h2 id="return">Return</h2>
+<p><code>float</code> in percentage</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def gripper_get(self)-&gt;float:
+    &#34;&#34;&#34;
+    get the gripper width
+    
+    ## Return
+    `float` in percentage
+    &#34;&#34;&#34;
     self.write(GripperCommand.get())
     return float(self.read()) * 100</code></pre>
 </details>
@@ -507,12 +1131,23 @@ def context_sequence(self, sequence: list[RobotCommand]):
 <span>def <span class="ident">gripper_set</span></span>(<span>self, label: str)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>set a gripper to a predefine label</p>
+<h1 id="parameter">Parameter</h1>
+<ul>
+<li><code>label: str</code>: the label to set to</li>
+</ul></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def gripper_set(self, label: str):
+    &#34;&#34;&#34;
+    set a gripper to a predefine label
+    
+
+    #Parameter
+    - `label: str`: the label to set to 
+    &#34;&#34;&#34;
     self.write(GripperCommand.set(label=label))
     self.assert_res_ok()</code></pre>
 </details>
@@ -521,25 +1156,100 @@ def context_sequence(self, sequence: list[RobotCommand]):
 <span>def <span class="ident">io</span></span>(<span>self, io_command: <a title="inovopy.iva.IOCommand" href="../iva/index.html#inovopy.iva.IOCommand">IOCommand</a>)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>instruct the robot to perform a <code><a title="inovopy.iva.IOCommand" href="../iva/index.html#inovopy.iva.IOCommand">IOCommand</a></code></p>
+<h2 id="parameter">Parameter</h2>
+<ul>
+<li><code>io_command: inovopy.iva.IOCommand</code>: io commmand to perform</li>
+</ul>
+<h2 id="return">Return</h2>
+<p><code>str</code> the respons</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def io(self, io_command : IOCommand):
-    self.write(io(io_command=io_command))</code></pre>
+    &#34;&#34;&#34;
+    instruct the robot to perform a `inovopy.iva.IOCommand`
+
+    ## Parameter
+    - `io_command: inovopy.iva.IOCommand`: io commmand to perform
+
+    ## Return
+    `str` the respons 
+    &#34;&#34;&#34;
+    self.write(io(io_command=io_command))
+    return self.read()</code></pre>
+</details>
+</dd>
+<dt id="inovopy.robot.InovoRobot.joint"><code class="name flex">
+<span>def <span class="ident">joint</span></span>(<span>self, target: <a title="inovopy.geometry.transform.Transform" href="../geometry/transform.html#inovopy.geometry.transform.Transform">Transform</a> | <a title="inovopy.geometry.jointcoord.JointCoord" href="../geometry/jointcoord.html#inovopy.geometry.jointcoord.JointCoord">JointCoord</a>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>joint move to a target</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def joint(self, target: Transform | JointCoord):
+    &#34;&#34;&#34;joint move to a target&#34;&#34;&#34;
+    self.execute(target.as_joint())</code></pre>
+</details>
+</dd>
+<dt id="inovopy.robot.InovoRobot.joint_relative"><code class="name flex">
+<span>def <span class="ident">joint_relative</span></span>(<span>self, target: <a title="inovopy.geometry.transform.Transform" href="../geometry/transform.html#inovopy.geometry.transform.Transform">Transform</a> | <a title="inovopy.geometry.jointcoord.JointCoord" href="../geometry/jointcoord.html#inovopy.geometry.jointcoord.JointCoord">JointCoord</a>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>joint relative move to a target</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def joint_relative(self, target: Transform | JointCoord):
+    &#34;&#34;&#34;joint relative move to a target&#34;&#34;&#34;
+    self.execute(target.as_joint_relative())</code></pre>
+</details>
+</dd>
+<dt id="inovopy.robot.InovoRobot.linear"><code class="name flex">
+<span>def <span class="ident">linear</span></span>(<span>self, target: <a title="inovopy.geometry.transform.Transform" href="../geometry/transform.html#inovopy.geometry.transform.Transform">Transform</a> | <a title="inovopy.geometry.jointcoord.JointCoord" href="../geometry/jointcoord.html#inovopy.geometry.jointcoord.JointCoord">JointCoord</a>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>linear move to a target</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def linear(self, target: Transform | JointCoord):
+    &#34;&#34;&#34;linear move to a target&#34;&#34;&#34;
+    self.execute(target.as_linear())</code></pre>
+</details>
+</dd>
+<dt id="inovopy.robot.InovoRobot.linear_relative"><code class="name flex">
+<span>def <span class="ident">linear_relative</span></span>(<span>self, target: <a title="inovopy.geometry.transform.Transform" href="../geometry/transform.html#inovopy.geometry.transform.Transform">Transform</a> | <a title="inovopy.geometry.jointcoord.JointCoord" href="../geometry/jointcoord.html#inovopy.geometry.jointcoord.JointCoord">JointCoord</a>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>linear relative move to a target</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def linear_relative(self, target: Transform | JointCoord):
+    &#34;&#34;&#34;linear relative move to a target&#34;&#34;&#34;
+    self.execute(target.as_linear_relative())</code></pre>
 </details>
 </dd>
 <dt id="inovopy.robot.InovoRobot.pop"><code class="name flex">
 <span>def <span class="ident">pop</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>exit a context</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def pop(self):
+    &#34;&#34;&#34;
+    exit a context
+    &#34;&#34;&#34;
     self.write(pop())
     self.assert_res_ok()</code></pre>
 </details>
@@ -548,12 +1258,13 @@ def context_sequence(self, sequence: list[RobotCommand]):
 <span>def <span class="ident">read</span></span>(<span>self) ‑> str</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>read a line</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def read(self) -&gt; str:
+    &#34;&#34;&#34;read a line&#34;&#34;&#34;
     return self.tcp_stream.read()</code></pre>
 </details>
 </dd>
@@ -561,12 +1272,22 @@ def context_sequence(self, sequence: list[RobotCommand]):
 <span>def <span class="ident">sequence</span></span>(<span>self, sequence: list[<a title="inovopy.iva.RobotCommand" href="../iva/index.html#inovopy.iva.RobotCommand">RobotCommand</a>], enter_context: bool = False)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>perform a sequence of <code><a title="inovopy.iva.RobotCommand" href="../iva/index.html#inovopy.iva.RobotCommand">RobotCommand</a></code></p>
+<h2 id="parameter">Parameter</h2>
+<ul>
+<li><code>enter_context: bool</code>: whether enter a context with the sequence or not</li>
+</ul></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def sequence(self, sequence: list[RobotCommand], enter_context: bool = False):
+    &#34;&#34;&#34;
+    perform a sequence of `inovopy.iva.RobotCommand`
+
+    ## Parameter
+    - `enter_context: bool`: whether enter a context with the sequence or not
+    &#34;&#34;&#34;
     for step in sequence:
         self.enqueue(step)
     self.dequeue(enter_context=enter_context)</code></pre>
@@ -576,40 +1297,124 @@ def context_sequence(self, sequence: list[RobotCommand]):
 <span>def <span class="ident">set_io_beckhoff</span></span>(<span>self, port: int, state: bool)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>set beckhoff output port</p>
+<h2 id="parameter">Parameter</h2>
+<ul>
+<li><code>port: int</code>: output port to set, default <code>0-7</code></li>
+<li><code>state: bool</code>: target state of the output</li>
+</ul></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def set_io_beckhoff(self, port: int, state: bool):
-    self.io(IOCommand.set_digital(target=&#34;beckhoff&#34;,port=port, state=state))
-    self.assert_res_ok()</code></pre>
+    &#34;&#34;&#34;
+    set beckhoff output port
+
+    ## Parameter
+    - `port: int`: output port to set, default `0-7`
+    - `state: bool`: target state of the output
+    &#34;&#34;&#34;
+    res = self.io(IOCommand.set_digital(target=&#34;beckhoff&#34;,port=port, state=state))
+    assert res == &#34;OK&#34;</code></pre>
 </details>
 </dd>
 <dt id="inovopy.robot.InovoRobot.set_io_wrist"><code class="name flex">
 <span>def <span class="ident">set_io_wrist</span></span>(<span>self, port: int, state: bool)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>set wrist output port</p>
+<h2 id="parameter">Parameter</h2>
+<ul>
+<li><code>port: int</code>: output port to set, default <code>0-7</code></li>
+<li><code>state: bool</code>: target state of the output</li>
+</ul></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def set_io_wrist(self, port: int, state: bool):
-    self.io(IOCommand.set_digital(target=&#34;wrist&#34;, port=port, state=state))
-    self.assert_res_ok()</code></pre>
+    &#34;&#34;&#34;
+    set wrist output port
+
+    ## Parameter
+    - `port: int`: output port to set, default `0-7`
+    - `state: bool`: target state of the output
+    &#34;&#34;&#34;
+    res = self.io(IOCommand.set_digital(target=&#34;wrist&#34;, port=port, state=state))
+    assert res == &#34;OK&#34;</code></pre>
+</details>
+</dd>
+<dt id="inovopy.robot.InovoRobot.set_param"><code class="name flex">
+<span>def <span class="ident">set_param</span></span>(<span>self, speed: float | None = None, accel: float | None = None, blend_linear: float | None = None, blend_angular: float | None = None, tcp_speed_linear: float | None = None, tcp_speed_angular: float | None = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>set the motion parameter of the robot</p>
+<h2 id="parameter">Parameter</h2>
+<ul>
+<li><code>speed : float</code>, in percent, range from <code>1</code> to <code>100</code></li>
+<li><code>accel : float</code>, in precent, range from <code>1</code> to <code>100</code></li>
+<li><code>blend_linear : float</code>, in mm, range from <code>1</code> to <code>1000</code></li>
+<li><code>blend_angular : float</code>, in degree, range from <code>1</code> to <code>360</code></li>
+<li><code>tcp_speed_linear : float</code>, in mm, range from <code>1</code> to <code>999</code></li>
+<li><code>tcp_speed_angular : float</code>, in degree, range from <code>1</code> to <code>360</code></li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_param(
+        self,
+        speed : float | None = None,
+        accel : float | None = None,
+        blend_linear : float | None = None,
+        blend_angular : float | None = None,
+        tcp_speed_linear : float | None = None,
+        tcp_speed_angular : float | None = None,
+    ):
+    &#34;&#34;&#34;
+    set the motion parameter of the robot
+    
+    ## Parameter
+    - `speed : float`, in percent, range from `1` to `100`
+    - `accel : float`, in precent, range from `1` to `100`
+    - `blend_linear : float`, in mm, range from `1` to `1000`
+    - `blend_angular : float`, in degree, range from `1` to `360`
+    - `tcp_speed_linear : float`, in mm, range from `1` to `999`
+    - `tcp_speed_angular : float`, in degree, range from `1` to `360`
+    &#34;&#34;&#34;
+    robot_command = RobotCommand.set_parameter(
+        speed=speed,
+        accel=accel,
+        blend_linear=blend_linear,
+        blend_angular=blend_angular,
+        tcp_speed_linear=tcp_speed_linear,
+        tcp_speed_angular=tcp_speed_angular
+    )
+
+    self.execute(robot_command=robot_command)</code></pre>
 </details>
 </dd>
 <dt id="inovopy.robot.InovoRobot.sleep"><code class="name flex">
 <span>def <span class="ident">sleep</span></span>(<span>self, second: float)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>instruct the robot to sleep for a specified time</p>
+<h2 id="parameter">Parameter:</h2>
+<ul>
+<li><code>second: float</code> : second to sleep</li>
+</ul></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def sleep(self, second: float):
+    &#34;&#34;&#34;
+    instruct the robot to sleep for a specified time
+    
+    ## Parameter:
+    - `second: float` : second to sleep
+    &#34;&#34;&#34;
     self.execute(RobotCommand.sleep(second=second))</code></pre>
 </details>
 </dd>
@@ -617,12 +1422,22 @@ def context_sequence(self, sequence: list[RobotCommand]):
 <span>def <span class="ident">write</span></span>(<span>self, instruction: dict[str, str | float])</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>write an instruction as str</p>
+<h2 id="parameter">Parameter:</h2>
+<ul>
+<li><code>instruction : dict[str, str|float]</code> : jsonable instruction dict</li>
+</ul></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def write(self, instruction : dict[str, str|float]):
+    &#34;&#34;&#34;
+    write an instruction as str
+    
+    ## Parameter:
+    - `instruction : dict[str, str|float]` : jsonable instruction dict 
+    &#34;&#34;&#34;
     msg = json.dumps(instruction)
     self.tcp_stream.write(msg)</code></pre>
 </details>
@@ -656,7 +1471,13 @@ def context_sequence(self, sequence: list[RobotCommand]):
 <nav id="sidebar">
 <h1>Index</h1>
 <div class="toc">
-<ul></ul>
+<ul>
+<li><a href="#robot-module">Robot Module</a><ul>
+<li><a href="#class">Class</a></li>
+<li><a href="#example">Example</a></li>
+</ul>
+</li>
+</ul>
 </div>
 <ul id="index">
 <li><h3>Super-module</h3>
@@ -685,11 +1506,16 @@ def context_sequence(self, sequence: list[RobotCommand]):
 <li><code><a title="inovopy.robot.InovoRobot.gripper_get" href="#inovopy.robot.InovoRobot.gripper_get">gripper_get</a></code></li>
 <li><code><a title="inovopy.robot.InovoRobot.gripper_set" href="#inovopy.robot.InovoRobot.gripper_set">gripper_set</a></code></li>
 <li><code><a title="inovopy.robot.InovoRobot.io" href="#inovopy.robot.InovoRobot.io">io</a></code></li>
+<li><code><a title="inovopy.robot.InovoRobot.joint" href="#inovopy.robot.InovoRobot.joint">joint</a></code></li>
+<li><code><a title="inovopy.robot.InovoRobot.joint_relative" href="#inovopy.robot.InovoRobot.joint_relative">joint_relative</a></code></li>
+<li><code><a title="inovopy.robot.InovoRobot.linear" href="#inovopy.robot.InovoRobot.linear">linear</a></code></li>
+<li><code><a title="inovopy.robot.InovoRobot.linear_relative" href="#inovopy.robot.InovoRobot.linear_relative">linear_relative</a></code></li>
 <li><code><a title="inovopy.robot.InovoRobot.pop" href="#inovopy.robot.InovoRobot.pop">pop</a></code></li>
 <li><code><a title="inovopy.robot.InovoRobot.read" href="#inovopy.robot.InovoRobot.read">read</a></code></li>
 <li><code><a title="inovopy.robot.InovoRobot.sequence" href="#inovopy.robot.InovoRobot.sequence">sequence</a></code></li>
 <li><code><a title="inovopy.robot.InovoRobot.set_io_beckhoff" href="#inovopy.robot.InovoRobot.set_io_beckhoff">set_io_beckhoff</a></code></li>
 <li><code><a title="inovopy.robot.InovoRobot.set_io_wrist" href="#inovopy.robot.InovoRobot.set_io_wrist">set_io_wrist</a></code></li>
+<li><code><a title="inovopy.robot.InovoRobot.set_param" href="#inovopy.robot.InovoRobot.set_param">set_param</a></code></li>
 <li><code><a title="inovopy.robot.InovoRobot.sleep" href="#inovopy.robot.InovoRobot.sleep">sleep</a></code></li>
 <li><code><a title="inovopy.robot.InovoRobot.write" href="#inovopy.robot.InovoRobot.write">write</a></code></li>
 </ul>
