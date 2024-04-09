@@ -21,6 +21,9 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Install wheel
+        run: pip install wheel
+
       - name: Build distribution
         run: python setup.py sdist bdist_wheel
 
@@ -29,5 +32,4 @@ jobs:
         with:
           name: Distribution
           path: dist/
-      
       
