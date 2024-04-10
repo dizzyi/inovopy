@@ -260,9 +260,12 @@ class InovoRobot:
         res = self.io(IOCommand.set_digital(target="wrist", port=port, state=state))
         assert res == "OK"
 
+    def gripper(self, gripper_command: GripperCommand):
+        self.write(gripper(gripper_command))
+
     def gipper_activate(self):
         """activate the gripper"""
-        self.write(GripperCommand.activate())
+        self.gripper(GripperCommand.activate())
         self.assert_res_ok()
     def gripper_get(self)->float:
         """
@@ -271,8 +274,9 @@ class InovoRobot:
         ## Return
         `float` in percentage
         """
-        self.write(GripperCommand.get())
+        self.gripper(GripperCommand.get())
         return float(self.read()) * 100
+    
     def gripper_set(self, label: str):
         """
         set a gripper to a predefine label
@@ -281,7 +285,7 @@ class InovoRobot:
         #Parameter
         - `label: str`: the label to set to 
         """
-        self.write(GripperCommand.set(label=label))
+        self.gripper(GripperCommand.set(label=label))
         self.assert_res_ok()
 
     def get_current_transform(self) -> Transform:
