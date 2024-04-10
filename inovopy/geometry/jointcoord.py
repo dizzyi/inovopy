@@ -122,3 +122,19 @@ class JointCoord(IntoRobotCommand):
             "j5" : self.joint_coord_deg[4],
             "j6" : self.joint_coord_deg[5],
         }
+
+    @classmethod
+    def from_dict(cls, data: dict[str, str|float]) -> 'JointCoord':
+        """
+        construct a new `JointCoord` from a dictionary
+
+        ## Parameter
+        - `data: dict[str, str|float]`: the data, if field is missing, 0 will be assumed
+        """
+        j1 = 0 if "j1" not in data else data["j1"]
+        j2 = 0 if "j2" not in data else data["j2"]
+        j3 = 0 if "j3" not in data else data["j3"]
+        j4 = 0 if "j4" not in data else data["j4"]
+        j5 = 0 if "j5" not in data else data["j5"]
+        j6 = 0 if "j6" not in data else data["j6"]
+        return JointCoord(j1, j2, j3, j4, j5, j6)

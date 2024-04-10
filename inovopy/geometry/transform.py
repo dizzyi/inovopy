@@ -339,3 +339,20 @@ class Transform(IntoRobotCommand):
             "ry" : self.euler_deg[1],
             "rz" : self.euler_deg[2],
         }
+
+    @classmethod
+    def from_dict(cls, data: dict[str, str|float]) -> 'Transform':
+        """
+        construct a new `Transform` from a dictionary
+
+        ## Parameter
+        - `data: dict[str, str|float]`: the data, if field is missing, 0 will be assumed
+        """
+        x = 0 if "x" not in data else data['x']
+        y = 0 if "y" not in data else data['y']
+        z = 0 if "z" not in data else data['z']
+        rx = 0 if "rx" not in data else data['rx']
+        ry = 0 if "ry" not in data else data['ry']
+        rz = 0 if "rz" not in data else data['rz']
+
+        return Transform((x,y,z),(rx,ry,rz))
