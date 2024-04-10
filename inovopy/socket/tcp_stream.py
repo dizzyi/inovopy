@@ -163,7 +163,6 @@ class TcpStream:
     def __del__(self):
         try:
             self.logger.debug("closing socket")
-            self.__conn.shutdown(socket.SHUT_RDWR)
             self.__conn.close()
         except OSError as e:
             try:
