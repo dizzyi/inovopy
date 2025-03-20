@@ -237,7 +237,7 @@ class RobotCommand:
         """
         return RobotCommand({
             "action" : "motion",
-            "motion_mode" : f"{motion_mode}",
+            "motion_mode" : motion_mode.to_arg(),
             **target.to_dict()
         })
 
@@ -257,6 +257,9 @@ class MotionMode(str, Enum):
     LINEAR_RELATIVE = "linear_relative"
     JOINT = "joint"
     JOINT_RELATIVE = "joint_relatve"
+
+    def to_arg(self) -> str:
+        return str(self).split('.')[1].lower()
 
 
 class IOCommand:
