@@ -3,7 +3,7 @@ setup script for inovopy
 """
 from setuptools import setup, find_packages
 
-VERSION = '0.0.6'
+VERSION = '0.0.7'
 DESCRIPTION = 'Inovo Robot Arm API'
 LONG_DESCRIPTION = \
 """
