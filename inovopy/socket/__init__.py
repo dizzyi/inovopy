@@ -24,9 +24,6 @@ read_message : str = stream.read()     # <-- read a messagea as str
 import socket
 import platform
 
-from inovopy.socket.tcp_listener import TcpListener
-from inovopy.socket.tcp_stream import TcpStream
-
 
 class SocketException(Exception):
     """socket commuication exception"""
@@ -48,3 +45,7 @@ def detect_interfaces() -> list[str]:
     if platform.system() == "Linux":
         hostname += ".local"
     return socket.gethostbyname_ex(hostname)[2]
+
+
+from inovopy.socket.tcp_listener import TcpListener
+from inovopy.socket.tcp_stream import TcpStream
