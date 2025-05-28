@@ -82,7 +82,7 @@ class Loggable(abc.ABC):
     - `critical(*args, **kwargs)` : transparent to `logger.Logger.critical`
     """
 
-    logger: logging.Logger | None
+    logger: logging.Logger | None = None
 
     @classmethod
     def get_class_logger(cls) -> logging.Logger:
@@ -126,6 +126,41 @@ class Loggable(abc.ABC):
             self.logger.critical(*args, **kwargs)
 
 
+LOGGING_CONFIG_CONSOLE = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "simpleformatter": {
+            "format": "%(name)-10s %(levelname)-7s %(message)s",
+        },
+    },
+    "handlers": {
+        "consolehandler": {
+            "()": "inovopy.util.ConsoleHandler",
+            "formatter": "simpleformatter",
+            "level": "INFO",
+        },
+    },
+    "loggers": {
+        "root": {
+            "handlers": ["consolehandler"],
+            "level": "DEBUG",
+            "propagate": True,
+        }
+    },
+}
+"""
+A simple config for `logging`, console only
+
+Usage:
+```python
+from logging.config import dictConfig
+from inovopy.util import LOGGING_CONFIG_CONSOLE
+
+dictConfig(LOGGING_CONFIG_CONSOLE)
+```
+"""
+
 LOGGING_CONFIG = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -161,7 +196,7 @@ LOGGING_CONFIG = {
     },
 }
 """
-A simple config for `logging`
+A simple config for `logging`, console + rotating file
 
 Usage:
 ```python

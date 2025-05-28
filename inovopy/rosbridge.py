@@ -3,7 +3,7 @@
 This module contain function and class for using rosbridge
 api to command and get state from inovo arm
 
-## Class
+`inovopy.rosbridge.InovoRos`
 """
 
 from contextlib import contextmanager
@@ -23,6 +23,8 @@ TOPIC_ROBOT_STATUS = "/robot/robot_state"
 TOPIC_ESTOP_STATUS = "/psu/estop/state"
 TOPIC_SAFE_STOP_STATUS = "/psu/safe_stop/state"
 TOPIC_RUNTIME_STATE = "/sequence/runtime_state"
+TOPIC_ARM_STATE = "/robot/arm_state"
+
 
 TYPE_TCP_SPEED = "commander_msgs/SpeedStamped"
 TYPE_TCP_POSE = "geometry_msgs/PoseStamped"
@@ -32,6 +34,7 @@ TYPE_ROBOT_STATUS = "arm_msgs/RobotState"
 TYPE_ESTOP_STATUS = "psu_msgs/SafetyCircuitState"
 TYPE_SAFE_STOP_STATUS = "psu_msgs/SafetyCircuitState"
 TYPE_RUNTIME_STATE = "commander_msgs/RuntimeState"
+TYPE_ARM_STATE = "arm_msgs/ArmState"
 
 # Service
 SERVICE_SAFE_STOP_RESET = "/psu/safe_stop/reset"
@@ -81,6 +84,58 @@ class Variable:
     @classmethod
     def from_message(cls, message) -> "Variable":
         return Variable(message["name"], message["type"], message["value"])
+
+
+class JointState:
+    age: int = 0
+    current: float = 0
+    drive_temp: float = 0
+    ff_torque: float = 0
+
+    joint_temp: float = 0
+    motor_temp: float = 0
+    output_gain: float = 0
+    position: float = 0
+
+    state: int = 0
+    status: int = 0
+
+    target_position: float = 0
+    torque: float = 0
+    velocity: float = 0
+
+    @classmethod
+    def attr_list(cls) -> list[str]:
+        return [
+            "age",
+            "current",
+            "drive_temp",
+            "ff_torque",
+            "joint_temp",
+            "motor_temp",
+            "output_gain",
+            "position",
+            "state",
+            "status",
+            "target_position",
+            "torque",
+            "velocity",
+        ]
+
+    def __init__(self):
+        pass
+
+    @classmethod
+    def from_message(cls, message) -> "JointState":
+        js = JointState()
+
+        for a in JointState.attr_list():
+            setattr(js, a, message[a])
+
+        return js
+
+    def __str__(self):
+        return str(dict((a, getattr(self, a)) for a in JointState.attr_list()))
 
 
 class InovoServiceResponse:
@@ -167,6 +222,11 @@ class InovoRos(inovopy.util.Loggable):
     runtime_status: RuntimeState = 0
     variables: list[Variable] = []
 
+    # Arm State
+    enable: bool = False
+    state: int = 0
+    joint_states: list[JointState] = []
+
     def __init__(self, host: str, logger: logging.Logger | str | None = None):
         """
         initalize `InovoRos`
@@ -199,16 +259,18 @@ class InovoRos(inovopy.util.Loggable):
             (self.__estop_status, TOPIC_ESTOP_STATUS, TYPE_ESTOP_STATUS),
             (self.__safe_stop_status, TOPIC_SAFE_STOP_STATUS, TYPE_SAFE_STOP_STATUS),
             (self.__runtime_state, TOPIC_RUNTIME_STATE, TYPE_RUNTIME_STATE),
+            (self.__arm_state, TOPIC_ARM_STATE, TYPE_ARM_STATE),
         ]
 
         self.subscribers: dict[str, roslibpy.Topic] = {}
 
         for cb, name, message_type in build_list:
+            self.info(f"Subscribing to topic: {name}, type : {message_type}")
             sub = roslibpy.Topic(self.ros, name, message_type)
             sub.subscribe(cb)
             self.subscribers[name] = sub
 
-    # Service Call Back
+    # Topic Call Back
     def __tcp_speed(self, message):
         self.tcp_speed_lin = message["speed"]["linear"]
         self.tcp_speed_ang = message["speed"]["angular"]
@@ -255,6 +317,14 @@ class InovoRos(inovopy.util.Loggable):
 
         for v in message["variables"]:
             self.variables.append(Variable.from_message(v))
+
+    def __arm_state(self, message):
+        self.enabled = message["enabled"]
+        self.state = message["state"]
+        self.joint_states = []
+
+        for j in message["joint_states"]:
+            self.joint_states.append(JointState.from_message(j))
 
     # Service
 
@@ -361,7 +431,7 @@ class InovoRos(inovopy.util.Loggable):
         and automatically unadvertise when exit.
 
         ## Yields:
-            `JogPublisher`: api for jog command
+        - `JogPublisher`: api for jog command
 
         ## Example:
         ```python
@@ -409,7 +479,7 @@ class JogPublisher:
     """
     context manager for jog
 
-    automatically advertise when `del`
+    automatically unadvertise when `del`
     """
 
     publisher: roslibpy.Topic
@@ -429,15 +499,15 @@ class JogPublisher:
         rz: float = 0,
     ):
         """
-        Send a cartesian jog demand
+        Send a cartesian jog twist demand
 
         Args:
-            x (float, optional): target x. Defaults to 0.
-            y (float, optional): target y. Defaults to 0.
-            z (float, optional): target z. Defaults to 0.
-            rx (float, optional): target rx. Defaults to 0.
-            ry (float, optional): target ry. Defaults to 0.
-            rz (float, optional): target ry. Defaults to 0.
+        - `x : float`: target linear velocity x. Defaults to 0.
+        - `y : float`: target linear velocity y. Defaults to 0.
+        - `z : float`: target linear velocity z. Defaults to 0.
+        - `rx : float`: target angular velocity rx. Defaults to 0.
+        - `ry : float`: target angular velocity ry. Defaults to 0.
+        - `rz : float`: target angular velocity ry. Defaults to 0.
         """
         self.publisher.publish(
             roslibpy.Message(

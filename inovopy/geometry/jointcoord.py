@@ -30,21 +30,29 @@ class JointCoord(IntoRobotCommand):
         Construct a new joint space representation from all joint angle
         """
         self.joint_coord_deg: list[float] = [
-            j1_deg,
-            j2_deg,
-            j3_deg,
-            j4_deg,
-            j5_deg,
-            j6_deg,
+            float(j1_deg),
+            float(j2_deg),
+            float(j3_deg),
+            float(j4_deg),
+            float(j5_deg),
+            float(j6_deg),
         ]
 
     def __str__(self) -> str:
-        return f"<JointCoord {[ f'{q:>5.1}' for q in self.joint_coord_deg]}>"
+        return str([str(q) for q in self.joint_coord_deg])
 
     def __add__(self, rhs: "JointCoord") -> "JointCoord":
         out = JointCoord()
         out.joint_coord_deg = [(self[i] + rhs[i]) for i in range(6)]
         return out
+
+    def __neg__(self) -> "JointCoord":
+        neg = []
+
+        for j in self.joint_coord_deg:
+            neg.append(-j)
+
+        JointCoord.from_list(neg)
 
     def __getitem__(self, idx: int) -> float:
         return self.joint_coord_deg[idx]
@@ -76,6 +84,21 @@ class JointCoord(IntoRobotCommand):
             joints[3],
             joints[4],
             joints[5],
+        )
+
+    @classmethod
+    def from_list(cls, coord: list[float]) -> "JointCoord":
+        """Construst a new `JointCoord` with specified coord"""
+        assert len(coord) >= 6
+        for i in range(6):
+            coord[i] = float(coord[i])
+        return JointCoord(
+            j1_deg=coord[0],
+            j2_deg=coord[1],
+            j3_deg=coord[2],
+            j4_deg=coord[3],
+            j5_deg=coord[4],
+            j6_deg=coord[5],
         )
 
     @classmethod

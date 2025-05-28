@@ -61,7 +61,9 @@ class InovoRobot(Loggable):
         self.inovo_ros: InovoRos = inovo_ros
 
     @classmethod
-    def default_iva(cls, host: str) -> "InovoRobot":
+    def default_iva(
+        cls, host: str, logger: logging.Logger | str | None = None
+    ) -> "InovoRobot":
         """
         start the iva protocal by
 
@@ -83,7 +85,9 @@ class InovoRobot(Loggable):
         tcp_stream: TcpStream = listener.accept()
         del listener
 
-        bot: InovoRobot = InovoRobot(tcp_stream=tcp_stream, inovo_ros=inovo_ros)
+        bot: InovoRobot = InovoRobot(
+            tcp_stream=tcp_stream, inovo_ros=inovo_ros, logger=logger
+        )
         return bot
 
     def read(self) -> str:
