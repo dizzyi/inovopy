@@ -5,14 +5,20 @@ This module provide an api class for listening tcp connection
 ## Classes
 - `TcpListener` : a class for managing and listening connection
 """
+
 import socket
 import select
+import logging
 
-from inovopy.socket.utils import SocketException, auto_detect_ips
+from inovopy.socket import SocketException, detect_interfaces
 from inovopy.socket.tcp_stream import TcpStream
-from inovopy.logger import Logger
+from inovopy.util import Loggable
 
-class TcpListener:
+DEFAULT_PORT: int = 50003
+"""Default port to listen on if no poort are specified `50003`."""
+
+
+class TcpListener(Loggable):
     """
     # TcpListener
     A class for listening to tcp connection
@@ -25,18 +31,14 @@ class TcpListener:
 
     example_stream = example_listener.accept()
     ```
-        
     """
 
-    DEFAULT_PORT : int = 50003
-    """Default port to listen on if no poort are specified `50003`."""
-
     def __init__(
-            self,
-            host: str | None = None,
-            port: int | None = None,
-            logger : Logger | None = None,
-        ):
+        self,
+        host: str | None = None,
+        port: int = DEFAULT_PORT,
+        logger: logging.Logger | str | None = None,
+    ):
         """
         initalize the tcp listener
 
@@ -48,122 +50,126 @@ class TcpListener:
 
         ## Parameter
         - `host : str | None` : local ip
-        - `port : int | None` : port to listen to
-        - `logger : Logger | None` : logger for logging
+        - `port : int` : port to listen to
+        - `logger: logging.Logger | str | None` :
+            - if `logger` is instance of `logging.Logger`, it will log with it;
+            - if `logger` is `str`, new logger will be created with it as name
+            - otherwise, no log
 
         ## Exception:
         `SocketException`:
-
-        - if not local ip address are found
+        - if no network interface found
         - if not vaild socket are created
         """
-        port : int = port or TcpListener.DEFAULT_PORT
+        super().__init__(logger)
 
-        if logger is None:
-            self.logger : Logger = Logger.default(f"TcpListener-{port}")
-            """logger for logging"""
-        else:
-            self.logger : Logger = logger
-
-
-        self.logger.debug("creating TcpListener . . .")
+        self.debug("creating TcpListener . . .")
 
         if host is None:
-            ips = auto_detect_ips(self.logger)
+            self.info("host not supplied, detecting networks . . .")
+            ips = detect_interfaces()
             """a list of ip to bind socket to and listen to"""
+
+            if len(ips) == 0:
+                self.error("No interface found")
+                raise SocketException(
+                    "No Network Interfaces, please make sure device is connected to network"
+                )
         else:
             ips = [host]
 
+        self.info("creating sockets . . .")
 
-        self.logger.info("Creating Socket . . .")
-
-        self.__sockets : list[socket.socket] = []
+        self.__sockets: list[socket.socket] = []
         """a list of socket to listen to"""
 
         for ip in ips:
-            self.logger.debug(f"ip : {ip}")
-            soc : socket.socket= socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.debug(f"Listening @ ip {ip}")
+            soc: socket.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-            self.logger.debug("....setting socket option")
+            self.debug("....setting socket option")
             soc.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
-            self.logger.debug("....trying to bind . . .")
+            self.debug("....trying to bind . . .")
             try:
-                soc.bind((ip,port))
-                self.logger.debug("....socket binding successful.")
+                soc.bind((ip, port))
+                self.debug("....socket binding successful.")
             except OSError as e:
-                self.logger.warn(f"Failed to bind @ {ip}:{port}")
-                self.logger.warn(f"Error: {e}")
+                self.warning(f"Failed to bind @ {ip}:{port}")
+                self.warning(f"Error: {e}")
                 continue
 
-            self.logger.debug("....trying to listen . . .")
+            self.debug("....trying to listen . . .")
             try:
                 soc.listen()
-                self.logger.debug("....socket start listening . . .")
+                self.debug("....socket start listening . . .")
             except OSError as e:
-                self.logger.warn(f"Failed to listen @ {ip}:{port}")
-                self.logger.warn(f"{e}")
+                self.warning(f"Failed to listen @ {ip}:{port}")
+                self.warning(f"{e}")
                 continue
 
             soc.setblocking(False)
 
-            self.logger.info(f"Finished setting up socket @ {ip}:{port}")
+            self.info(f"Finished setting up socket @ {ip}:{port}")
             self.__sockets.append(soc)
 
-
         if len(self.__sockets) == 0:
-            self.logger.error("No vaild socket created.")
+            self.error("No vaild socket created.")
             raise SocketException("No vaild socket created.")
 
-    def accept(self, stream_logger : Logger | None = None) -> TcpStream:
+    def accept(self, stream_logger: logging.Logger | str | None = None) -> TcpStream:
         """
         try accept a new tcp connection.
 
         ## Parameter:
-        `stream_logger : Logger` : logger of returned TcpStream
-        
+        - `logger: logging.Logger | str | None` : logger of returned `TcpStream`
+            - if `logger` is instance of `logging.Logger`, it will log with it;
+            - if `logger` is `str`, new logger will be created with it as name
+            - otherwise, no log
+
         ## Return:
         `TcpStream` : the accepted tcp connetion
 
         ## Exception:
         No exception, will continue to try to accept if encounter `OSError`
         """
-        self.logger.info("Start accepting . . .")
+        self.info("Start accepting . . .")
 
-        self.logger.debug("waiting for connection . . .")
+        self.debug("waiting for connection . . .")
         while True:
-            readables, _, _ = select.select(self.__sockets,[],[],1)
+            readables, _, _ = select.select(self.__sockets, [], [], 1)
 
             for soc in readables:
+                soc: socket.socket = soc
+
                 if soc not in self.__sockets:
-                    self.logger.debug("....readables not in self.__sockets")
+                    self.warning("....readables not in self.__sockets")
                     continue
 
-                (ip,port) = soc.getsockname()
+                (ip, port) = soc.getsockname()
 
-                self.logger.info(f"trying to accept connection at {ip}:{port}")
+                self.info(f"trying to accept connection at {ip}:{port}")
 
                 try:
                     accept = soc.accept()
-                    conn : socket.socket = accept[0]
+                    conn: socket.socket = accept[0]
                     peer_ip, peer_port = accept[1]
-                    self.logger.info(f"Accepting connect successful to {peer_ip}:{peer_port}")
+                    self.info(f"Accepting connect successful to {peer_ip}:{peer_port}")
                 except OSError as e:
-                    self.logger.warn("Accepting connection failed")
-                    self.logger.warn(f"{e}")
+                    self.warning("Accepting connection failed")
+                    self.warning(f"{e}")
                     continue
 
                 stream = TcpStream(conn, stream_logger)
                 return stream
 
-
     def __del__(self):
         for soc in self.__sockets:
             try:
-                (ip,port) = soc.getsockname()
-                self.logger.debug(f"shutting down socket @ {ip}:{port}")
+                (ip, port) = soc.getsockname()
+                self.debug(f"shutting down socket @ {ip}:{port}")
                 soc.close()
             except OSError as e:
-                self.logger.error("Failed to shut down socket!")
-                self.logger.error(f"{e}")
+                self.error("Failed to shut down socket!")
+                self.error(f"{e}")
                 continue
