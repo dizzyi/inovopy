@@ -6,7 +6,7 @@ from inovopy.rosbridge import InovoRos
 
 if __name__ == "__main__":
     dictConfig(LOGGING_CONFIG_CONSOLE)
-    ros = InovoRos("192.168.1.122", "service")
+    ros = InovoRos("<PSU IP addresss>", "service")
 
     time.sleep(2)
 
