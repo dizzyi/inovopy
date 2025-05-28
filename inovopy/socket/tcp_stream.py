@@ -5,14 +5,17 @@ This module provide an api class for managing tcp connection
 ## Class
 - `TcpStream` : a class for managing tcp connection
 """
+
 import socket
 import select
+import logging
 
-from inovopy.socket.utils import SocketException, auto_detect_ips
-from inovopy.utils import clean
-from inovopy.logger import Logger
+from inovopy.socket import SocketException, EndOfCommunication, detect_interfaces
+from inovopy.util import clean
+from inovopy.util import Loggable
 
-class TcpStream:
+
+class TcpStream(Loggable):
     """
     # TcpStream
     A class for managing tcp connetion
@@ -20,9 +23,9 @@ class TcpStream:
     ## Usage
     ```python
     from inovopy.socket import TcpListener, TcpStream
-    
+
     example_listener : TcpListener = TcpListener()
-    
+
     example_stream : TcpStream = example_listener.accept()
 
     example_stream.write("send a message")
@@ -30,34 +33,28 @@ class TcpStream:
     read_message = example_stream.read()
     ```
     """
-    def __init__(
-            self,
-            conn: socket.socket,
-            logger : Logger | None = None
-        ):
+
+    def __init__(self, conn: socket.socket, logger: logging.Logger | str | None = None):
         """
         initalize the stream
 
         ## Parameter
         - `conn : socket.socket` : the socket connection
-        - `logger` : if it's `None`, a logger with default setting will be created
+        - `logger: logging.Logger | str | None` :
+            - if `logger` is instance of `logging.Logger`, it will log with it;
+            - if `logger` is `str`, new logger will be created with it as name
+            - otherwise, no log
         """
-        self.__conn : socket.socket = conn
-        if logger:
-            self.logger : Logger = logger
-        else:
-            ip,port = self.__conn.getsockname()
-            peer_ip, _ = self.__conn.getpeername()
-            name : str = f"TcpStream-{ip}-{port}-{peer_ip}"
-            self.logger : Logger = Logger.default(name)
+        super().__init__(logger)
+        self.__conn: socket.socket = conn
 
     @classmethod
     def connect(
-            cls,
-            ip : str | None = None,
-            port : int = 50003,
-            logger : Logger | None = None
-        ) -> 'TcpStream':
+        cls,
+        ip: str | None = None,
+        port: int = 50003,
+        logger: logging.Logger | str | None = None,
+    ) -> "TcpStream":
         """
         Try to connect to an socket address
 
@@ -65,58 +62,63 @@ class TcpStream:
         - `ip : str`: if `None`, will try local machine
         - `port: int` : port to connect to
         - `logger: Logger`: logger for the resulted `TcpStream`
-        
+
         ## Return
         `TcpStream` the resulted connection
 
         ## Exception:
         `SocketException`
+        - if no network interface found
         """
+        logger = TcpStream.get_class_logger()
+
         if not ip:
             ip = "localhost"
-        if not logger:
-            name = f"TcpClient {ip}-{port}"
-            logger = Logger.default(name)
-        if ip == "localhost":
-            ip = auto_detect_ips(logger)[0]
 
-        logger.info("Start connecting . . .")
+        if ip == "localhost":
+            ips = detect_interfaces()
+            if len(ips) == 0:
+                logger.error("No interface found")
+                raise SocketException(
+                    "No Network Interfaces, please make sure device is connected to network"
+                )
+
+        logger.debug("Start connecting . . .")
         try:
             conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            conn.connect((ip,port))
-            logger.info(f"Successfully connected to {ip}:{port}")
+            conn.connect((ip, port))
+            logger.debug(f"Successfully connected to {ip}:{port}")
             return TcpStream(conn=conn, logger=logger)
         except OSError as e:
-            logger.warn("Failed to connect")
-            logger.warn(f"{e}")
+            logger.warning("Failed to connect")
+            logger.warning(f"{e}")
             raise SocketException("Failed to connect") from e
 
     @property
-    def ip(self)->str:
+    def ip(self) -> str:
         """get the local ip of the socket"""
         return self.__conn.getsockname()[0]
 
-    def try_read(self,timeout: float = 1.0) -> str | None:
+    def try_read(self, timeout: float = 1.0) -> str | None:
         """
         try to read a message from the socket
         ## Parameter
         - `timout : float = 1.0` : time out for the reading
-        
+
         ## Return
         `str` : read message; or
         `None` : if no message is recived
         """
-        ready_socket, _, _ = select.select([self.__conn],[],[],timeout)
+        ready_socket, _, _ = select.select([self.__conn], [], [], timeout)
         if not ready_socket:
             return None
         return self.read()
-
 
     def read(self) -> str:
         """
         read a message form the connection
 
-        maximum byte : `2048`
+        maximum byte : `4096`
 
         ## Return:
         `str` the message read
@@ -128,7 +130,7 @@ class TcpStream:
         """
         try:
             self.__conn.setblocking(True)
-            data = self.__conn.recv(2048)
+            data = self.__conn.recv(4096)
         except OSError as e:
             self.logger.error("Error occur during socket read!")
             self.logger.error(f"{e}")
@@ -137,7 +139,7 @@ class TcpStream:
         if not data:
             self.__conn.close()
             self.logger.error("Read Error : EOF detected")
-            raise SocketException("Read Error : EOF detected")
+            raise EndOfCommunication()
 
         s = clean(data.decode("UTF-8"))
         self.logger.debug(f"....{s}")

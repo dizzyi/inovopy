@@ -6,9 +6,21 @@ This module provide geometric data structure class for robot control
 - `transform` : Functions and Class for 3D spatial transform
 - `jointcoord` : 6D joint space representation
 """
-from abc import ABC,abstractmethod
 
-from inovopy.iva import  MotionMode, RobotCommand
+import numpy
+from abc import ABC
+from inovopy.iva import MotionMode, RobotCommand
+
+
+def deg_to_rad(deg: float) -> float:
+    """translate degree to radian"""
+    return deg / 180 * numpy.pi
+
+
+def rad_to_deg(rad: float) -> float:
+    """translate radion to degree"""
+    return rad / numpy.pi * 180
+
 
 class IntoRobotCommand(ABC):
     """
@@ -22,23 +34,32 @@ class IntoRobotCommand(ABC):
     - `as_joint`
     - `as_joint_relative`
     """
-    #@abstractmethod
+
+    # @abstractmethod
     def as_motion(self, motion_mode: MotionMode) -> RobotCommand:
         """construct a new motion command from the `self`"""
         return RobotCommand.motion(motion_mode=motion_mode, target=self)
-    #@abstractmethod
+
+    # @abstractmethod
     def as_linear(self) -> RobotCommand:
         """construct a new linear motion command from the `self`"""
         return self.as_motion(motion_mode=MotionMode.LINEAR)
-    #@abstractmethod
+
+    # @abstractmethod
     def as_linear_relative(self) -> RobotCommand:
         """construct a new linear relative motion command from the `self`"""
         return self.as_motion(motion_mode=MotionMode.LINEAR_RELATIVE)
-    #@abstractmethod
+
+    # @abstractmethod
     def as_joint(self) -> RobotCommand:
         """construct a new joint motion command from the `self`"""
         return self.as_motion(motion_mode=MotionMode.JOINT)
-    #@abstractmethod
+
+    # @abstractmethod
     def as_joint_relative(self) -> RobotCommand:
         """construct a new joint relative motion command from the `self`"""
         return self.as_motion(motion_mode=MotionMode.JOINT_RELATIVE)
+
+
+from inovopy.geometry.transform import Transform
+from inovopy.geometry.jointcoord import JointCoord
