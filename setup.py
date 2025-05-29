@@ -7,7 +7,7 @@ from pathlib import Path
 
 VERSION = "1.0.0"
 DESCRIPTION = "Inovo Robot Arm API"
-LONG_DESCRIPTION = Path(__file__).parent.read_text()
+LONG_DESCRIPTION = (Path(__file__).parent / "README.md").read_text()
 
 # Setting up
 setup(
