@@ -126,6 +126,7 @@ class Loggable(abc.ABC):
             self.logger.critical(*args, **kwargs)
 
 
+# Default Logging Config
 LOGGING_CONFIG_CONSOLE = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -158,6 +159,33 @@ from logging.config import dictConfig
 from inovopy.util import LOGGING_CONFIG_CONSOLE
 
 dictConfig(LOGGING_CONFIG_CONSOLE)
+```
+
+Value:
+```python
+LOGGING_CONFIG_CONSOLE = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "simpleformatter": {
+            "format": "%(name)-10s %(levelname)-7s %(message)s",
+        },
+    },
+    "handlers": {
+        "consolehandler": {
+            "()": "inovopy.util.ConsoleHandler",
+            "formatter": "simpleformatter",
+            "level": "INFO",
+        },
+    },
+    "loggers": {
+        "root": {
+            "handlers": ["consolehandler"],
+            "level": "DEBUG",
+            "propagate": True,
+        }
+    },
+}
 ```
 """
 
@@ -204,5 +232,42 @@ from logging.config import dictConfig
 from inovopy.util import LOGGING_CONFIG
 
 dictConfig(LOGGING_CONFIG)
+```
+Value: 
+```python
+LOGGING_CONFIG = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "simpleformatter": {
+            "format": "%(name)-10s %(levelname)-7s %(message)s",
+        },
+        "detailformatter": {
+            "format": "%(asctime)s %(name)-10s %(levelname)-7s %(funcName)s() L%(lineno)-4d %(message)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+        },
+    },
+    "handlers": {
+        "rotatehandler": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "formatter": "detailformatter",
+            "filename": "logging/master_log.log",
+            "maxBytes": 50 * 1000 * 1000,
+            "backupCount": 3,
+        },
+        "consolehandler": {
+            "()": "inovopy.util.ConsoleHandler",
+            "formatter": "simpleformatter",
+            "level": "INFO",
+        },
+    },
+    "loggers": {
+        "root": {
+            "handlers": ["consolehandler", "rotatehandler"],
+            "level": "DEBUG",
+            "propagate": True,
+        }
+    },
+}
 ```
 """

@@ -4,7 +4,7 @@ import subprocess
 import shutil
 import logging
 from logging.config import dictConfig
-from inovopy.util import LOGGING_CONFIG
+from inovopy.util import LOGGING_CONFIG_CONSOLE
 
 
 def gen_docs():
@@ -32,5 +32,5 @@ def gen_docs():
 
 
 if __name__ == "__main__":
-    dictConfig(LOGGING_CONFIG)
+    dictConfig(LOGGING_CONFIG_CONSOLE)
     gen_docs()

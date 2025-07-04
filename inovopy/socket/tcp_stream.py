@@ -132,17 +132,17 @@ class TcpStream(Loggable):
             self.__conn.setblocking(True)
             data = self.__conn.recv(4096)
         except OSError as e:
-            self.logger.error("Error occur during socket read!")
-            self.logger.error(f"{e}")
+            self.error("Error occur during socket read!")
+            self.error(f"{e}")
             raise SocketException("Read Error") from e
 
         if not data:
             self.__conn.close()
-            self.logger.error("Read Error : EOF detected")
+            self.error("Read Error : EOF detected")
             raise EndOfCommunication()
 
         s = clean(data.decode("UTF-8"))
-        self.logger.debug(f"....{s}")
+        self.debug(f"...{s}")
 
         return s
 
@@ -154,21 +154,21 @@ class TcpStream(Loggable):
         - `msg : str` : string message to send
         """
         try:
-            self.logger.debug(f"{msg}")
+            self.debug(f"{msg}")
             msg = f"{msg}\n"
             self.__conn.send(msg.encode())
         except Exception as e:
-            self.logger.error("Error occur during socket write!")
-            self.logger.error(f"{e}")
+            self.error("Error occur during socket write!")
+            self.error(f"{e}")
             raise SocketException("Write Error") from e
 
     def __del__(self):
         try:
-            self.logger.debug("closing socket")
+            self.debug("closing socket")
             self.__conn.close()
         except OSError as e:
             try:
-                self.logger.error("Failed to shut down socket!")
-                self.logger.error(f"{e}")
+                self.error("Failed to shut down socket!")
+                self.error(f"{e}")
             except OSError:
                 pass
