@@ -17,7 +17,7 @@ def gen_docs():
 
     logger.info("generating docs . . .")
     res = subprocess.run(
-        ["pdoc", "--html", "-o", "./docs", "inovopy"],
+        ["pdoc", "--html", "--output-dir", "./temp", "inovopy"],
         capture_output=True,
         text=True,
         check=False,
@@ -29,7 +29,10 @@ def gen_docs():
 
     if res.stderr != "":
         logger.error(res.stderr)
-        return
+        exit(1)
+    
+    shutil.copytree("./temp/inovopy", "./docs")
+    shutil.rmtree("./temp")
 
 
 if __name__ == "__main__":
