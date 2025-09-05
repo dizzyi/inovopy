@@ -2,6 +2,7 @@
 
 import subprocess
 import shutil
+import os
 import logging
 from logging.config import dictConfig
 from inovopy.util import LOGGING_CONFIG_CONSOLE
@@ -16,7 +17,7 @@ def gen_docs():
 
     logger.info("generating docs . . .")
     res = subprocess.run(
-        ["pdoc", "-o", "./docs", "inovopy"],
+        ["pdoc", "--html", "-o", "./docs", "inovopy"],
         capture_output=True,
         text=True,
         check=False,

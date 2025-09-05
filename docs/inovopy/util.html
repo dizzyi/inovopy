@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>inovopy.util API documentation</title>
+<meta name="description" content="Utils Module
+This module provide utility functions and classes …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>inovopy.util</code></h1>
+</header>
+<section id="section-intro">
+<h1 id="utils-module">Utils Module</h1>
+<p>This module provide utility functions and classes.</p>
+<h2 id="classes">Classes</h2>
+<p><code><a title="inovopy.util.ConsoleHandler" href="#inovopy.util.ConsoleHandler">ConsoleHandler</a></code>: colorful python logging handler
+<code><a title="inovopy.util.Loggable" href="#inovopy.util.Loggable">Loggable</a></code> : helper interface for logging class</p>
+<h2 id="functions">Functions</h2>
+<ul>
+<li><code><a title="inovopy.util.clean" href="#inovopy.util.clean">clean()</a></code> : clean up all non visible character of a str</li>
+<li><code><a title="inovopy.util.clamp" href="#inovopy.util.clamp">clamp()</a></code> : clamp float</li>
+</ul>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-variables">Global variables</h2>
+<dl>
+<dt id="inovopy.util.LOGGING_CONFIG"><code class="name">var <span class="ident">LOGGING_CONFIG</span></code></dt>
+<dd>
+<div class="desc"><p>A simple config for <code>logging</code>, console + rotating file</p>
+<p>Usage:</p>
+<pre><code class="language-python">from logging.config import dictConfig
+from inovopy.util import LOGGING_CONFIG
+
+dictConfig(LOGGING_CONFIG)
+</code></pre>
+<p>Value: </p>
+<pre><code class="language-python">LOGGING_CONFIG = {
+    &quot;version&quot;: 1,
+    &quot;disable_existing_loggers&quot;: False,
+    &quot;formatters&quot;: {
+        &quot;simpleformatter&quot;: {
+            &quot;format&quot;: &quot;%(name)-10s %(levelname)-7s %(message)s&quot;,
+        },
+        &quot;detailformatter&quot;: {
+            &quot;format&quot;: &quot;%(asctime)s %(name)-10s %(levelname)-7s %(funcName)s() L%(lineno)-4d %(message)s&quot;,
+            &quot;datefmt&quot;: &quot;%Y-%m-%d %H:%M:%S&quot;,
+        },
+    },
+    &quot;handlers&quot;: {
+        &quot;rotatehandler&quot;: {
+            &quot;class&quot;: &quot;logging.handlers.RotatingFileHandler&quot;,
+            &quot;formatter&quot;: &quot;detailformatter&quot;,
+            &quot;filename&quot;: &quot;logging/master_log.log&quot;,
+            &quot;maxBytes&quot;: 50 * 1000 * 1000,
+            &quot;backupCount&quot;: 3,
+        },
+        &quot;consolehandler&quot;: {
+            &quot;()&quot;: &quot;inovopy.util.ConsoleHandler&quot;,
+            &quot;formatter&quot;: &quot;simpleformatter&quot;,
+            &quot;level&quot;: &quot;INFO&quot;,
+        },
+    },
+    &quot;loggers&quot;: {
+        &quot;root&quot;: {
+            &quot;handlers&quot;: [&quot;consolehandler&quot;, &quot;rotatehandler&quot;],
+            &quot;level&quot;: &quot;DEBUG&quot;,
+            &quot;propagate&quot;: True,
+        }
+    },
+}
+</code></pre></div>
+</dd>
+<dt id="inovopy.util.LOGGING_CONFIG_CONSOLE"><code class="name">var <span class="ident">LOGGING_CONFIG_CONSOLE</span></code></dt>
+<dd>
+<div class="desc"><p>A simple config for <code>logging</code>, console only</p>
+<p>Usage:</p>
+<pre><code class="language-python">from logging.config import dictConfig
+from inovopy.util import LOGGING_CONFIG_CONSOLE
+
+dictConfig(LOGGING_CONFIG_CONSOLE)
+</code></pre>
+<p>Value:</p>
+<pre><code class="language-python">LOGGING_CONFIG_CONSOLE = {
+    &quot;version&quot;: 1,
+    &quot;disable_existing_loggers&quot;: False,
+    &quot;formatters&quot;: {
+        &quot;simpleformatter&quot;: {
+            &quot;format&quot;: &quot;%(name)-10s %(levelname)-7s %(message)s&quot;,
+        },
+    },
+    &quot;handlers&quot;: {
+        &quot;consolehandler&quot;: {
+            &quot;()&quot;: &quot;inovopy.util.ConsoleHandler&quot;,
+            &quot;formatter&quot;: &quot;simpleformatter&quot;,
+            &quot;level&quot;: &quot;INFO&quot;,
+        },
+    },
+    &quot;loggers&quot;: {
+        &quot;root&quot;: {
+            &quot;handlers&quot;: [&quot;consolehandler&quot;],
+            &quot;level&quot;: &quot;DEBUG&quot;,
+            &quot;propagate&quot;: True,
+        }
+    },
+}
+</code></pre></div>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="inovopy.util.clamp"><code class="name flex">
+<span>def <span class="ident">clamp</span></span>(<span>f: float, floor: float, ceil: float) ‑> float</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def clamp(f: float, floor: float, ceil: float) -&gt; float:
+    &#34;&#34;&#34;clamp a float between a floor and a ceil&#34;&#34;&#34;
+    return min(max(f, floor), ceil)</code></pre>
+</details>
+<div class="desc"><p>clamp a float between a floor and a ceil</p></div>
+</dd>
+<dt id="inovopy.util.clean"><code class="name flex">
+<span>def <span class="ident">clean</span></span>(<span>s: str) ‑> str</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def clean(s: str) -&gt; str:
+    &#34;&#34;&#34;clean up all non visible characters of a str&#34;&#34;&#34;
+    return re.sub(r&#34;[^ -~]&#34;, &#34;&#34;, s)</code></pre>
+</details>
+<div class="desc"><p>clean up all non visible characters of a str</p></div>
+</dd>
+<dt id="inovopy.util.get_package_logger"><code class="name flex">
+<span>def <span class="ident">get_package_logger</span></span>(<span>) ‑> logging.Logger</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_package_logger() -&gt; logging.Logger:
+    &#34;&#34;&#34;Get package logger&#34;&#34;&#34;
+    return logging.getLogger(&#34;inovopy&#34;)</code></pre>
+</details>
+<div class="desc"><p>Get package logger</p></div>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="inovopy.util.ConsoleHandler"><code class="flex name class">
+<span>class <span class="ident">ConsoleHandler</span></span>
+<span>(</span><span>level=0)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ConsoleHandler(logging.Handler):
+    &#34;&#34;&#34;
+    A class for logging to console with color
+
+    Base Class:
+    - `logging.Handler`
+    &#34;&#34;&#34;
+
+    class ConsoleColor:
+        &#34;&#34;&#34;
+        a internal class for changing console display color
+        &#34;&#34;&#34;
+
+        RED = &#34;\033[31m&#34;
+        YELLOW = &#34;\033[33m&#34;
+        GREEN = &#34;\033[32m&#34;
+        RESET = &#34;\033[0m&#34;
+
+    def __init__(self, level=0):
+        super().__init__(level)
+
+    def emit(self, record: logging.LogRecord):
+        cc = ConsoleHandler.ConsoleColor
+
+        l = record.levelno
+        msg = self.format(record)
+
+        if l &gt;= 40:
+            msg = f&#34;{cc.RED}{msg}{cc.RESET}&#34;
+        elif l &gt;= 30:
+            msg = f&#34;{cc.YELLOW}{msg}{cc.RESET}&#34;
+        elif l &gt;= 20:
+            msg = f&#34;{cc.GREEN}{msg}{cc.RESET}&#34;
+        else:
+            pass
+
+        print(msg)</code></pre>
+</details>
+<div class="desc"><p>A class for logging to console with color</p>
+<p>Base Class:
+- <code>logging.Handler</code></p>
+<p>Initializes the instance - basically setting the formatter to None
+and the filter list to empty.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>logging.Handler</li>
+<li>logging.Filterer</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="inovopy.util.ConsoleHandler.ConsoleColor"><code class="name">var <span class="ident">ConsoleColor</span></code></dt>
+<dd>
+<div class="desc"><p>a internal class for changing console display color</p></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="inovopy.util.ConsoleHandler.emit"><code class="name flex">
+<span>def <span class="ident">emit</span></span>(<span>self, record: logging.LogRecord)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def emit(self, record: logging.LogRecord):
+    cc = ConsoleHandler.ConsoleColor
+
+    l = record.levelno
+    msg = self.format(record)
+
+    if l &gt;= 40:
+        msg = f&#34;{cc.RED}{msg}{cc.RESET}&#34;
+    elif l &gt;= 30:
+        msg = f&#34;{cc.YELLOW}{msg}{cc.RESET}&#34;
+    elif l &gt;= 20:
+        msg = f&#34;{cc.GREEN}{msg}{cc.RESET}&#34;
+    else:
+        pass
+
+    print(msg)</code></pre>
+</details>
+<div class="desc"><p>Do whatever it takes to actually log the specified logging record.</p>
+<p>This version is intended to be implemented by subclasses and so
+raises a NotImplementedError.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="inovopy.util.Loggable"><code class="flex name class">
+<span>class <span class="ident">Loggable</span></span>
+<span>(</span><span>logger: logging.Logger | str | None = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Loggable(abc.ABC):
+    &#34;&#34;&#34;
+    A simple interface baseclass for logging class
+
+    Function:
+    - `debug(*args, **kwargs)` : transparent to `logger.Logger.debug`
+    - `info(*args, **kwargs)` : transparent to `logger.Logger.info`
+    - `warning(*args, **kwargs)` : transparent to `logger.Logger.warning`
+    - `error(*args, **kwargs)` : transparent to `logger.Logger.error`
+    - `critical(*args, **kwargs)` : transparent to `logger.Logger.critical`
+    &#34;&#34;&#34;
+
+    logger: logging.Logger | None = None
+
+    @classmethod
+    def get_class_logger(cls) -&gt; logging.Logger:
+        return get_package_logger().getChild(cls.__name__)
+
+    @classmethod
+    def get_logger(cls, name: str) -&gt; logging.Logger:
+        return cls.get_class_logger().getChild(name)
+
+    def __init__(self, logger: logging.Logger | str | None = None):
+        super().__init__()
+
+        if isinstance(logger, logging.Logger):
+            self.logger = logger
+        elif isinstance(logger, str):
+            self.logger = self.get_logger(logger)
+
+    def debug(self, *args, **kwargs):
+        &#34;&#34;&#34;transparent to `logger.Logger.debug`&#34;&#34;&#34;
+        if self.logger:
+            self.logger.debug(*args, **kwargs)
+
+    def info(self, *args, **kwargs):
+        &#34;&#34;&#34;transparent to `logger.Logger.info`&#34;&#34;&#34;
+        if self.logger:
+            self.logger.info(*args, **kwargs)
+
+    def warning(self, *args, **kwargs):
+        &#34;&#34;&#34;transparent to `logger.Logger.warning`&#34;&#34;&#34;
+        if self.logger:
+            self.logger.warning(*args, **kwargs)
+
+    def error(self, *args, **kwargs):
+        &#34;&#34;&#34;transparent to `logger.Logger.error`&#34;&#34;&#34;
+        if self.logger:
+            self.logger.error(*args, **kwargs)
+
+    def critical(self, *args, **kwargs):
+        &#34;&#34;&#34;transparent to `logger.Logger.critical`&#34;&#34;&#34;
+        if self.logger:
+            self.logger.critical(*args, **kwargs)</code></pre>
+</details>
+<div class="desc"><p>A simple interface baseclass for logging class</p>
+<p>Function:
+- <code>debug(*args, **kwargs)</code> : transparent to <code>logger.Logger.debug</code>
+- <code>info(*args, **kwargs)</code> : transparent to <code>logger.Logger.info</code>
+- <code>warning(*args, **kwargs)</code> : transparent to <code>logger.Logger.warning</code>
+- <code>error(*args, **kwargs)</code> : transparent to <code>logger.Logger.error</code>
+- <code>critical(*args, **kwargs)</code> : transparent to <code>logger.Logger.critical</code></p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="inovopy.robot.InovoRobot" href="robot/index.html#inovopy.robot.InovoRobot">InovoRobot</a></li>
+<li><a title="inovopy.rosbridge.InovoRos" href="rosbridge.html#inovopy.rosbridge.InovoRos">InovoRos</a></li>
+<li><a title="inovopy.socket.tcp_listener.TcpListener" href="socket/tcp_listener.html#inovopy.socket.tcp_listener.TcpListener">TcpListener</a></li>
+<li><a title="inovopy.socket.tcp_stream.TcpStream" href="socket/tcp_stream.html#inovopy.socket.tcp_stream.TcpStream">TcpStream</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="inovopy.util.Loggable.logger"><code class="name">var <span class="ident">logger</span> : logging.Logger | None</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+</dl>
+<h3>Static methods</h3>
+<dl>
+<dt id="inovopy.util.Loggable.get_class_logger"><code class="name flex">
+<span>def <span class="ident">get_class_logger</span></span>(<span>) ‑> logging.Logger</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="inovopy.util.Loggable.get_logger"><code class="name flex">
+<span>def <span class="ident">get_logger</span></span>(<span>name: str) ‑> logging.Logger</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="inovopy.util.Loggable.critical"><code class="name flex">
+<span>def <span class="ident">critical</span></span>(<span>self, *args, **kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def critical(self, *args, **kwargs):
+    &#34;&#34;&#34;transparent to `logger.Logger.critical`&#34;&#34;&#34;
+    if self.logger:
+        self.logger.critical(*args, **kwargs)</code></pre>
+</details>
+<div class="desc"><p>transparent to <code>logger.Logger.critical</code></p></div>
+</dd>
+<dt id="inovopy.util.Loggable.debug"><code class="name flex">
+<span>def <span class="ident">debug</span></span>(<span>self, *args, **kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def debug(self, *args, **kwargs):
+    &#34;&#34;&#34;transparent to `logger.Logger.debug`&#34;&#34;&#34;
+    if self.logger:
+        self.logger.debug(*args, **kwargs)</code></pre>
+</details>
+<div class="desc"><p>transparent to <code>logger.Logger.debug</code></p></div>
+</dd>
+<dt id="inovopy.util.Loggable.error"><code class="name flex">
+<span>def <span class="ident">error</span></span>(<span>self, *args, **kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def error(self, *args, **kwargs):
+    &#34;&#34;&#34;transparent to `logger.Logger.error`&#34;&#34;&#34;
+    if self.logger:
+        self.logger.error(*args, **kwargs)</code></pre>
+</details>
+<div class="desc"><p>transparent to <code>logger.Logger.error</code></p></div>
+</dd>
+<dt id="inovopy.util.Loggable.info"><code class="name flex">
+<span>def <span class="ident">info</span></span>(<span>self, *args, **kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def info(self, *args, **kwargs):
+    &#34;&#34;&#34;transparent to `logger.Logger.info`&#34;&#34;&#34;
+    if self.logger:
+        self.logger.info(*args, **kwargs)</code></pre>
+</details>
+<div class="desc"><p>transparent to <code>logger.Logger.info</code></p></div>
+</dd>
+<dt id="inovopy.util.Loggable.warning"><code class="name flex">
+<span>def <span class="ident">warning</span></span>(<span>self, *args, **kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def warning(self, *args, **kwargs):
+    &#34;&#34;&#34;transparent to `logger.Logger.warning`&#34;&#34;&#34;
+    if self.logger:
+        self.logger.warning(*args, **kwargs)</code></pre>
+</details>
+<div class="desc"><p>transparent to <code>logger.Logger.warning</code></p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#utils-module">Utils Module</a><ul>
+<li><a href="#classes">Classes</a></li>
+<li><a href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="inovopy" href="index.html">inovopy</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-variables">Global variables</a></h3>
+<ul class="">
+<li><code><a title="inovopy.util.LOGGING_CONFIG" href="#inovopy.util.LOGGING_CONFIG">LOGGING_CONFIG</a></code></li>
+<li><code><a title="inovopy.util.LOGGING_CONFIG_CONSOLE" href="#inovopy.util.LOGGING_CONFIG_CONSOLE">LOGGING_CONFIG_CONSOLE</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="inovopy.util.clamp" href="#inovopy.util.clamp">clamp</a></code></li>
+<li><code><a title="inovopy.util.clean" href="#inovopy.util.clean">clean</a></code></li>
+<li><code><a title="inovopy.util.get_package_logger" href="#inovopy.util.get_package_logger">get_package_logger</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="inovopy.util.ConsoleHandler" href="#inovopy.util.ConsoleHandler">ConsoleHandler</a></code></h4>
+<ul class="">
+<li><code><a title="inovopy.util.ConsoleHandler.ConsoleColor" href="#inovopy.util.ConsoleHandler.ConsoleColor">ConsoleColor</a></code></li>
+<li><code><a title="inovopy.util.ConsoleHandler.emit" href="#inovopy.util.ConsoleHandler.emit">emit</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="inovopy.util.Loggable" href="#inovopy.util.Loggable">Loggable</a></code></h4>
+<ul class="two-column">
+<li><code><a title="inovopy.util.Loggable.critical" href="#inovopy.util.Loggable.critical">critical</a></code></li>
+<li><code><a title="inovopy.util.Loggable.debug" href="#inovopy.util.Loggable.debug">debug</a></code></li>
+<li><code><a title="inovopy.util.Loggable.error" href="#inovopy.util.Loggable.error">error</a></code></li>
+<li><code><a title="inovopy.util.Loggable.get_class_logger" href="#inovopy.util.Loggable.get_class_logger">get_class_logger</a></code></li>
+<li><code><a title="inovopy.util.Loggable.get_logger" href="#inovopy.util.Loggable.get_logger">get_logger</a></code></li>
+<li><code><a title="inovopy.util.Loggable.info" href="#inovopy.util.Loggable.info">info</a></code></li>
+<li><code><a title="inovopy.util.Loggable.logger" href="#inovopy.util.Loggable.logger">logger</a></code></li>
+<li><code><a title="inovopy.util.Loggable.warning" href="#inovopy.util.Loggable.warning">warning</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

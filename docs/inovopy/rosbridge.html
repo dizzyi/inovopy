@@ -1,0 +1,1445 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>inovopy.rosbridge API documentation</title>
+<meta name="description" content="Ros Bridge Module
+This module contain function and class for using rosbridge
+api to command and get state from inovo arm …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>inovopy.rosbridge</code></h1>
+</header>
+<section id="section-intro">
+<h1 id="ros-bridge-module">Ros Bridge Module</h1>
+<p>This module contain function and class for using rosbridge
+api to command and get state from inovo arm</p>
+<p><code><a title="inovopy.rosbridge.InovoRos" href="#inovopy.rosbridge.InovoRos">InovoRos</a></code></p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="inovopy.rosbridge.InovoRos"><code class="flex name class">
+<span>class <span class="ident">InovoRos</span></span>
+<span>(</span><span>host: str, logger: logging.Logger | str | None = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class InovoRos(inovopy.util.Loggable):
+    &#34;&#34;&#34;
+    # RosBridge
+    A class managing rosbridge api communication
+
+    ## Usage
+    ```python
+    from inovopy.rosbridge import InovoRos
+
+    ros = InovoRos(&#34;192.168.1.1&#34;)
+
+    ros.estop_reset()
+    ```
+    &#34;&#34;&#34;
+
+    # Ros
+    ros: roslibpy.Ros
+    &#34;&#34;&#34;connection manager to ROS server (`roslibpy.Ros`)&#34;&#34;&#34;
+
+    # Tcp Speed
+    tcp_speed_lin: float = 0
+    tcp_speed_ang: float = 0
+
+    # Tcp Pose
+    tcp_pose_vec: tuple[float, float, float] = (0, 0, 0)
+    tcp_pose_quat: tuple[float, float, float, float] = (0, 0, 0, 0)
+
+    # Joint State
+    joint_pos: list[float] = []
+    joint_vel: list[float] = []
+    joint_eff: list[float] = []
+
+    # Power Status
+    voltage: float = 0
+    current: float = 0
+    power_status: str = 0
+
+    # Robot Status
+    driver_state: str = &#34;&#34;
+    drive_powered: bool = False
+
+    # EStop Status
+    estop_active: bool = False
+    estop_circuit: bool = False
+
+    # Safe Stop Status
+    safe_stop_active: bool = False
+    safe_stop_circuit: bool = False
+
+    # Runtime State
+    active_blocks: list[str] = []
+    current_block_progress: float = 0
+    runtime_status: RuntimeState = 0
+    variables: list[Variable] = []
+
+    # Arm State
+    enable: bool = False
+    state: int = 0
+    joint_states: list[JointState] = []
+
+    def __init__(self, host: str, logger: logging.Logger | str | None = None):
+        &#34;&#34;&#34;
+        initalize `InovoRos`
+
+        ## Args
+        - `host : str` : host of psu, preferably in form of `192.168.x.x`
+        - `logger: logging.Logger | str | None` :
+            - if `logger` is instance of `logging.Logger`, it will log with it;
+            - if `logger` is `str`, new logger will be created with it as name
+            - otherwise, no log
+        &#34;&#34;&#34;
+        super().__init__(logger)
+
+        self.host: str = host
+
+        self.info(f&#34;ros bridge initalized with host : {self.host}&#34;)
+        if not &#34;192.168&#34; in self.host:
+            self.warning(&#34;host is not in form of 192.168.x.x&#34;)
+            self.warning(&#34;this might cause networking latency&#34;)
+
+        self.ros = roslibpy.Ros(host, 9090)
+        self.ros.run()
+
+        build_list = [
+            (self.__tcp_speed, TOPIC_TCP_SPEED, TYPE_TCP_SPEED),
+            (self.__tcp_pose, TOPIC_TCP_POSE, TYPE_TCP_POSE),
+            (self.__joint_state, TOPIC_JOINT_STATE, TYPE_JOINT_STATE),
+            (self.__power_status, TOPIC_POWER_STATUS, TYPE_POWER_STATUS),
+            (self.__robot_status, TOPIC_ROBOT_STATUS, TYPE_ROBOT_STATUS),
+            (self.__estop_status, TOPIC_ESTOP_STATUS, TYPE_ESTOP_STATUS),
+            (self.__safe_stop_status, TOPIC_SAFE_STOP_STATUS, TYPE_SAFE_STOP_STATUS),
+            (self.__runtime_state, TOPIC_RUNTIME_STATE, TYPE_RUNTIME_STATE),
+            (self.__arm_state, TOPIC_ARM_STATE, TYPE_ARM_STATE),
+        ]
+
+        self.subscribers: dict[str, roslibpy.Topic] = {}
+
+        for cb, name, message_type in build_list:
+            self.info(f&#34;Subscribing to topic: {name}, type : {message_type}&#34;)
+            sub = roslibpy.Topic(self.ros, name, message_type)
+            sub.subscribe(cb)
+            self.subscribers[name] = sub
+
+    # Topic Call Back
+    def __tcp_speed(self, message):
+        self.tcp_speed_lin = message[&#34;speed&#34;][&#34;linear&#34;]
+        self.tcp_speed_ang = message[&#34;speed&#34;][&#34;angular&#34;]
+
+    def __tcp_pose(self, message):
+        vec = message[&#34;pose&#34;][&#34;position&#34;]
+        self.tcp_pose_vec = (vec[&#34;x&#34;], vec[&#34;y&#34;], vec[&#34;z&#34;])
+
+        quat = message[&#34;pose&#34;][&#34;orientation&#34;]
+        self.tcp_pose_quat = (
+            quat[&#34;x&#34;],
+            quat[&#34;y&#34;],
+            quat[&#34;z&#34;],
+            quat[&#34;w&#34;],
+        )
+
+    def __joint_state(self, message):
+        self.joint_pos = message[&#34;position&#34;]
+        self.joint_vel = message[&#34;velocity&#34;]
+        self.joint_eff = message[&#34;effort&#34;]
+
+    def __power_status(self, message):
+        self.power_status = message[&#34;state&#34;]
+        self.voltage = message[&#34;voltage&#34;]
+        self.current = message[&#34;current&#34;]
+
+    def __robot_status(self, message):
+        self.driver_state = message[&#34;driver_state&#34;]
+        self.drives_powered = message[&#34;drives_powered&#34;]
+
+    def __estop_status(self, message):
+        self.estop_active = message[&#34;active&#34;]
+        self.estop_circuit = message[&#34;circuit_complete&#34;]
+
+    def __safe_stop_status(self, message):
+        self.safe_stop_active = message[&#34;active&#34;]
+        self.safe_stop_circuit = message[&#34;circuit_complete&#34;]
+
+    def __runtime_state(self, message):
+        self.active_blocks = message[&#34;active_blocks&#34;]
+        self.current_block_progress = message[&#34;current_block_progress&#34;]
+        self.runtime_status = RuntimeState(message[&#34;state&#34;])
+        self.variables = []
+
+        for v in message[&#34;variables&#34;]:
+            self.variables.append(Variable.from_message(v))
+
+    def __arm_state(self, message):
+        self.enabled = message[&#34;enabled&#34;]
+        self.state = message[&#34;state&#34;]
+        self.joint_states = []
+
+        for j in message[&#34;joint_states&#34;]:
+            self.joint_states.append(JointState.from_message(j))
+
+    # Service
+
+    # PSU/Robot
+    def safe_stop_reset(self) -&gt; InovoServiceResponse:
+        req = roslibpy.ServiceRequest()
+        res = roslibpy.Service(self.ros, SERVICE_SAFE_STOP_RESET, TYPE_TRIGGER).call(
+            req
+        )
+        return InovoServiceResponse.from_message(res)
+
+    def estop_reset(self) -&gt; InovoServiceResponse:
+        req = roslibpy.ServiceRequest()
+        res = roslibpy.Service(self.ros, SERVICE_ESTOP_RESET, TYPE_TRIGGER).call(req)
+        return InovoServiceResponse.from_message(res)
+
+    def power_on(self) -&gt; InovoServiceResponse:
+        req = roslibpy.ServiceRequest()
+        res = roslibpy.Service(self.ros, SERVICE_POWER_ON, TYPE_TRIGGER).call(req)
+        return InovoServiceResponse.from_message(res)
+
+    def power_off(self) -&gt; InovoServiceResponse:
+        req = roslibpy.ServiceRequest()
+        res = roslibpy.Service(self.ros, SERVICE_POWER_OFF, TYPE_TRIGGER).call(req)
+        return InovoServiceResponse.from_message(res)
+
+    def robot_enable(self) -&gt; InovoServiceResponse:
+        req = roslibpy.ServiceRequest()
+        res = roslibpy.Service(self.ros, SERVICE_ROBOT_ENABLE, TYPE_TRIGGER).call(req)
+        return InovoServiceResponse.from_message(res)
+
+    def robot_disable(self) -&gt; InovoServiceResponse:
+        req = roslibpy.ServiceRequest()
+        res = roslibpy.Service(self.ros, SERVICE_ROBOT_DISABLE, TYPE_TRIGGER).call(req)
+        return InovoServiceResponse.from_message(res)
+
+    # Runtime
+    def runtime_start(self, procedure_name: str | None = None) -&gt; InovoServiceResponse:
+        &#34;&#34;&#34;
+        start a sequence in runtime
+
+        ## Args:
+        - `procedure_name : str | None`:
+            - if `None`, will start from start block
+            - if `str`, will try to start function with respected name
+        &#34;&#34;&#34;
+
+        payload = {}
+
+        if procedure_name:
+            payload[&#34;procedure_name&#34;] = procedure_name
+
+        req = roslibpy.ServiceRequest(payload)
+        res = roslibpy.Service(
+            self.ros, SERVICE_SEQUENCE_START, TYPE_RUN_SEQUENCE
+        ).call(req)
+        return InovoServiceResponse.from_message(res)
+
+    def runtime_stop(self) -&gt; InovoServiceResponse:
+        req = roslibpy.ServiceRequest()
+        res = roslibpy.Service(self.ros, SERVICE_SEQUENCE_STOP, TYPE_TRIGGER).call(req)
+        return InovoServiceResponse.from_message(res)
+
+    def runtime_pause(self) -&gt; InovoServiceResponse:
+        req = roslibpy.ServiceRequest()
+        res = roslibpy.Service(self.ros, SERVICE_SEQUENCE_PAUSE, TYPE_TRIGGER).call(req)
+        return InovoServiceResponse.from_message(res)
+
+    def runtime_step(self) -&gt; InovoServiceResponse:
+        req = roslibpy.ServiceRequest()
+        res = roslibpy.Service(self.ros, SERVICE_SEQUENCE_STEP, TYPE_TRIGGER).call(req)
+        return InovoServiceResponse.from_message(res)
+
+    def runtime_debug(self) -&gt; InovoServiceResponse:
+        req = roslibpy.ServiceRequest()
+        res = roslibpy.Service(self.ros, SERVICE_SEQUENCE_DEBUG, TYPE_TRIGGER).call(req)
+        return InovoServiceResponse.from_message(res)
+
+    def runtime_continue(self) -&gt; InovoServiceResponse:
+        req = roslibpy.ServiceRequest()
+        res = roslibpy.Service(self.ros, SERVICE_SEQUENCE_CONTINUE, TYPE_TRIGGER).call(
+            req
+        )
+        return InovoServiceResponse.from_message(res)
+
+    def runtime_get_var(self, name: str) -&gt; InovoServiceResponse:
+        req = roslibpy.ServiceRequest({&#34;name&#34;: name})
+        res = roslibpy.Service(self.ros, SERVICE_SEQUENCE_GET_VAR, TYPE_GET_VAR).call(
+            req
+        )
+        return InovoServiceResponse.from_message(res)
+
+    def runtime_set_var(self, name: str, value: typing.Any) -&gt; InovoServiceResponse:
+        req = roslibpy.ServiceRequest({&#34;name&#34;: name, &#34;value&#34;: str(value)})
+        res = roslibpy.Service(self.ros, SERVICE_SEQUENCE_SET_VAR, TYPE_SET_VAR).call(
+            req
+        )
+        return InovoServiceResponse.from_message(res)
+
+    @contextmanager
+    def jog(self):
+        &#34;&#34;&#34;
+        Enter a context of jog command mode. Advertise when enter context
+        and automatically unadvertise when exit.
+
+        ## Yields:
+        - `JogPublisher`: api for jog command
+
+        ## Example:
+        ```python
+        import time
+        from inovopy.rosbridge import InovoRos
+
+        ros = InovoRos(&#34;192.168.1.122&#34;, &#34;Jog&#34;)
+
+        with ros.jog() as j:
+            for _ in range(1000):
+                j.jog(z=-0.01)
+                time.sleep(0.01)
+            for _ in range(1000):
+                j.jog(z=0.01)
+                time.sleep(0.01)
+        ```
+        &#34;&#34;&#34;
+
+        top = roslibpy.Topic(self.ros, TOPIC_CARTESIAN_JOG, TYPE_CARTESIAN_JOG_DEMAND)
+        top.advertise()
+
+        publisher = JogPublisher(top)
+
+        yield publisher
+
+        publisher.publisher.unadvertise()
+        del publisher
+
+    # Destruction
+    def unsubscribe_all(self):
+        for n, sub in self.subscribers.items():
+            self.info(f&#34;unsubscribing topic : {n}&#34;)
+            sub.unsubscribe()
+
+    def resubscribe_all(self):
+        for n, sub in self.subscribers.items():
+            self.info(f&#34;resubscribing topic : {n}&#34;)
+            sub.subscribe()
+
+    def __del__(self):
+        self.ros.close()</code></pre>
+</details>
+<div class="desc"><h1 id="rosbridge">RosBridge</h1>
+<p>A class managing rosbridge api communication</p>
+<h2 id="usage">Usage</h2>
+<pre><code class="language-python">from inovopy.rosbridge import InovoRos
+
+ros = InovoRos(&quot;192.168.1.1&quot;)
+
+ros.estop_reset()
+</code></pre>
+<p>initalize <code><a title="inovopy.rosbridge.InovoRos" href="#inovopy.rosbridge.InovoRos">InovoRos</a></code></p>
+<h2 id="args">Args</h2>
+<ul>
+<li><code>host : str</code> : host of psu, preferably in form of <code>192.168.x.x</code></li>
+<li><code>logger: logging.Logger | str | None</code> :<ul>
+<li>if <code>logger</code> is instance of <code>logging.Logger</code>, it will log with it;</li>
+<li>if <code>logger</code> is <code>str</code>, new logger will be created with it as name</li>
+<li>otherwise, no log</li>
+</ul>
+</li>
+</ul></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="inovopy.util.Loggable" href="util.html#inovopy.util.Loggable">Loggable</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="inovopy.rosbridge.InovoRos.active_blocks"><code class="name">var <span class="ident">active_blocks</span> : list[str]</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.current"><code class="name">var <span class="ident">current</span> : float</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.current_block_progress"><code class="name">var <span class="ident">current_block_progress</span> : float</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.drive_powered"><code class="name">var <span class="ident">drive_powered</span> : bool</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.driver_state"><code class="name">var <span class="ident">driver_state</span> : str</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.enable"><code class="name">var <span class="ident">enable</span> : bool</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.estop_active"><code class="name">var <span class="ident">estop_active</span> : bool</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.estop_circuit"><code class="name">var <span class="ident">estop_circuit</span> : bool</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.joint_eff"><code class="name">var <span class="ident">joint_eff</span> : list[float]</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.joint_pos"><code class="name">var <span class="ident">joint_pos</span> : list[float]</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.joint_states"><code class="name">var <span class="ident">joint_states</span> : list[<a title="inovopy.rosbridge.JointState" href="#inovopy.rosbridge.JointState">JointState</a>]</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.joint_vel"><code class="name">var <span class="ident">joint_vel</span> : list[float]</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.power_status"><code class="name">var <span class="ident">power_status</span> : str</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.ros"><code class="name">var <span class="ident">ros</span> : roslibpy.ros.Ros</code></dt>
+<dd>
+<div class="desc"><p>connection manager to ROS server (<code>roslibpy.Ros</code>)</p></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.runtime_status"><code class="name">var <span class="ident">runtime_status</span> : <a title="inovopy.rosbridge.RuntimeState" href="#inovopy.rosbridge.RuntimeState">RuntimeState</a></code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.safe_stop_active"><code class="name">var <span class="ident">safe_stop_active</span> : bool</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.safe_stop_circuit"><code class="name">var <span class="ident">safe_stop_circuit</span> : bool</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.state"><code class="name">var <span class="ident">state</span> : int</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.tcp_pose_quat"><code class="name">var <span class="ident">tcp_pose_quat</span> : tuple[float, float, float, float]</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.tcp_pose_vec"><code class="name">var <span class="ident">tcp_pose_vec</span> : tuple[float, float, float]</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.tcp_speed_ang"><code class="name">var <span class="ident">tcp_speed_ang</span> : float</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.tcp_speed_lin"><code class="name">var <span class="ident">tcp_speed_lin</span> : float</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.variables"><code class="name">var <span class="ident">variables</span> : list[<a title="inovopy.rosbridge.Variable" href="#inovopy.rosbridge.Variable">Variable</a>]</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.voltage"><code class="name">var <span class="ident">voltage</span> : float</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="inovopy.rosbridge.InovoRos.estop_reset"><code class="name flex">
+<span>def <span class="ident">estop_reset</span></span>(<span>self) ‑> <a title="inovopy.rosbridge.InovoServiceResponse" href="#inovopy.rosbridge.InovoServiceResponse">InovoServiceResponse</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def estop_reset(self) -&gt; InovoServiceResponse:
+    req = roslibpy.ServiceRequest()
+    res = roslibpy.Service(self.ros, SERVICE_ESTOP_RESET, TYPE_TRIGGER).call(req)
+    return InovoServiceResponse.from_message(res)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.jog"><code class="name flex">
+<span>def <span class="ident">jog</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@contextmanager
+def jog(self):
+    &#34;&#34;&#34;
+    Enter a context of jog command mode. Advertise when enter context
+    and automatically unadvertise when exit.
+
+    ## Yields:
+    - `JogPublisher`: api for jog command
+
+    ## Example:
+    ```python
+    import time
+    from inovopy.rosbridge import InovoRos
+
+    ros = InovoRos(&#34;192.168.1.122&#34;, &#34;Jog&#34;)
+
+    with ros.jog() as j:
+        for _ in range(1000):
+            j.jog(z=-0.01)
+            time.sleep(0.01)
+        for _ in range(1000):
+            j.jog(z=0.01)
+            time.sleep(0.01)
+    ```
+    &#34;&#34;&#34;
+
+    top = roslibpy.Topic(self.ros, TOPIC_CARTESIAN_JOG, TYPE_CARTESIAN_JOG_DEMAND)
+    top.advertise()
+
+    publisher = JogPublisher(top)
+
+    yield publisher
+
+    publisher.publisher.unadvertise()
+    del publisher</code></pre>
+</details>
+<div class="desc"><p>Enter a context of jog command mode. Advertise when enter context
+and automatically unadvertise when exit.</p>
+<h2 id="yields">Yields:</h2>
+<ul>
+<li><code><a title="inovopy.rosbridge.JogPublisher" href="#inovopy.rosbridge.JogPublisher">JogPublisher</a></code>: api for jog command</li>
+</ul>
+<h2 id="example">Example:</h2>
+<pre><code class="language-python">import time
+from inovopy.rosbridge import InovoRos
+
+ros = InovoRos(&quot;192.168.1.122&quot;, &quot;Jog&quot;)
+
+with ros.jog() as j:
+    for _ in range(1000):
+        j.jog(z=-0.01)
+        time.sleep(0.01)
+    for _ in range(1000):
+        j.jog(z=0.01)
+        time.sleep(0.01)
+</code></pre></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.power_off"><code class="name flex">
+<span>def <span class="ident">power_off</span></span>(<span>self) ‑> <a title="inovopy.rosbridge.InovoServiceResponse" href="#inovopy.rosbridge.InovoServiceResponse">InovoServiceResponse</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def power_off(self) -&gt; InovoServiceResponse:
+    req = roslibpy.ServiceRequest()
+    res = roslibpy.Service(self.ros, SERVICE_POWER_OFF, TYPE_TRIGGER).call(req)
+    return InovoServiceResponse.from_message(res)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.power_on"><code class="name flex">
+<span>def <span class="ident">power_on</span></span>(<span>self) ‑> <a title="inovopy.rosbridge.InovoServiceResponse" href="#inovopy.rosbridge.InovoServiceResponse">InovoServiceResponse</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def power_on(self) -&gt; InovoServiceResponse:
+    req = roslibpy.ServiceRequest()
+    res = roslibpy.Service(self.ros, SERVICE_POWER_ON, TYPE_TRIGGER).call(req)
+    return InovoServiceResponse.from_message(res)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.resubscribe_all"><code class="name flex">
+<span>def <span class="ident">resubscribe_all</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def resubscribe_all(self):
+    for n, sub in self.subscribers.items():
+        self.info(f&#34;resubscribing topic : {n}&#34;)
+        sub.subscribe()</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.robot_disable"><code class="name flex">
+<span>def <span class="ident">robot_disable</span></span>(<span>self) ‑> <a title="inovopy.rosbridge.InovoServiceResponse" href="#inovopy.rosbridge.InovoServiceResponse">InovoServiceResponse</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def robot_disable(self) -&gt; InovoServiceResponse:
+    req = roslibpy.ServiceRequest()
+    res = roslibpy.Service(self.ros, SERVICE_ROBOT_DISABLE, TYPE_TRIGGER).call(req)
+    return InovoServiceResponse.from_message(res)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.robot_enable"><code class="name flex">
+<span>def <span class="ident">robot_enable</span></span>(<span>self) ‑> <a title="inovopy.rosbridge.InovoServiceResponse" href="#inovopy.rosbridge.InovoServiceResponse">InovoServiceResponse</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def robot_enable(self) -&gt; InovoServiceResponse:
+    req = roslibpy.ServiceRequest()
+    res = roslibpy.Service(self.ros, SERVICE_ROBOT_ENABLE, TYPE_TRIGGER).call(req)
+    return InovoServiceResponse.from_message(res)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.runtime_continue"><code class="name flex">
+<span>def <span class="ident">runtime_continue</span></span>(<span>self) ‑> <a title="inovopy.rosbridge.InovoServiceResponse" href="#inovopy.rosbridge.InovoServiceResponse">InovoServiceResponse</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def runtime_continue(self) -&gt; InovoServiceResponse:
+    req = roslibpy.ServiceRequest()
+    res = roslibpy.Service(self.ros, SERVICE_SEQUENCE_CONTINUE, TYPE_TRIGGER).call(
+        req
+    )
+    return InovoServiceResponse.from_message(res)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.runtime_debug"><code class="name flex">
+<span>def <span class="ident">runtime_debug</span></span>(<span>self) ‑> <a title="inovopy.rosbridge.InovoServiceResponse" href="#inovopy.rosbridge.InovoServiceResponse">InovoServiceResponse</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def runtime_debug(self) -&gt; InovoServiceResponse:
+    req = roslibpy.ServiceRequest()
+    res = roslibpy.Service(self.ros, SERVICE_SEQUENCE_DEBUG, TYPE_TRIGGER).call(req)
+    return InovoServiceResponse.from_message(res)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.runtime_get_var"><code class="name flex">
+<span>def <span class="ident">runtime_get_var</span></span>(<span>self, name: str) ‑> <a title="inovopy.rosbridge.InovoServiceResponse" href="#inovopy.rosbridge.InovoServiceResponse">InovoServiceResponse</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def runtime_get_var(self, name: str) -&gt; InovoServiceResponse:
+    req = roslibpy.ServiceRequest({&#34;name&#34;: name})
+    res = roslibpy.Service(self.ros, SERVICE_SEQUENCE_GET_VAR, TYPE_GET_VAR).call(
+        req
+    )
+    return InovoServiceResponse.from_message(res)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.runtime_pause"><code class="name flex">
+<span>def <span class="ident">runtime_pause</span></span>(<span>self) ‑> <a title="inovopy.rosbridge.InovoServiceResponse" href="#inovopy.rosbridge.InovoServiceResponse">InovoServiceResponse</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def runtime_pause(self) -&gt; InovoServiceResponse:
+    req = roslibpy.ServiceRequest()
+    res = roslibpy.Service(self.ros, SERVICE_SEQUENCE_PAUSE, TYPE_TRIGGER).call(req)
+    return InovoServiceResponse.from_message(res)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.runtime_set_var"><code class="name flex">
+<span>def <span class="ident">runtime_set_var</span></span>(<span>self, name: str, value: Any) ‑> <a title="inovopy.rosbridge.InovoServiceResponse" href="#inovopy.rosbridge.InovoServiceResponse">InovoServiceResponse</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def runtime_set_var(self, name: str, value: typing.Any) -&gt; InovoServiceResponse:
+    req = roslibpy.ServiceRequest({&#34;name&#34;: name, &#34;value&#34;: str(value)})
+    res = roslibpy.Service(self.ros, SERVICE_SEQUENCE_SET_VAR, TYPE_SET_VAR).call(
+        req
+    )
+    return InovoServiceResponse.from_message(res)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.runtime_start"><code class="name flex">
+<span>def <span class="ident">runtime_start</span></span>(<span>self, procedure_name: str | None = None) ‑> <a title="inovopy.rosbridge.InovoServiceResponse" href="#inovopy.rosbridge.InovoServiceResponse">InovoServiceResponse</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def runtime_start(self, procedure_name: str | None = None) -&gt; InovoServiceResponse:
+    &#34;&#34;&#34;
+    start a sequence in runtime
+
+    ## Args:
+    - `procedure_name : str | None`:
+        - if `None`, will start from start block
+        - if `str`, will try to start function with respected name
+    &#34;&#34;&#34;
+
+    payload = {}
+
+    if procedure_name:
+        payload[&#34;procedure_name&#34;] = procedure_name
+
+    req = roslibpy.ServiceRequest(payload)
+    res = roslibpy.Service(
+        self.ros, SERVICE_SEQUENCE_START, TYPE_RUN_SEQUENCE
+    ).call(req)
+    return InovoServiceResponse.from_message(res)</code></pre>
+</details>
+<div class="desc"><p>start a sequence in runtime</p>
+<h2 id="args">Args:</h2>
+<ul>
+<li><code>procedure_name : str | None</code>:<ul>
+<li>if <code>None</code>, will start from start block</li>
+<li>if <code>str</code>, will try to start function with respected name</li>
+</ul>
+</li>
+</ul></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.runtime_step"><code class="name flex">
+<span>def <span class="ident">runtime_step</span></span>(<span>self) ‑> <a title="inovopy.rosbridge.InovoServiceResponse" href="#inovopy.rosbridge.InovoServiceResponse">InovoServiceResponse</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def runtime_step(self) -&gt; InovoServiceResponse:
+    req = roslibpy.ServiceRequest()
+    res = roslibpy.Service(self.ros, SERVICE_SEQUENCE_STEP, TYPE_TRIGGER).call(req)
+    return InovoServiceResponse.from_message(res)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.runtime_stop"><code class="name flex">
+<span>def <span class="ident">runtime_stop</span></span>(<span>self) ‑> <a title="inovopy.rosbridge.InovoServiceResponse" href="#inovopy.rosbridge.InovoServiceResponse">InovoServiceResponse</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def runtime_stop(self) -&gt; InovoServiceResponse:
+    req = roslibpy.ServiceRequest()
+    res = roslibpy.Service(self.ros, SERVICE_SEQUENCE_STOP, TYPE_TRIGGER).call(req)
+    return InovoServiceResponse.from_message(res)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.safe_stop_reset"><code class="name flex">
+<span>def <span class="ident">safe_stop_reset</span></span>(<span>self) ‑> <a title="inovopy.rosbridge.InovoServiceResponse" href="#inovopy.rosbridge.InovoServiceResponse">InovoServiceResponse</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def safe_stop_reset(self) -&gt; InovoServiceResponse:
+    req = roslibpy.ServiceRequest()
+    res = roslibpy.Service(self.ros, SERVICE_SAFE_STOP_RESET, TYPE_TRIGGER).call(
+        req
+    )
+    return InovoServiceResponse.from_message(res)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoRos.unsubscribe_all"><code class="name flex">
+<span>def <span class="ident">unsubscribe_all</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def unsubscribe_all(self):
+    for n, sub in self.subscribers.items():
+        self.info(f&#34;unsubscribing topic : {n}&#34;)
+        sub.unsubscribe()</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="inovopy.util.Loggable" href="util.html#inovopy.util.Loggable">Loggable</a></b></code>:
+<ul class="hlist">
+<li><code><a title="inovopy.util.Loggable.critical" href="util.html#inovopy.util.Loggable.critical">critical</a></code></li>
+<li><code><a title="inovopy.util.Loggable.debug" href="util.html#inovopy.util.Loggable.debug">debug</a></code></li>
+<li><code><a title="inovopy.util.Loggable.error" href="util.html#inovopy.util.Loggable.error">error</a></code></li>
+<li><code><a title="inovopy.util.Loggable.info" href="util.html#inovopy.util.Loggable.info">info</a></code></li>
+<li><code><a title="inovopy.util.Loggable.logger" href="util.html#inovopy.util.Loggable.logger">logger</a></code></li>
+<li><code><a title="inovopy.util.Loggable.warning" href="util.html#inovopy.util.Loggable.warning">warning</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="inovopy.rosbridge.InovoServiceResponse"><code class="flex name class">
+<span>class <span class="ident">InovoServiceResponse</span></span>
+<span>(</span><span>message: dict)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class InovoServiceResponse:
+    &#34;&#34;&#34;
+    Response when calling service
+
+    Field:
+    - `success : bool` : whether the service call success
+    - `message : str` : message from service call, usually error message
+    - `value : str | None` : extra information from response, used in `runtime_get_var`
+    &#34;&#34;&#34;
+
+    success: bool
+    message: str
+    value: str | None
+
+    def __init__(self, message: dict):
+        self.success = message[&#34;success&#34;]
+        self.message = message[&#34;message&#34;]
+        self.value = message.get(&#34;value&#34;)
+
+    def __str__(self):
+        return str(
+            {&#34;success&#34;: self.success, &#34;message&#34;: self.message, &#34;value&#34;: self.value}
+        )
+
+    @classmethod
+    def from_message(cls, message) -&gt; &#34;InovoServiceResponse&#34;:
+        return InovoServiceResponse(message)</code></pre>
+</details>
+<div class="desc"><p>Response when calling service</p>
+<p>Field:
+- <code>success : bool</code> : whether the service call success
+- <code>message : str</code> : message from service call, usually error message
+- <code>value : str | None</code> : extra information from response, used in <code>runtime_get_var</code></p></div>
+<h3>Class variables</h3>
+<dl>
+<dt id="inovopy.rosbridge.InovoServiceResponse.message"><code class="name">var <span class="ident">message</span> : str</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoServiceResponse.success"><code class="name">var <span class="ident">success</span> : bool</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.InovoServiceResponse.value"><code class="name">var <span class="ident">value</span> : str | None</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+</dl>
+<h3>Static methods</h3>
+<dl>
+<dt id="inovopy.rosbridge.InovoServiceResponse.from_message"><code class="name flex">
+<span>def <span class="ident">from_message</span></span>(<span>message) ‑> <a title="inovopy.rosbridge.InovoServiceResponse" href="#inovopy.rosbridge.InovoServiceResponse">InovoServiceResponse</a></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="inovopy.rosbridge.JogPublisher"><code class="flex name class">
+<span>class <span class="ident">JogPublisher</span></span>
+<span>(</span><span>publisher: roslibpy.core.Topic)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class JogPublisher:
+    &#34;&#34;&#34;
+    context manager for jog
+
+    automatically unadvertise when `del`
+    &#34;&#34;&#34;
+
+    publisher: roslibpy.Topic
+
+    def __init__(self, publisher: roslibpy.Topic):
+        self.publisher = publisher
+
+        self.publisher.advertise()
+
+    def jog(
+        self,
+        x: float = 0,
+        y: float = 0,
+        z: float = 0,
+        rx: float = 0,
+        ry: float = 0,
+        rz: float = 0,
+    ):
+        &#34;&#34;&#34;
+        Send a cartesian jog twist demand
+
+        Args:
+        - `x : float`: target linear velocity x. Defaults to 0.
+        - `y : float`: target linear velocity y. Defaults to 0.
+        - `z : float`: target linear velocity z. Defaults to 0.
+        - `rx : float`: target angular velocity rx. Defaults to 0.
+        - `ry : float`: target angular velocity ry. Defaults to 0.
+        - `rz : float`: target angular velocity ry. Defaults to 0.
+        &#34;&#34;&#34;
+        self.publisher.publish(
+            roslibpy.Message(
+                {
+                    &#34;twist&#34;: {
+                        &#34;linear&#34;: {
+                            &#34;x&#34;: x,
+                            &#34;y&#34;: y,
+                            &#34;z&#34;: z,
+                        },
+                        &#34;angular&#34;: {
+                            &#34;x&#34;: rx,
+                            &#34;y&#34;: ry,
+                            &#34;z&#34;: rz,
+                        },
+                    }
+                }
+            )
+        )
+
+    def __del__(self):
+        self.publisher.unadvertise()</code></pre>
+</details>
+<div class="desc"><p>context manager for jog</p>
+<p>automatically unadvertise when <code>del</code></p></div>
+<h3>Class variables</h3>
+<dl>
+<dt id="inovopy.rosbridge.JogPublisher.publisher"><code class="name">var <span class="ident">publisher</span> : roslibpy.core.Topic</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="inovopy.rosbridge.JogPublisher.jog"><code class="name flex">
+<span>def <span class="ident">jog</span></span>(<span>self,<br>x: float = 0,<br>y: float = 0,<br>z: float = 0,<br>rx: float = 0,<br>ry: float = 0,<br>rz: float = 0)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def jog(
+    self,
+    x: float = 0,
+    y: float = 0,
+    z: float = 0,
+    rx: float = 0,
+    ry: float = 0,
+    rz: float = 0,
+):
+    &#34;&#34;&#34;
+    Send a cartesian jog twist demand
+
+    Args:
+    - `x : float`: target linear velocity x. Defaults to 0.
+    - `y : float`: target linear velocity y. Defaults to 0.
+    - `z : float`: target linear velocity z. Defaults to 0.
+    - `rx : float`: target angular velocity rx. Defaults to 0.
+    - `ry : float`: target angular velocity ry. Defaults to 0.
+    - `rz : float`: target angular velocity ry. Defaults to 0.
+    &#34;&#34;&#34;
+    self.publisher.publish(
+        roslibpy.Message(
+            {
+                &#34;twist&#34;: {
+                    &#34;linear&#34;: {
+                        &#34;x&#34;: x,
+                        &#34;y&#34;: y,
+                        &#34;z&#34;: z,
+                    },
+                    &#34;angular&#34;: {
+                        &#34;x&#34;: rx,
+                        &#34;y&#34;: ry,
+                        &#34;z&#34;: rz,
+                    },
+                }
+            }
+        )
+    )</code></pre>
+</details>
+<div class="desc"><p>Send a cartesian jog twist demand</p>
+<p>Args:
+- <code>x : float</code>: target linear velocity x. Defaults to 0.
+- <code>y : float</code>: target linear velocity y. Defaults to 0.
+- <code>z : float</code>: target linear velocity z. Defaults to 0.
+- <code>rx : float</code>: target angular velocity rx. Defaults to 0.
+- <code>ry : float</code>: target angular velocity ry. Defaults to 0.
+- <code>rz : float</code>: target angular velocity ry. Defaults to 0.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="inovopy.rosbridge.JointState"><code class="flex name class">
+<span>class <span class="ident">JointState</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class JointState:
+    age: int = 0
+    current: float = 0
+    drive_temp: float = 0
+    ff_torque: float = 0
+
+    joint_temp: float = 0
+    motor_temp: float = 0
+    output_gain: float = 0
+    position: float = 0
+
+    state: int = 0
+    status: int = 0
+
+    target_position: float = 0
+    torque: float = 0
+    velocity: float = 0
+
+    @classmethod
+    def attr_list(cls) -&gt; list[str]:
+        return [
+            &#34;age&#34;,
+            &#34;current&#34;,
+            &#34;drive_temp&#34;,
+            &#34;ff_torque&#34;,
+            &#34;joint_temp&#34;,
+            &#34;motor_temp&#34;,
+            &#34;output_gain&#34;,
+            &#34;position&#34;,
+            &#34;state&#34;,
+            &#34;status&#34;,
+            &#34;target_position&#34;,
+            &#34;torque&#34;,
+            &#34;velocity&#34;,
+        ]
+
+    def __init__(self):
+        pass
+
+    @classmethod
+    def from_message(cls, message) -&gt; &#34;JointState&#34;:
+        js = JointState()
+
+        for a in JointState.attr_list():
+            setattr(js, a, message[a])
+
+        return js
+
+    def __str__(self):
+        return str(dict((a, getattr(self, a)) for a in JointState.attr_list()))</code></pre>
+</details>
+<div class="desc"></div>
+<h3>Class variables</h3>
+<dl>
+<dt id="inovopy.rosbridge.JointState.age"><code class="name">var <span class="ident">age</span> : int</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.JointState.current"><code class="name">var <span class="ident">current</span> : float</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.JointState.drive_temp"><code class="name">var <span class="ident">drive_temp</span> : float</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.JointState.ff_torque"><code class="name">var <span class="ident">ff_torque</span> : float</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.JointState.joint_temp"><code class="name">var <span class="ident">joint_temp</span> : float</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.JointState.motor_temp"><code class="name">var <span class="ident">motor_temp</span> : float</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.JointState.output_gain"><code class="name">var <span class="ident">output_gain</span> : float</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.JointState.position"><code class="name">var <span class="ident">position</span> : float</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.JointState.state"><code class="name">var <span class="ident">state</span> : int</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.JointState.status"><code class="name">var <span class="ident">status</span> : int</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.JointState.target_position"><code class="name">var <span class="ident">target_position</span> : float</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.JointState.torque"><code class="name">var <span class="ident">torque</span> : float</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.JointState.velocity"><code class="name">var <span class="ident">velocity</span> : float</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+</dl>
+<h3>Static methods</h3>
+<dl>
+<dt id="inovopy.rosbridge.JointState.attr_list"><code class="name flex">
+<span>def <span class="ident">attr_list</span></span>(<span>) ‑> list[str]</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="inovopy.rosbridge.JointState.from_message"><code class="name flex">
+<span>def <span class="ident">from_message</span></span>(<span>message) ‑> <a title="inovopy.rosbridge.JointState" href="#inovopy.rosbridge.JointState">JointState</a></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="inovopy.rosbridge.RuntimeState"><code class="flex name class">
+<span>class <span class="ident">RuntimeState</span></span>
+<span>(</span><span>*args, **kwds)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RuntimeState(Enum):
+    Idle = 0
+    Running = 1
+    Paused = 2
+    PausedOnError = 3</code></pre>
+</details>
+<div class="desc"><p>Create a collection of name/value pairs.</p>
+<p>Example enumeration:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; class Color(Enum):
+...     RED = 1
+...     BLUE = 2
+...     GREEN = 3
+</code></pre>
+<p>Access them by:</p>
+<ul>
+<li>attribute access:</li>
+</ul>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>Color.RED
+<Color.RED: 1></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<ul>
+<li>value lookup:</li>
+</ul>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>Color(1)
+<Color.RED: 1></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<ul>
+<li>name lookup:</li>
+</ul>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>Color['RED']
+<Color.RED: 1></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>Enumerations can be iterated over, and know how many members they have:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; len(Color)
+3
+</code></pre>
+<pre><code class="language-python-repl">&gt;&gt;&gt; list(Color)
+[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]
+</code></pre>
+<p>Methods can be added to enumerations, and members can have their own
+attributes &ndash; see the documentation for details.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="inovopy.rosbridge.RuntimeState.Idle"><code class="name">var <span class="ident">Idle</span></code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.RuntimeState.Paused"><code class="name">var <span class="ident">Paused</span></code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.RuntimeState.PausedOnError"><code class="name">var <span class="ident">PausedOnError</span></code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.RuntimeState.Running"><code class="name">var <span class="ident">Running</span></code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="inovopy.rosbridge.Variable"><code class="flex name class">
+<span>class <span class="ident">Variable</span></span>
+<span>(</span><span>name: str, dtype: str, value: str)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Variable:
+    name: str
+    dtype: str
+    value: str
+
+    def __init__(self, name: str, dtype: str, value: str):
+        self.name = name
+        self.dtype = dtype
+        self.value = value
+
+    @classmethod
+    def from_message(cls, message) -&gt; &#34;Variable&#34;:
+        return Variable(message[&#34;name&#34;], message[&#34;type&#34;], message[&#34;value&#34;])</code></pre>
+</details>
+<div class="desc"></div>
+<h3>Class variables</h3>
+<dl>
+<dt id="inovopy.rosbridge.Variable.dtype"><code class="name">var <span class="ident">dtype</span> : str</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.Variable.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="inovopy.rosbridge.Variable.value"><code class="name">var <span class="ident">value</span> : str</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+</dl>
+<h3>Static methods</h3>
+<dl>
+<dt id="inovopy.rosbridge.Variable.from_message"><code class="name flex">
+<span>def <span class="ident">from_message</span></span>(<span>message) ‑> <a title="inovopy.rosbridge.Variable" href="#inovopy.rosbridge.Variable">Variable</a></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#ros-bridge-module">Ros Bridge Module</a></li>
+</ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="inovopy" href="index.html">inovopy</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="inovopy.rosbridge.InovoRos" href="#inovopy.rosbridge.InovoRos">InovoRos</a></code></h4>
+<ul class="">
+<li><code><a title="inovopy.rosbridge.InovoRos.active_blocks" href="#inovopy.rosbridge.InovoRos.active_blocks">active_blocks</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.current" href="#inovopy.rosbridge.InovoRos.current">current</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.current_block_progress" href="#inovopy.rosbridge.InovoRos.current_block_progress">current_block_progress</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.drive_powered" href="#inovopy.rosbridge.InovoRos.drive_powered">drive_powered</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.driver_state" href="#inovopy.rosbridge.InovoRos.driver_state">driver_state</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.enable" href="#inovopy.rosbridge.InovoRos.enable">enable</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.estop_active" href="#inovopy.rosbridge.InovoRos.estop_active">estop_active</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.estop_circuit" href="#inovopy.rosbridge.InovoRos.estop_circuit">estop_circuit</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.estop_reset" href="#inovopy.rosbridge.InovoRos.estop_reset">estop_reset</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.jog" href="#inovopy.rosbridge.InovoRos.jog">jog</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.joint_eff" href="#inovopy.rosbridge.InovoRos.joint_eff">joint_eff</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.joint_pos" href="#inovopy.rosbridge.InovoRos.joint_pos">joint_pos</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.joint_states" href="#inovopy.rosbridge.InovoRos.joint_states">joint_states</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.joint_vel" href="#inovopy.rosbridge.InovoRos.joint_vel">joint_vel</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.power_off" href="#inovopy.rosbridge.InovoRos.power_off">power_off</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.power_on" href="#inovopy.rosbridge.InovoRos.power_on">power_on</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.power_status" href="#inovopy.rosbridge.InovoRos.power_status">power_status</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.resubscribe_all" href="#inovopy.rosbridge.InovoRos.resubscribe_all">resubscribe_all</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.robot_disable" href="#inovopy.rosbridge.InovoRos.robot_disable">robot_disable</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.robot_enable" href="#inovopy.rosbridge.InovoRos.robot_enable">robot_enable</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.ros" href="#inovopy.rosbridge.InovoRos.ros">ros</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.runtime_continue" href="#inovopy.rosbridge.InovoRos.runtime_continue">runtime_continue</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.runtime_debug" href="#inovopy.rosbridge.InovoRos.runtime_debug">runtime_debug</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.runtime_get_var" href="#inovopy.rosbridge.InovoRos.runtime_get_var">runtime_get_var</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.runtime_pause" href="#inovopy.rosbridge.InovoRos.runtime_pause">runtime_pause</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.runtime_set_var" href="#inovopy.rosbridge.InovoRos.runtime_set_var">runtime_set_var</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.runtime_start" href="#inovopy.rosbridge.InovoRos.runtime_start">runtime_start</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.runtime_status" href="#inovopy.rosbridge.InovoRos.runtime_status">runtime_status</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.runtime_step" href="#inovopy.rosbridge.InovoRos.runtime_step">runtime_step</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.runtime_stop" href="#inovopy.rosbridge.InovoRos.runtime_stop">runtime_stop</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.safe_stop_active" href="#inovopy.rosbridge.InovoRos.safe_stop_active">safe_stop_active</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.safe_stop_circuit" href="#inovopy.rosbridge.InovoRos.safe_stop_circuit">safe_stop_circuit</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.safe_stop_reset" href="#inovopy.rosbridge.InovoRos.safe_stop_reset">safe_stop_reset</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.state" href="#inovopy.rosbridge.InovoRos.state">state</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.tcp_pose_quat" href="#inovopy.rosbridge.InovoRos.tcp_pose_quat">tcp_pose_quat</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.tcp_pose_vec" href="#inovopy.rosbridge.InovoRos.tcp_pose_vec">tcp_pose_vec</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.tcp_speed_ang" href="#inovopy.rosbridge.InovoRos.tcp_speed_ang">tcp_speed_ang</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.tcp_speed_lin" href="#inovopy.rosbridge.InovoRos.tcp_speed_lin">tcp_speed_lin</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.unsubscribe_all" href="#inovopy.rosbridge.InovoRos.unsubscribe_all">unsubscribe_all</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.variables" href="#inovopy.rosbridge.InovoRos.variables">variables</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoRos.voltage" href="#inovopy.rosbridge.InovoRos.voltage">voltage</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="inovopy.rosbridge.InovoServiceResponse" href="#inovopy.rosbridge.InovoServiceResponse">InovoServiceResponse</a></code></h4>
+<ul class="">
+<li><code><a title="inovopy.rosbridge.InovoServiceResponse.from_message" href="#inovopy.rosbridge.InovoServiceResponse.from_message">from_message</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoServiceResponse.message" href="#inovopy.rosbridge.InovoServiceResponse.message">message</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoServiceResponse.success" href="#inovopy.rosbridge.InovoServiceResponse.success">success</a></code></li>
+<li><code><a title="inovopy.rosbridge.InovoServiceResponse.value" href="#inovopy.rosbridge.InovoServiceResponse.value">value</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="inovopy.rosbridge.JogPublisher" href="#inovopy.rosbridge.JogPublisher">JogPublisher</a></code></h4>
+<ul class="">
+<li><code><a title="inovopy.rosbridge.JogPublisher.jog" href="#inovopy.rosbridge.JogPublisher.jog">jog</a></code></li>
+<li><code><a title="inovopy.rosbridge.JogPublisher.publisher" href="#inovopy.rosbridge.JogPublisher.publisher">publisher</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="inovopy.rosbridge.JointState" href="#inovopy.rosbridge.JointState">JointState</a></code></h4>
+<ul class="two-column">
+<li><code><a title="inovopy.rosbridge.JointState.age" href="#inovopy.rosbridge.JointState.age">age</a></code></li>
+<li><code><a title="inovopy.rosbridge.JointState.attr_list" href="#inovopy.rosbridge.JointState.attr_list">attr_list</a></code></li>
+<li><code><a title="inovopy.rosbridge.JointState.current" href="#inovopy.rosbridge.JointState.current">current</a></code></li>
+<li><code><a title="inovopy.rosbridge.JointState.drive_temp" href="#inovopy.rosbridge.JointState.drive_temp">drive_temp</a></code></li>
+<li><code><a title="inovopy.rosbridge.JointState.ff_torque" href="#inovopy.rosbridge.JointState.ff_torque">ff_torque</a></code></li>
+<li><code><a title="inovopy.rosbridge.JointState.from_message" href="#inovopy.rosbridge.JointState.from_message">from_message</a></code></li>
+<li><code><a title="inovopy.rosbridge.JointState.joint_temp" href="#inovopy.rosbridge.JointState.joint_temp">joint_temp</a></code></li>
+<li><code><a title="inovopy.rosbridge.JointState.motor_temp" href="#inovopy.rosbridge.JointState.motor_temp">motor_temp</a></code></li>
+<li><code><a title="inovopy.rosbridge.JointState.output_gain" href="#inovopy.rosbridge.JointState.output_gain">output_gain</a></code></li>
+<li><code><a title="inovopy.rosbridge.JointState.position" href="#inovopy.rosbridge.JointState.position">position</a></code></li>
+<li><code><a title="inovopy.rosbridge.JointState.state" href="#inovopy.rosbridge.JointState.state">state</a></code></li>
+<li><code><a title="inovopy.rosbridge.JointState.status" href="#inovopy.rosbridge.JointState.status">status</a></code></li>
+<li><code><a title="inovopy.rosbridge.JointState.target_position" href="#inovopy.rosbridge.JointState.target_position">target_position</a></code></li>
+<li><code><a title="inovopy.rosbridge.JointState.torque" href="#inovopy.rosbridge.JointState.torque">torque</a></code></li>
+<li><code><a title="inovopy.rosbridge.JointState.velocity" href="#inovopy.rosbridge.JointState.velocity">velocity</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="inovopy.rosbridge.RuntimeState" href="#inovopy.rosbridge.RuntimeState">RuntimeState</a></code></h4>
+<ul class="">
+<li><code><a title="inovopy.rosbridge.RuntimeState.Idle" href="#inovopy.rosbridge.RuntimeState.Idle">Idle</a></code></li>
+<li><code><a title="inovopy.rosbridge.RuntimeState.Paused" href="#inovopy.rosbridge.RuntimeState.Paused">Paused</a></code></li>
+<li><code><a title="inovopy.rosbridge.RuntimeState.PausedOnError" href="#inovopy.rosbridge.RuntimeState.PausedOnError">PausedOnError</a></code></li>
+<li><code><a title="inovopy.rosbridge.RuntimeState.Running" href="#inovopy.rosbridge.RuntimeState.Running">Running</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="inovopy.rosbridge.Variable" href="#inovopy.rosbridge.Variable">Variable</a></code></h4>
+<ul class="">
+<li><code><a title="inovopy.rosbridge.Variable.dtype" href="#inovopy.rosbridge.Variable.dtype">dtype</a></code></li>
+<li><code><a title="inovopy.rosbridge.Variable.from_message" href="#inovopy.rosbridge.Variable.from_message">from_message</a></code></li>
+<li><code><a title="inovopy.rosbridge.Variable.name" href="#inovopy.rosbridge.Variable.name">name</a></code></li>
+<li><code><a title="inovopy.rosbridge.Variable.value" href="#inovopy.rosbridge.Variable.value">value</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

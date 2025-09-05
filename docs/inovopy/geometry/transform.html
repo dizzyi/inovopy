@@ -1,0 +1,1093 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>inovopy.geometry.transform API documentation</title>
+<meta name="description" content="Transform Module
+This module provide useful class and function for spatial calculation …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>inovopy.geometry.transform</code></h1>
+</header>
+<section id="section-intro">
+<h1 id="transform-module">Transform Module</h1>
+<p>This module provide useful class and function for spatial calculation</p>
+<h2 id="class">Class</h2>
+<ul>
+<li><code><a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></code> : A spatial transform represented a translation and rotation</li>
+</ul>
+<h2 id="function">Function</h2>
+<ul>
+<li><code>deg_to_rad</code> : translate degree to radian</li>
+<li><code>rad_to_deg</code> : translate radian to degree</li>
+<li><code><a title="inovopy.geometry.transform.rx_mat" href="#inovopy.geometry.transform.rx_mat">rx_mat()</a></code> : compute rotation matrx of rotation along x axis</li>
+<li><code><a title="inovopy.geometry.transform.ry_mat" href="#inovopy.geometry.transform.ry_mat">ry_mat()</a></code> : compute rotation matrx of rotation along y axis</li>
+<li><code><a title="inovopy.geometry.transform.rz_mat" href="#inovopy.geometry.transform.rz_mat">rz_mat()</a></code> : compute rotation matrx of rotation along z axis</li>
+<li><code><a title="inovopy.geometry.transform.euler_to_mat" href="#inovopy.geometry.transform.euler_to_mat">euler_to_mat()</a></code> : translate euler angle to rotation matrix</li>
+<li><code><a title="inovopy.geometry.transform.mat_to_euler" href="#inovopy.geometry.transform.mat_to_euler">mat_to_euler()</a></code> : translate rotation matrix to euler angle</li>
+</ul>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="inovopy.geometry.transform.euler_to_mat"><code class="name flex">
+<span>def <span class="ident">euler_to_mat</span></span>(<span>euler_deg: Tuple[float, float, float]) ‑> numpy.ndarray[tuple[typing.Any, ...], numpy.dtype[numpy.float64]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def euler_to_mat(
+    euler_deg: Tuple[float, float, float],
+) -&gt; numpy_typing.NDArray[numpy.float64]:
+    &#34;&#34;&#34;translate euler angle to rotation matrix&#34;&#34;&#34;
+    rx = rx_mat(euler_deg[0])
+    ry = ry_mat(euler_deg[1])
+    rz = rz_mat(euler_deg[2])
+    return numpy.matmul(rz, numpy.matmul(ry, rx))</code></pre>
+</details>
+<div class="desc"><p>translate euler angle to rotation matrix</p></div>
+</dd>
+<dt id="inovopy.geometry.transform.mat_to_euler"><code class="name flex">
+<span>def <span class="ident">mat_to_euler</span></span>(<span>mat: numpy.ndarray[tuple[typing.Any, ...], numpy.dtype[numpy.float64]]) ‑> Tuple[float, float, float]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def mat_to_euler(
+    mat: numpy_typing.NDArray[numpy.float64],
+) -&gt; Tuple[float, float, float]:
+    &#34;&#34;&#34;translate rotation matrix to euler angle&#34;&#34;&#34;
+    r31 = mat[2, 0]
+    if numpy.abs(r31) != 1:
+        ry = -numpy.arcsin(r31)
+        rx = numpy.arctan2(mat[2, 1] / numpy.cos(ry), mat[2, 2] / numpy.cos(ry))
+        rz = numpy.arctan2(mat[1, 0] / numpy.cos(ry), mat[0, 0] / numpy.cos(ry))
+    else:
+        rz = 0
+        if r31 == -1:
+            ry = numpy.pi / 2
+            rx = numpy.arctan2(mat[0, 1], mat[0, 2])
+        else:
+            ry = -numpy.pi / 2
+            rx = numpy.arctan2(-mat[0, 1], -mat[0, 2])
+    return (rad_to_deg(rx), rad_to_deg(ry), rad_to_deg(rz))</code></pre>
+</details>
+<div class="desc"><p>translate rotation matrix to euler angle</p></div>
+</dd>
+<dt id="inovopy.geometry.transform.rx_mat"><code class="name flex">
+<span>def <span class="ident">rx_mat</span></span>(<span>deg: float) ‑> numpy.ndarray[tuple[typing.Any, ...], numpy.dtype[numpy.float64]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def rx_mat(deg: float) -&gt; numpy_typing.NDArray[numpy.float64]:
+    &#34;&#34;&#34;compute rotation matrx of rotation along x axis&#34;&#34;&#34;
+    mat = numpy.eye(3)
+    mat[1, 1] = numpy.cos(deg_to_rad(deg))
+    mat[1, 2] = -numpy.sin(deg_to_rad(deg))
+    mat[2, 2] = numpy.cos(deg_to_rad(deg))
+    mat[2, 1] = numpy.sin(deg_to_rad(deg))
+    return mat</code></pre>
+</details>
+<div class="desc"><p>compute rotation matrx of rotation along x axis</p></div>
+</dd>
+<dt id="inovopy.geometry.transform.ry_mat"><code class="name flex">
+<span>def <span class="ident">ry_mat</span></span>(<span>deg: float) ‑> numpy.ndarray[tuple[typing.Any, ...], numpy.dtype[numpy.float64]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ry_mat(deg: float) -&gt; numpy_typing.NDArray[numpy.float64]:
+    &#34;&#34;&#34;compute rotation matrx of rotation along y axis&#34;&#34;&#34;
+    mat = numpy.eye(3)
+    mat[0, 0] = numpy.cos(deg_to_rad(deg))
+    mat[0, 2] = numpy.sin(deg_to_rad(deg))
+    mat[2, 2] = numpy.cos(deg_to_rad(deg))
+    mat[2, 0] = -numpy.sin(deg_to_rad(deg))
+    return mat</code></pre>
+</details>
+<div class="desc"><p>compute rotation matrx of rotation along y axis</p></div>
+</dd>
+<dt id="inovopy.geometry.transform.rz_mat"><code class="name flex">
+<span>def <span class="ident">rz_mat</span></span>(<span>deg: float) ‑> numpy.ndarray[tuple[typing.Any, ...], numpy.dtype[numpy.float64]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def rz_mat(deg: float) -&gt; numpy_typing.NDArray[numpy.float64]:
+    &#34;&#34;&#34;compute rotation matrx of rotation along z axis&#34;&#34;&#34;
+    mat = numpy.eye(3)
+    mat[0, 0] = numpy.cos(deg_to_rad(deg))
+    mat[0, 1] = -numpy.sin(deg_to_rad(deg))
+    mat[1, 1] = numpy.cos(deg_to_rad(deg))
+    mat[1, 0] = numpy.sin(deg_to_rad(deg))
+    return mat</code></pre>
+</details>
+<div class="desc"><p>compute rotation matrx of rotation along z axis</p></div>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="inovopy.geometry.transform.Transform"><code class="flex name class">
+<span>class <span class="ident">Transform</span></span>
+<span>(</span><span>vec_mm: Tuple[float, float, float] = (0, 0, 0),<br>euler_deg: Tuple[float, float, float] = (0, 0, 0))</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Transform(IntoRobotCommand):
+    &#34;&#34;&#34;
+    # Transform
+    A class representing spatial transform,
+    compose of a translation and a rotation
+
+    ## Representation
+    - `vec_mm` : a 3D vector with unit in mm
+    - `euler_deg` : a set of euler angle wiht unit in degree
+    &#34;&#34;&#34;
+
+    def __init__(
+        self,
+        vec_mm: Tuple[float, float, float] = (0, 0, 0),
+        euler_deg: Tuple[float, float, float] = (0, 0, 0),
+    ):
+        &#34;&#34;&#34;
+        initalize a transform
+
+        ## Parameter
+        - `vec_mm` : a 3D vector with unit in mm
+        - `euler_deg` : a set of euler angle wiht unit in degree
+        &#34;&#34;&#34;
+        self.vec_mm: Tuple[float, float, float] = vec_mm
+        self.euler_deg: Tuple[float, float, float] = euler_deg
+
+    def clone(self) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;clone the transform&#34;&#34;&#34;
+        return Transform(vec_mm=self.vec_mm, euler_deg=self.euler_deg)
+
+    def __repr__(self) -&gt; str:
+        return f&#34;vec_mm : {self.vec_mm}, euler_deg : {self.euler_deg}&#34;
+
+    @classmethod
+    def from_vec(cls, x_mm: float = 0, y_mm: float = 0, z_mm: float = 0) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;Construct a new `Transform` from vector componment&#34;&#34;&#34;
+        return Transform(vec_mm=(x_mm, y_mm, z_mm))
+
+    @classmethod
+    def from_euler(
+        cls, rx_deg: float = 0, ry_deg: float = 0, rz_deg: float = 0
+    ) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;Construct a new `Transform` from euler angle set&#34;&#34;&#34;
+        return Transform(euler_deg=(rx_deg, ry_deg, rz_deg))
+
+    @classmethod
+    def from_robot(cls, res: str) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;Parse robot transform response into `Transform`&#34;&#34;&#34;
+        res = re.sub(r&#34;[ {}]&#34;, &#34;&#34;, res).split(&#34;,&#34;)
+        t = Transform()
+        for i in range(6):
+            tokens = res[i].split(&#34;:&#34;)
+            q = float(tokens[1])
+
+            match tokens[0]:
+                case &#34;x&#34;:
+                    t.set_x(q * 1000)
+                case &#34;y&#34;:
+                    t.set_y(q * 1000)
+                case &#34;z&#34;:
+                    t.set_z(q * 1000)
+                case &#34;rx&#34;:
+                    t.set_rx(rad_to_deg(q))
+                case &#34;ry&#34;:
+                    t.set_ry(rad_to_deg(q))
+                case &#34;rz&#34;:
+                    t.set_rz(rad_to_deg(q))
+                case _:
+                    continue
+        return t
+
+    def vec_only(self) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;Extract translation from `self` and construct a new transfrom&#34;&#34;&#34;
+        return Transform(vec_mm=self.vec_mm)
+
+    def euler_only(self) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;Extract rotation from `self` and construct a new transfrom&#34;&#34;&#34;
+        return Transform(euler_deg=self.euler_deg)
+
+    @classmethod
+    def from_x(cls, x_mm: float) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;Construct a new `Transform` with specified x&#34;&#34;&#34;
+        return Transform.from_vec(x_mm=x_mm)
+
+    @classmethod
+    def from_y(cls, y_mm: float) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;Construct a new `Transform` with specified y&#34;&#34;&#34;
+        return Transform.from_vec(y_mm=y_mm)
+
+    @classmethod
+    def from_z(cls, z_mm: float) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;Construct a new `Transform` with specified z&#34;&#34;&#34;
+        return Transform.from_vec(z_mm=z_mm)
+
+    @classmethod
+    def from_rx(cls, rx_deg: float) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;Construct a new `Transform` with specified rx&#34;&#34;&#34;
+        return Transform.from_euler(rx_deg=rx_deg)
+
+    @classmethod
+    def from_ry(cls, ry_deg: float) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;Construct a new `Transform` with specified ry&#34;&#34;&#34;
+        return Transform.from_euler(ry_deg=ry_deg)
+
+    @classmethod
+    def from_rz(cls, rz_deg: float) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;Construct a new `Transform` with specified rz&#34;&#34;&#34;
+        return Transform.from_euler(rz_deg=rz_deg)
+
+    def set_vec(self, x_mm: float, y_mm: float, z_mm: float) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;set the vector&#34;&#34;&#34;
+        self.vec_mm = (x_mm, y_mm, z_mm)
+        return self
+
+    def set_x(self, mm: float) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;set the x component to a specified value&#34;&#34;&#34;
+        self.vec_mm = (mm, self.vec_mm[1], self.vec_mm[2])
+        return self
+
+    def set_y(self, mm: float) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;set the y component to a specified value&#34;&#34;&#34;
+        self.vec_mm = (self.vec_mm[0], mm, self.vec_mm[2])
+        return self
+
+    def set_z(self, mm: float) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;set the z component to a specified value&#34;&#34;&#34;
+        self.vec_mm = (self.vec_mm[0], self.vec_mm[1], mm)
+        return self
+
+    def set_euler(self, rx_deg: float, ry_deg: float, rz_deg: float) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;set the euler angle&#34;&#34;&#34;
+        self.euler_deg = (rx_deg, ry_deg, rz_deg)
+        return self
+
+    def set_rx(self, deg: float) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;set the rx component to a specified value&#34;&#34;&#34;
+        self.euler_deg = (deg, self.euler_deg[1], self.euler_deg[2])
+        return self
+
+    def set_ry(self, deg: float) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;set the ry component to a specified value&#34;&#34;&#34;
+        self.euler_deg = (self.euler_deg[0], deg, self.euler_deg[2])
+        return self
+
+    def set_rz(self, deg: float) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;set the rz component to a specified value&#34;&#34;&#34;
+        self.euler_deg = (self.euler_deg[0], self.euler_deg[1], deg)
+        return self
+
+    def to_homogenous(self) -&gt; numpy_typing.NDArray[numpy.float64]:
+        &#34;&#34;&#34;
+        return a homogenous matrix representation of the `self`
+
+        ## Return:
+        - `np.array` : 4x4 homogenous matrix representation of the transform
+        &#34;&#34;&#34;
+        mat = numpy.eye(4)
+        mat[0:3, 0:3] = euler_to_mat(self.euler_deg)
+        mat[0:3, 3] = numpy.asarray(self.vec_mm)
+        return mat
+
+    @classmethod
+    def from_homogenous(cls, mat: numpy_typing.NDArray[numpy.float64]) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;
+        construct a transform from a `np.array` 4x4 homogenous matrix
+
+        ## Parameter:
+        - `mat : np.array` : 4x4 homogenous matrix representation of the transform
+
+        ## Return:
+        - `Transform`
+        &#34;&#34;&#34;
+        return Transform(
+            vec_mm=(
+                mat[0, 3],
+                mat[1, 3],
+                mat[2, 3],
+            ),
+            euler_deg=mat_to_euler(mat),
+        )
+
+    def inv(self) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;return the inverse transform of `self`&#34;&#34;&#34;
+        return Transform.from_homogenous(numpy.linalg.inv(self.to_homogenous()))
+
+    def __mul__(self, rhs: &#34;Transform&#34;) -&gt; &#34;Transform&#34;:
+        return Transform.from_homogenous(
+            numpy.matmul(self.to_homogenous(), rhs.to_homogenous())
+        )
+
+    def then(self, transform: &#34;Transform&#34;) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;
+        return a new transform that is apply a transform to `self`
+
+        ## Parameter
+        - `transform` : the transform to apply to `self`
+
+        ## Return
+        - `transform` : resulted transform
+        &#34;&#34;&#34;
+        new = transform * self
+        self.vec_mm = new.vec_mm
+        self.euler_deg = new.euler_deg
+        return self
+
+    def then_x(self, cm: float) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;return a new transform that apply translation along x axis to `self`&#34;&#34;&#34;
+        return self.then(Transform.from_x(cm))
+
+    def then_y(self, cm: float) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;return a new transform that apply translation along y axis to `self`&#34;&#34;&#34;
+        return self.then(Transform.from_y(cm))
+
+    def then_z(self, cm: float) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;return a new transform that apply translation along z axis to `self`&#34;&#34;&#34;
+        return self.then(Transform.from_z(cm))
+
+    def then_rx(self, deg: float) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;return a new transform that apply rotation along x axis to `self`&#34;&#34;&#34;
+        return self.then(Transform.from_rx(deg))
+
+    def then_ry(self, deg: float) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;return a new transform that apply rotation along y axis to `self`&#34;&#34;&#34;
+        return self.then(Transform.from_ry(deg))
+
+    def then_rz(self, deg: float) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;return a new transform that apply rotation along z axis to `self`&#34;&#34;&#34;
+        return self.then(Transform.from_rz(deg))
+
+    def then_relative_to(
+        self, transform: &#34;Transform&#34;, reference: &#34;Transform&#34;
+    ) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;
+        return a new transform that,
+        apply a transform to `self` relative to a reference
+
+        ## Parameter
+        - `transform` : the transform to apply
+        - `reference` : the reference of the transfrom
+        &#34;&#34;&#34;
+        return reference * transform * reference.inv() * self
+
+    def then_relative(self, transform: &#34;Transform&#34;) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;return a new transform that apply a transform relative `self`&#39;s position&#34;&#34;&#34;
+        return self.then_relative_to(transform=transform, reference=self.vec_only())
+
+    def then_relative_rx(self, deg: float) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;return a new transform that apply relative rotaion along axis x&#34;&#34;&#34;
+        return self.then_relative(Transform.from_rx(deg))
+
+    def then_relative_ry(self, deg: float) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;return a new transform that apply relative rotaion along axis y&#34;&#34;&#34;
+        return self.then_relative(Transform.from_ry(deg))
+
+    def then_relative_rz(self, deg: float) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;return a new transform that apply relative rotaion along axis z&#34;&#34;&#34;
+        return self.then_relative(Transform.from_rz(deg))
+
+    def to_dict(self) -&gt; dict[str, str | float]:
+        &#34;&#34;&#34;return a `dict[str,str|float]` representation of the transform&#34;&#34;&#34;
+        return {
+            &#34;target&#34;: &#34;transform&#34;,
+            &#34;x&#34;: self.vec_mm[0],
+            &#34;y&#34;: self.vec_mm[1],
+            &#34;z&#34;: self.vec_mm[2],
+            &#34;rx&#34;: self.euler_deg[0],
+            &#34;ry&#34;: self.euler_deg[1],
+            &#34;rz&#34;: self.euler_deg[2],
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict[str, str | float]) -&gt; &#34;Transform&#34;:
+        &#34;&#34;&#34;
+        construct a new `Transform` from a dictionary
+
+        ## Parameter
+        - `data: dict[str, str|float]`: the data, if field is missing, 0 will be assumed
+        &#34;&#34;&#34;
+        x = 0 if &#34;x&#34; not in data else data[&#34;x&#34;]
+        y = 0 if &#34;y&#34; not in data else data[&#34;y&#34;]
+        z = 0 if &#34;z&#34; not in data else data[&#34;z&#34;]
+        rx = 0 if &#34;rx&#34; not in data else data[&#34;rx&#34;]
+        ry = 0 if &#34;ry&#34; not in data else data[&#34;ry&#34;]
+        rz = 0 if &#34;rz&#34; not in data else data[&#34;rz&#34;]
+
+        return Transform((x, y, z), (rx, ry, rz))</code></pre>
+</details>
+<div class="desc"><h1 id="transform">Transform</h1>
+<p>A class representing spatial transform,
+compose of a translation and a rotation</p>
+<h2 id="representation">Representation</h2>
+<ul>
+<li><code>vec_mm</code> : a 3D vector with unit in mm</li>
+<li><code>euler_deg</code> : a set of euler angle wiht unit in degree</li>
+</ul>
+<p>initalize a transform</p>
+<h2 id="parameter">Parameter</h2>
+<ul>
+<li><code>vec_mm</code> : a 3D vector with unit in mm</li>
+<li><code>euler_deg</code> : a set of euler angle wiht unit in degree</li>
+</ul></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="inovopy.geometry.IntoRobotCommand" href="index.html#inovopy.geometry.IntoRobotCommand">IntoRobotCommand</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Static methods</h3>
+<dl>
+<dt id="inovopy.geometry.transform.Transform.from_dict"><code class="name flex">
+<span>def <span class="ident">from_dict</span></span>(<span>data: dict[str, str | float]) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>construct a new <code><a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></code> from a dictionary</p>
+<h2 id="parameter">Parameter</h2>
+<ul>
+<li><code>data: dict[str, str|float]</code>: the data, if field is missing, 0 will be assumed</li>
+</ul></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.from_euler"><code class="name flex">
+<span>def <span class="ident">from_euler</span></span>(<span>rx_deg: float = 0, ry_deg: float = 0, rz_deg: float = 0) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Construct a new <code><a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></code> from euler angle set</p></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.from_homogenous"><code class="name flex">
+<span>def <span class="ident">from_homogenous</span></span>(<span>mat: numpy.ndarray[tuple[typing.Any, ...], numpy.dtype[numpy.float64]]) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>construct a transform from a <code>np.array</code> 4x4 homogenous matrix</p>
+<h2 id="parameter">Parameter:</h2>
+<ul>
+<li><code>mat : np.array</code> : 4x4 homogenous matrix representation of the transform</li>
+</ul>
+<h2 id="return">Return:</h2>
+<ul>
+<li><code><a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></code></li>
+</ul></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.from_robot"><code class="name flex">
+<span>def <span class="ident">from_robot</span></span>(<span>res: str) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Parse robot transform response into <code><a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></code></p></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.from_rx"><code class="name flex">
+<span>def <span class="ident">from_rx</span></span>(<span>rx_deg: float) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Construct a new <code><a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></code> with specified rx</p></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.from_ry"><code class="name flex">
+<span>def <span class="ident">from_ry</span></span>(<span>ry_deg: float) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Construct a new <code><a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></code> with specified ry</p></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.from_rz"><code class="name flex">
+<span>def <span class="ident">from_rz</span></span>(<span>rz_deg: float) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Construct a new <code><a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></code> with specified rz</p></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.from_vec"><code class="name flex">
+<span>def <span class="ident">from_vec</span></span>(<span>x_mm: float = 0, y_mm: float = 0, z_mm: float = 0) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Construct a new <code><a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></code> from vector componment</p></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.from_x"><code class="name flex">
+<span>def <span class="ident">from_x</span></span>(<span>x_mm: float) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Construct a new <code><a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></code> with specified x</p></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.from_y"><code class="name flex">
+<span>def <span class="ident">from_y</span></span>(<span>y_mm: float) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Construct a new <code><a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></code> with specified y</p></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.from_z"><code class="name flex">
+<span>def <span class="ident">from_z</span></span>(<span>z_mm: float) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Construct a new <code><a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></code> with specified z</p></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="inovopy.geometry.transform.Transform.clone"><code class="name flex">
+<span>def <span class="ident">clone</span></span>(<span>self) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def clone(self) -&gt; &#34;Transform&#34;:
+    &#34;&#34;&#34;clone the transform&#34;&#34;&#34;
+    return Transform(vec_mm=self.vec_mm, euler_deg=self.euler_deg)</code></pre>
+</details>
+<div class="desc"><p>clone the transform</p></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.euler_only"><code class="name flex">
+<span>def <span class="ident">euler_only</span></span>(<span>self) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def euler_only(self) -&gt; &#34;Transform&#34;:
+    &#34;&#34;&#34;Extract rotation from `self` and construct a new transfrom&#34;&#34;&#34;
+    return Transform(euler_deg=self.euler_deg)</code></pre>
+</details>
+<div class="desc"><p>Extract rotation from <code>self</code> and construct a new transfrom</p></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.inv"><code class="name flex">
+<span>def <span class="ident">inv</span></span>(<span>self) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def inv(self) -&gt; &#34;Transform&#34;:
+    &#34;&#34;&#34;return the inverse transform of `self`&#34;&#34;&#34;
+    return Transform.from_homogenous(numpy.linalg.inv(self.to_homogenous()))</code></pre>
+</details>
+<div class="desc"><p>return the inverse transform of <code>self</code></p></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.set_euler"><code class="name flex">
+<span>def <span class="ident">set_euler</span></span>(<span>self, rx_deg: float, ry_deg: float, rz_deg: float) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_euler(self, rx_deg: float, ry_deg: float, rz_deg: float) -&gt; &#34;Transform&#34;:
+    &#34;&#34;&#34;set the euler angle&#34;&#34;&#34;
+    self.euler_deg = (rx_deg, ry_deg, rz_deg)
+    return self</code></pre>
+</details>
+<div class="desc"><p>set the euler angle</p></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.set_rx"><code class="name flex">
+<span>def <span class="ident">set_rx</span></span>(<span>self, deg: float) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_rx(self, deg: float) -&gt; &#34;Transform&#34;:
+    &#34;&#34;&#34;set the rx component to a specified value&#34;&#34;&#34;
+    self.euler_deg = (deg, self.euler_deg[1], self.euler_deg[2])
+    return self</code></pre>
+</details>
+<div class="desc"><p>set the rx component to a specified value</p></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.set_ry"><code class="name flex">
+<span>def <span class="ident">set_ry</span></span>(<span>self, deg: float) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_ry(self, deg: float) -&gt; &#34;Transform&#34;:
+    &#34;&#34;&#34;set the ry component to a specified value&#34;&#34;&#34;
+    self.euler_deg = (self.euler_deg[0], deg, self.euler_deg[2])
+    return self</code></pre>
+</details>
+<div class="desc"><p>set the ry component to a specified value</p></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.set_rz"><code class="name flex">
+<span>def <span class="ident">set_rz</span></span>(<span>self, deg: float) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_rz(self, deg: float) -&gt; &#34;Transform&#34;:
+    &#34;&#34;&#34;set the rz component to a specified value&#34;&#34;&#34;
+    self.euler_deg = (self.euler_deg[0], self.euler_deg[1], deg)
+    return self</code></pre>
+</details>
+<div class="desc"><p>set the rz component to a specified value</p></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.set_vec"><code class="name flex">
+<span>def <span class="ident">set_vec</span></span>(<span>self, x_mm: float, y_mm: float, z_mm: float) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_vec(self, x_mm: float, y_mm: float, z_mm: float) -&gt; &#34;Transform&#34;:
+    &#34;&#34;&#34;set the vector&#34;&#34;&#34;
+    self.vec_mm = (x_mm, y_mm, z_mm)
+    return self</code></pre>
+</details>
+<div class="desc"><p>set the vector</p></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.set_x"><code class="name flex">
+<span>def <span class="ident">set_x</span></span>(<span>self, mm: float) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_x(self, mm: float) -&gt; &#34;Transform&#34;:
+    &#34;&#34;&#34;set the x component to a specified value&#34;&#34;&#34;
+    self.vec_mm = (mm, self.vec_mm[1], self.vec_mm[2])
+    return self</code></pre>
+</details>
+<div class="desc"><p>set the x component to a specified value</p></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.set_y"><code class="name flex">
+<span>def <span class="ident">set_y</span></span>(<span>self, mm: float) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_y(self, mm: float) -&gt; &#34;Transform&#34;:
+    &#34;&#34;&#34;set the y component to a specified value&#34;&#34;&#34;
+    self.vec_mm = (self.vec_mm[0], mm, self.vec_mm[2])
+    return self</code></pre>
+</details>
+<div class="desc"><p>set the y component to a specified value</p></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.set_z"><code class="name flex">
+<span>def <span class="ident">set_z</span></span>(<span>self, mm: float) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_z(self, mm: float) -&gt; &#34;Transform&#34;:
+    &#34;&#34;&#34;set the z component to a specified value&#34;&#34;&#34;
+    self.vec_mm = (self.vec_mm[0], self.vec_mm[1], mm)
+    return self</code></pre>
+</details>
+<div class="desc"><p>set the z component to a specified value</p></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.then"><code class="name flex">
+<span>def <span class="ident">then</span></span>(<span>self,<br>transform: <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a>) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def then(self, transform: &#34;Transform&#34;) -&gt; &#34;Transform&#34;:
+    &#34;&#34;&#34;
+    return a new transform that is apply a transform to `self`
+
+    ## Parameter
+    - `transform` : the transform to apply to `self`
+
+    ## Return
+    - `transform` : resulted transform
+    &#34;&#34;&#34;
+    new = transform * self
+    self.vec_mm = new.vec_mm
+    self.euler_deg = new.euler_deg
+    return self</code></pre>
+</details>
+<div class="desc"><p>return a new transform that is apply a transform to <code>self</code></p>
+<h2 id="parameter">Parameter</h2>
+<ul>
+<li><code>transform</code> : the transform to apply to <code>self</code></li>
+</ul>
+<h2 id="return">Return</h2>
+<ul>
+<li><code>transform</code> : resulted transform</li>
+</ul></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.then_relative"><code class="name flex">
+<span>def <span class="ident">then_relative</span></span>(<span>self,<br>transform: <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a>) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def then_relative(self, transform: &#34;Transform&#34;) -&gt; &#34;Transform&#34;:
+    &#34;&#34;&#34;return a new transform that apply a transform relative `self`&#39;s position&#34;&#34;&#34;
+    return self.then_relative_to(transform=transform, reference=self.vec_only())</code></pre>
+</details>
+<div class="desc"><p>return a new transform that apply a transform relative <code>self</code>'s position</p></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.then_relative_rx"><code class="name flex">
+<span>def <span class="ident">then_relative_rx</span></span>(<span>self, deg: float) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def then_relative_rx(self, deg: float) -&gt; &#34;Transform&#34;:
+    &#34;&#34;&#34;return a new transform that apply relative rotaion along axis x&#34;&#34;&#34;
+    return self.then_relative(Transform.from_rx(deg))</code></pre>
+</details>
+<div class="desc"><p>return a new transform that apply relative rotaion along axis x</p></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.then_relative_ry"><code class="name flex">
+<span>def <span class="ident">then_relative_ry</span></span>(<span>self, deg: float) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def then_relative_ry(self, deg: float) -&gt; &#34;Transform&#34;:
+    &#34;&#34;&#34;return a new transform that apply relative rotaion along axis y&#34;&#34;&#34;
+    return self.then_relative(Transform.from_ry(deg))</code></pre>
+</details>
+<div class="desc"><p>return a new transform that apply relative rotaion along axis y</p></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.then_relative_rz"><code class="name flex">
+<span>def <span class="ident">then_relative_rz</span></span>(<span>self, deg: float) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def then_relative_rz(self, deg: float) -&gt; &#34;Transform&#34;:
+    &#34;&#34;&#34;return a new transform that apply relative rotaion along axis z&#34;&#34;&#34;
+    return self.then_relative(Transform.from_rz(deg))</code></pre>
+</details>
+<div class="desc"><p>return a new transform that apply relative rotaion along axis z</p></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.then_relative_to"><code class="name flex">
+<span>def <span class="ident">then_relative_to</span></span>(<span>self,<br>transform: <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a>,<br>reference: <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a>) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def then_relative_to(
+    self, transform: &#34;Transform&#34;, reference: &#34;Transform&#34;
+) -&gt; &#34;Transform&#34;:
+    &#34;&#34;&#34;
+    return a new transform that,
+    apply a transform to `self` relative to a reference
+
+    ## Parameter
+    - `transform` : the transform to apply
+    - `reference` : the reference of the transfrom
+    &#34;&#34;&#34;
+    return reference * transform * reference.inv() * self</code></pre>
+</details>
+<div class="desc"><p>return a new transform that,
+apply a transform to <code>self</code> relative to a reference</p>
+<h2 id="parameter">Parameter</h2>
+<ul>
+<li><code>transform</code> : the transform to apply</li>
+<li><code>reference</code> : the reference of the transfrom</li>
+</ul></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.then_rx"><code class="name flex">
+<span>def <span class="ident">then_rx</span></span>(<span>self, deg: float) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def then_rx(self, deg: float) -&gt; &#34;Transform&#34;:
+    &#34;&#34;&#34;return a new transform that apply rotation along x axis to `self`&#34;&#34;&#34;
+    return self.then(Transform.from_rx(deg))</code></pre>
+</details>
+<div class="desc"><p>return a new transform that apply rotation along x axis to <code>self</code></p></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.then_ry"><code class="name flex">
+<span>def <span class="ident">then_ry</span></span>(<span>self, deg: float) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def then_ry(self, deg: float) -&gt; &#34;Transform&#34;:
+    &#34;&#34;&#34;return a new transform that apply rotation along y axis to `self`&#34;&#34;&#34;
+    return self.then(Transform.from_ry(deg))</code></pre>
+</details>
+<div class="desc"><p>return a new transform that apply rotation along y axis to <code>self</code></p></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.then_rz"><code class="name flex">
+<span>def <span class="ident">then_rz</span></span>(<span>self, deg: float) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def then_rz(self, deg: float) -&gt; &#34;Transform&#34;:
+    &#34;&#34;&#34;return a new transform that apply rotation along z axis to `self`&#34;&#34;&#34;
+    return self.then(Transform.from_rz(deg))</code></pre>
+</details>
+<div class="desc"><p>return a new transform that apply rotation along z axis to <code>self</code></p></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.then_x"><code class="name flex">
+<span>def <span class="ident">then_x</span></span>(<span>self, cm: float) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def then_x(self, cm: float) -&gt; &#34;Transform&#34;:
+    &#34;&#34;&#34;return a new transform that apply translation along x axis to `self`&#34;&#34;&#34;
+    return self.then(Transform.from_x(cm))</code></pre>
+</details>
+<div class="desc"><p>return a new transform that apply translation along x axis to <code>self</code></p></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.then_y"><code class="name flex">
+<span>def <span class="ident">then_y</span></span>(<span>self, cm: float) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def then_y(self, cm: float) -&gt; &#34;Transform&#34;:
+    &#34;&#34;&#34;return a new transform that apply translation along y axis to `self`&#34;&#34;&#34;
+    return self.then(Transform.from_y(cm))</code></pre>
+</details>
+<div class="desc"><p>return a new transform that apply translation along y axis to <code>self</code></p></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.then_z"><code class="name flex">
+<span>def <span class="ident">then_z</span></span>(<span>self, cm: float) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def then_z(self, cm: float) -&gt; &#34;Transform&#34;:
+    &#34;&#34;&#34;return a new transform that apply translation along z axis to `self`&#34;&#34;&#34;
+    return self.then(Transform.from_z(cm))</code></pre>
+</details>
+<div class="desc"><p>return a new transform that apply translation along z axis to <code>self</code></p></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.to_dict"><code class="name flex">
+<span>def <span class="ident">to_dict</span></span>(<span>self) ‑> dict[str, str | float]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_dict(self) -&gt; dict[str, str | float]:
+    &#34;&#34;&#34;return a `dict[str,str|float]` representation of the transform&#34;&#34;&#34;
+    return {
+        &#34;target&#34;: &#34;transform&#34;,
+        &#34;x&#34;: self.vec_mm[0],
+        &#34;y&#34;: self.vec_mm[1],
+        &#34;z&#34;: self.vec_mm[2],
+        &#34;rx&#34;: self.euler_deg[0],
+        &#34;ry&#34;: self.euler_deg[1],
+        &#34;rz&#34;: self.euler_deg[2],
+    }</code></pre>
+</details>
+<div class="desc"><p>return a <code>dict[str,str|float]</code> representation of the transform</p></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.to_homogenous"><code class="name flex">
+<span>def <span class="ident">to_homogenous</span></span>(<span>self) ‑> numpy.ndarray[tuple[typing.Any, ...], numpy.dtype[numpy.float64]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_homogenous(self) -&gt; numpy_typing.NDArray[numpy.float64]:
+    &#34;&#34;&#34;
+    return a homogenous matrix representation of the `self`
+
+    ## Return:
+    - `np.array` : 4x4 homogenous matrix representation of the transform
+    &#34;&#34;&#34;
+    mat = numpy.eye(4)
+    mat[0:3, 0:3] = euler_to_mat(self.euler_deg)
+    mat[0:3, 3] = numpy.asarray(self.vec_mm)
+    return mat</code></pre>
+</details>
+<div class="desc"><p>return a homogenous matrix representation of the <code>self</code></p>
+<h2 id="return">Return:</h2>
+<ul>
+<li><code>np.array</code> : 4x4 homogenous matrix representation of the transform</li>
+</ul></div>
+</dd>
+<dt id="inovopy.geometry.transform.Transform.vec_only"><code class="name flex">
+<span>def <span class="ident">vec_only</span></span>(<span>self) ‑> <a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def vec_only(self) -&gt; &#34;Transform&#34;:
+    &#34;&#34;&#34;Extract translation from `self` and construct a new transfrom&#34;&#34;&#34;
+    return Transform(vec_mm=self.vec_mm)</code></pre>
+</details>
+<div class="desc"><p>Extract translation from <code>self</code> and construct a new transfrom</p></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="inovopy.geometry.IntoRobotCommand" href="index.html#inovopy.geometry.IntoRobotCommand">IntoRobotCommand</a></b></code>:
+<ul class="hlist">
+<li><code><a title="inovopy.geometry.IntoRobotCommand.as_joint" href="index.html#inovopy.geometry.IntoRobotCommand.as_joint">as_joint</a></code></li>
+<li><code><a title="inovopy.geometry.IntoRobotCommand.as_joint_relative" href="index.html#inovopy.geometry.IntoRobotCommand.as_joint_relative">as_joint_relative</a></code></li>
+<li><code><a title="inovopy.geometry.IntoRobotCommand.as_linear" href="index.html#inovopy.geometry.IntoRobotCommand.as_linear">as_linear</a></code></li>
+<li><code><a title="inovopy.geometry.IntoRobotCommand.as_linear_relative" href="index.html#inovopy.geometry.IntoRobotCommand.as_linear_relative">as_linear_relative</a></code></li>
+<li><code><a title="inovopy.geometry.IntoRobotCommand.as_motion" href="index.html#inovopy.geometry.IntoRobotCommand.as_motion">as_motion</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#transform-module">Transform Module</a><ul>
+<li><a href="#class">Class</a></li>
+<li><a href="#function">Function</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="inovopy.geometry" href="index.html">inovopy.geometry</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="inovopy.geometry.transform.euler_to_mat" href="#inovopy.geometry.transform.euler_to_mat">euler_to_mat</a></code></li>
+<li><code><a title="inovopy.geometry.transform.mat_to_euler" href="#inovopy.geometry.transform.mat_to_euler">mat_to_euler</a></code></li>
+<li><code><a title="inovopy.geometry.transform.rx_mat" href="#inovopy.geometry.transform.rx_mat">rx_mat</a></code></li>
+<li><code><a title="inovopy.geometry.transform.ry_mat" href="#inovopy.geometry.transform.ry_mat">ry_mat</a></code></li>
+<li><code><a title="inovopy.geometry.transform.rz_mat" href="#inovopy.geometry.transform.rz_mat">rz_mat</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="inovopy.geometry.transform.Transform" href="#inovopy.geometry.transform.Transform">Transform</a></code></h4>
+<ul class="two-column">
+<li><code><a title="inovopy.geometry.transform.Transform.clone" href="#inovopy.geometry.transform.Transform.clone">clone</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.euler_only" href="#inovopy.geometry.transform.Transform.euler_only">euler_only</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.from_dict" href="#inovopy.geometry.transform.Transform.from_dict">from_dict</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.from_euler" href="#inovopy.geometry.transform.Transform.from_euler">from_euler</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.from_homogenous" href="#inovopy.geometry.transform.Transform.from_homogenous">from_homogenous</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.from_robot" href="#inovopy.geometry.transform.Transform.from_robot">from_robot</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.from_rx" href="#inovopy.geometry.transform.Transform.from_rx">from_rx</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.from_ry" href="#inovopy.geometry.transform.Transform.from_ry">from_ry</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.from_rz" href="#inovopy.geometry.transform.Transform.from_rz">from_rz</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.from_vec" href="#inovopy.geometry.transform.Transform.from_vec">from_vec</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.from_x" href="#inovopy.geometry.transform.Transform.from_x">from_x</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.from_y" href="#inovopy.geometry.transform.Transform.from_y">from_y</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.from_z" href="#inovopy.geometry.transform.Transform.from_z">from_z</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.inv" href="#inovopy.geometry.transform.Transform.inv">inv</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.set_euler" href="#inovopy.geometry.transform.Transform.set_euler">set_euler</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.set_rx" href="#inovopy.geometry.transform.Transform.set_rx">set_rx</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.set_ry" href="#inovopy.geometry.transform.Transform.set_ry">set_ry</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.set_rz" href="#inovopy.geometry.transform.Transform.set_rz">set_rz</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.set_vec" href="#inovopy.geometry.transform.Transform.set_vec">set_vec</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.set_x" href="#inovopy.geometry.transform.Transform.set_x">set_x</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.set_y" href="#inovopy.geometry.transform.Transform.set_y">set_y</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.set_z" href="#inovopy.geometry.transform.Transform.set_z">set_z</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.then" href="#inovopy.geometry.transform.Transform.then">then</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.then_relative" href="#inovopy.geometry.transform.Transform.then_relative">then_relative</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.then_relative_rx" href="#inovopy.geometry.transform.Transform.then_relative_rx">then_relative_rx</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.then_relative_ry" href="#inovopy.geometry.transform.Transform.then_relative_ry">then_relative_ry</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.then_relative_rz" href="#inovopy.geometry.transform.Transform.then_relative_rz">then_relative_rz</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.then_relative_to" href="#inovopy.geometry.transform.Transform.then_relative_to">then_relative_to</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.then_rx" href="#inovopy.geometry.transform.Transform.then_rx">then_rx</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.then_ry" href="#inovopy.geometry.transform.Transform.then_ry">then_ry</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.then_rz" href="#inovopy.geometry.transform.Transform.then_rz">then_rz</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.then_x" href="#inovopy.geometry.transform.Transform.then_x">then_x</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.then_y" href="#inovopy.geometry.transform.Transform.then_y">then_y</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.then_z" href="#inovopy.geometry.transform.Transform.then_z">then_z</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.to_dict" href="#inovopy.geometry.transform.Transform.to_dict">to_dict</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.to_homogenous" href="#inovopy.geometry.transform.Transform.to_homogenous">to_homogenous</a></code></li>
+<li><code><a title="inovopy.geometry.transform.Transform.vec_only" href="#inovopy.geometry.transform.Transform.vec_only">vec_only</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

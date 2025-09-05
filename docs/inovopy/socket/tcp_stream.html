@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>inovopy.socket.tcp_stream API documentation</title>
+<meta name="description" content="TCP Stream Module
+This module provide an api class for managing tcp connection …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>inovopy.socket.tcp_stream</code></h1>
+</header>
+<section id="section-intro">
+<h1 id="tcp-stream-module">TCP Stream Module</h1>
+<p>This module provide an api class for managing tcp connection</p>
+<h2 id="class">Class</h2>
+<ul>
+<li><code><a title="inovopy.socket.tcp_stream.TcpStream" href="#inovopy.socket.tcp_stream.TcpStream">TcpStream</a></code> : a class for managing tcp connection</li>
+</ul>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="inovopy.socket.tcp_stream.TcpStream"><code class="flex name class">
+<span>class <span class="ident">TcpStream</span></span>
+<span>(</span><span>conn: socket.socket, logger: logging.Logger | str | None = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TcpStream(Loggable):
+    &#34;&#34;&#34;
+    # TcpStream
+    A class for managing tcp connetion
+
+    ## Usage
+    ```python
+    from inovopy.socket import TcpListener, TcpStream
+
+    example_listener : TcpListener = TcpListener()
+
+    example_stream : TcpStream = example_listener.accept()
+
+    example_stream.write(&#34;send a message&#34;)
+
+    read_message = example_stream.read()
+    ```
+    &#34;&#34;&#34;
+
+    def __init__(self, conn: socket.socket, logger: logging.Logger | str | None = None):
+        &#34;&#34;&#34;
+        initalize the stream
+
+        ## Parameter
+        - `conn : socket.socket` : the socket connection
+        - `logger: logging.Logger | str | None` :
+            - if `logger` is instance of `logging.Logger`, it will log with it;
+            - if `logger` is `str`, new logger will be created with it as name
+            - otherwise, no log
+        &#34;&#34;&#34;
+        super().__init__(logger)
+        self.__conn: socket.socket = conn
+
+    @classmethod
+    def connect(
+        cls,
+        ip: str | None = None,
+        port: int = 50003,
+        logger: logging.Logger | str | None = None,
+    ) -&gt; &#34;TcpStream&#34;:
+        &#34;&#34;&#34;
+        Try to connect to an socket address
+
+        ## Parameter
+        - `ip : str`: if `None`, will try local machine
+        - `port: int` : port to connect to
+        - `logger: Logger`: logger for the resulted `TcpStream`
+
+        ## Return
+        `TcpStream` the resulted connection
+
+        ## Exception:
+        `SocketException`
+        - if no network interface found
+        &#34;&#34;&#34;
+        logger = TcpStream.get_class_logger()
+
+        if not ip:
+            ip = &#34;localhost&#34;
+
+        if ip == &#34;localhost&#34;:
+            ips = detect_interfaces()
+            if len(ips) == 0:
+                logger.error(&#34;No interface found&#34;)
+                raise SocketException(
+                    &#34;No Network Interfaces, please make sure device is connected to network&#34;
+                )
+
+        logger.debug(&#34;Start connecting . . .&#34;)
+        try:
+            conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            conn.connect((ip, port))
+            logger.debug(f&#34;Successfully connected to {ip}:{port}&#34;)
+            return TcpStream(conn=conn, logger=logger)
+        except OSError as e:
+            logger.warning(&#34;Failed to connect&#34;)
+            logger.warning(f&#34;{e}&#34;)
+            raise SocketException(&#34;Failed to connect&#34;) from e
+
+    @property
+    def ip(self) -&gt; str:
+        &#34;&#34;&#34;get the local ip of the socket&#34;&#34;&#34;
+        return self.__conn.getsockname()[0]
+
+    def try_read(self, timeout: float = 1.0) -&gt; str | None:
+        &#34;&#34;&#34;
+        try to read a message from the socket
+        ## Parameter
+        - `timout : float = 1.0` : time out for the reading
+
+        ## Return
+        `str` : read message; or
+        `None` : if no message is recived
+        &#34;&#34;&#34;
+        ready_socket, _, _ = select.select([self.__conn], [], [], timeout)
+        if not ready_socket:
+            return None
+        return self.read()
+
+    def read(self) -&gt; str:
+        &#34;&#34;&#34;
+        read a message form the connection
+
+        maximum byte : `4096`
+
+        ## Return:
+        `str` the message read
+
+        ## Exception:
+        `SocketException`:
+        - if the read failed
+        - if `EOF` character is read
+        &#34;&#34;&#34;
+        try:
+            self.__conn.setblocking(True)
+            data = self.__conn.recv(4096)
+        except OSError as e:
+            self.error(&#34;Error occur during socket read!&#34;)
+            self.error(f&#34;{e}&#34;)
+            raise SocketException(&#34;Read Error&#34;) from e
+
+        if not data:
+            self.__conn.close()
+            self.error(&#34;Read Error : EOF detected&#34;)
+            raise EndOfCommunication()
+
+        s = clean(data.decode(&#34;UTF-8&#34;))
+        self.debug(f&#34;...{s}&#34;)
+
+        return s
+
+    def write(self, msg: str):
+        &#34;&#34;&#34;
+        write a message to the connection
+
+        ## Parameter:
+        - `msg : str` : string message to send
+        &#34;&#34;&#34;
+        try:
+            self.debug(f&#34;{msg}&#34;)
+            msg = f&#34;{msg}\n&#34;
+            self.__conn.send(msg.encode())
+        except Exception as e:
+            self.error(&#34;Error occur during socket write!&#34;)
+            self.error(f&#34;{e}&#34;)
+            raise SocketException(&#34;Write Error&#34;) from e
+
+    def __del__(self):
+        try:
+            self.debug(&#34;closing socket&#34;)
+            self.__conn.close()
+        except OSError as e:
+            try:
+                self.error(&#34;Failed to shut down socket!&#34;)
+                self.error(f&#34;{e}&#34;)
+            except OSError:
+                pass</code></pre>
+</details>
+<div class="desc"><h1 id="tcpstream">TcpStream</h1>
+<p>A class for managing tcp connetion</p>
+<h2 id="usage">Usage</h2>
+<pre><code class="language-python">from inovopy.socket import TcpListener, TcpStream
+
+example_listener : TcpListener = TcpListener()
+
+example_stream : TcpStream = example_listener.accept()
+
+example_stream.write(&quot;send a message&quot;)
+
+read_message = example_stream.read()
+</code></pre>
+<p>initalize the stream</p>
+<h2 id="parameter">Parameter</h2>
+<ul>
+<li><code>conn : socket.socket</code> : the socket connection</li>
+<li><code>logger: logging.Logger | str | None</code> :<ul>
+<li>if <code>logger</code> is instance of <code>logging.Logger</code>, it will log with it;</li>
+<li>if <code>logger</code> is <code>str</code>, new logger will be created with it as name</li>
+<li>otherwise, no log</li>
+</ul>
+</li>
+</ul></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="inovopy.util.Loggable" href="../util.html#inovopy.util.Loggable">Loggable</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Static methods</h3>
+<dl>
+<dt id="inovopy.socket.tcp_stream.TcpStream.connect"><code class="name flex">
+<span>def <span class="ident">connect</span></span>(<span>ip: str | None = None,<br>port: int = 50003,<br>logger: logging.Logger | str | None = None) ‑> <a title="inovopy.socket.tcp_stream.TcpStream" href="#inovopy.socket.tcp_stream.TcpStream">TcpStream</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Try to connect to an socket address</p>
+<h2 id="parameter">Parameter</h2>
+<ul>
+<li><code>ip : str</code>: if <code>None</code>, will try local machine</li>
+<li><code>port: int</code> : port to connect to</li>
+<li><code>logger: Logger</code>: logger for the resulted <code><a title="inovopy.socket.tcp_stream.TcpStream" href="#inovopy.socket.tcp_stream.TcpStream">TcpStream</a></code></li>
+</ul>
+<h2 id="return">Return</h2>
+<p><code><a title="inovopy.socket.tcp_stream.TcpStream" href="#inovopy.socket.tcp_stream.TcpStream">TcpStream</a></code> the resulted connection</p>
+<h2 id="exception">Exception:</h2>
+<p><code>SocketException</code>
+- if no network interface found</p></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="inovopy.socket.tcp_stream.TcpStream.ip"><code class="name">prop <span class="ident">ip</span> : str</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def ip(self) -&gt; str:
+    &#34;&#34;&#34;get the local ip of the socket&#34;&#34;&#34;
+    return self.__conn.getsockname()[0]</code></pre>
+</details>
+<div class="desc"><p>get the local ip of the socket</p></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="inovopy.socket.tcp_stream.TcpStream.read"><code class="name flex">
+<span>def <span class="ident">read</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def read(self) -&gt; str:
+    &#34;&#34;&#34;
+    read a message form the connection
+
+    maximum byte : `4096`
+
+    ## Return:
+    `str` the message read
+
+    ## Exception:
+    `SocketException`:
+    - if the read failed
+    - if `EOF` character is read
+    &#34;&#34;&#34;
+    try:
+        self.__conn.setblocking(True)
+        data = self.__conn.recv(4096)
+    except OSError as e:
+        self.error(&#34;Error occur during socket read!&#34;)
+        self.error(f&#34;{e}&#34;)
+        raise SocketException(&#34;Read Error&#34;) from e
+
+    if not data:
+        self.__conn.close()
+        self.error(&#34;Read Error : EOF detected&#34;)
+        raise EndOfCommunication()
+
+    s = clean(data.decode(&#34;UTF-8&#34;))
+    self.debug(f&#34;...{s}&#34;)
+
+    return s</code></pre>
+</details>
+<div class="desc"><p>read a message form the connection</p>
+<p>maximum byte : <code>4096</code></p>
+<h2 id="return">Return:</h2>
+<p><code>str</code> the message read</p>
+<h2 id="exception">Exception:</h2>
+<p><code>SocketException</code>:
+- if the read failed
+- if <code>EOF</code> character is read</p></div>
+</dd>
+<dt id="inovopy.socket.tcp_stream.TcpStream.try_read"><code class="name flex">
+<span>def <span class="ident">try_read</span></span>(<span>self, timeout: float = 1.0) ‑> str | None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def try_read(self, timeout: float = 1.0) -&gt; str | None:
+    &#34;&#34;&#34;
+    try to read a message from the socket
+    ## Parameter
+    - `timout : float = 1.0` : time out for the reading
+
+    ## Return
+    `str` : read message; or
+    `None` : if no message is recived
+    &#34;&#34;&#34;
+    ready_socket, _, _ = select.select([self.__conn], [], [], timeout)
+    if not ready_socket:
+        return None
+    return self.read()</code></pre>
+</details>
+<div class="desc"><p>try to read a message from the socket</p>
+<h2 id="parameter">Parameter</h2>
+<ul>
+<li><code>timout : float = 1.0</code> : time out for the reading</li>
+</ul>
+<h2 id="return">Return</h2>
+<p><code>str</code> : read message; or
+<code>None</code> : if no message is recived</p></div>
+</dd>
+<dt id="inovopy.socket.tcp_stream.TcpStream.write"><code class="name flex">
+<span>def <span class="ident">write</span></span>(<span>self, msg: str)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def write(self, msg: str):
+    &#34;&#34;&#34;
+    write a message to the connection
+
+    ## Parameter:
+    - `msg : str` : string message to send
+    &#34;&#34;&#34;
+    try:
+        self.debug(f&#34;{msg}&#34;)
+        msg = f&#34;{msg}\n&#34;
+        self.__conn.send(msg.encode())
+    except Exception as e:
+        self.error(&#34;Error occur during socket write!&#34;)
+        self.error(f&#34;{e}&#34;)
+        raise SocketException(&#34;Write Error&#34;) from e</code></pre>
+</details>
+<div class="desc"><p>write a message to the connection</p>
+<h2 id="parameter">Parameter:</h2>
+<ul>
+<li><code>msg : str</code> : string message to send</li>
+</ul></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="inovopy.util.Loggable" href="../util.html#inovopy.util.Loggable">Loggable</a></b></code>:
+<ul class="hlist">
+<li><code><a title="inovopy.util.Loggable.critical" href="../util.html#inovopy.util.Loggable.critical">critical</a></code></li>
+<li><code><a title="inovopy.util.Loggable.debug" href="../util.html#inovopy.util.Loggable.debug">debug</a></code></li>
+<li><code><a title="inovopy.util.Loggable.error" href="../util.html#inovopy.util.Loggable.error">error</a></code></li>
+<li><code><a title="inovopy.util.Loggable.info" href="../util.html#inovopy.util.Loggable.info">info</a></code></li>
+<li><code><a title="inovopy.util.Loggable.logger" href="../util.html#inovopy.util.Loggable.logger">logger</a></code></li>
+<li><code><a title="inovopy.util.Loggable.warning" href="../util.html#inovopy.util.Loggable.warning">warning</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#tcp-stream-module">TCP Stream Module</a><ul>
+<li><a href="#class">Class</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="inovopy.socket" href="index.html">inovopy.socket</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="inovopy.socket.tcp_stream.TcpStream" href="#inovopy.socket.tcp_stream.TcpStream">TcpStream</a></code></h4>
+<ul class="">
+<li><code><a title="inovopy.socket.tcp_stream.TcpStream.connect" href="#inovopy.socket.tcp_stream.TcpStream.connect">connect</a></code></li>
+<li><code><a title="inovopy.socket.tcp_stream.TcpStream.ip" href="#inovopy.socket.tcp_stream.TcpStream.ip">ip</a></code></li>
+<li><code><a title="inovopy.socket.tcp_stream.TcpStream.read" href="#inovopy.socket.tcp_stream.TcpStream.read">read</a></code></li>
+<li><code><a title="inovopy.socket.tcp_stream.TcpStream.try_read" href="#inovopy.socket.tcp_stream.TcpStream.try_read">try_read</a></code></li>
+<li><code><a title="inovopy.socket.tcp_stream.TcpStream.write" href="#inovopy.socket.tcp_stream.TcpStream.write">write</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>
